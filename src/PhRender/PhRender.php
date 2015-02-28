@@ -10,8 +10,7 @@
 
 namespace PhRender;
 
-use PhRender\Template\Template,
-    PhRender\Template\Renderer\Renderer,
+use PhRender\Template\Renderer\Renderer,
     PhRender\Template\Renderer\Visibility,
     PhRender\Template\Renderer\Repeat,
     PhRender\Template\Renderer\Bind;
