@@ -10,6 +10,6 @@ php:
 script: phpunit --verbose --coverage-text
 
 matrix:
-  allow_failures:
+  allow_failures: 
     - php: hhvm
   fast_finish: true

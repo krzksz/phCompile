@@ -23,7 +23,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\Expression::render
+     * @covers PhRender\Template\Expression::render
      * @dataProvider renderReplaceProvider
      */
     public function testRenderReplace($scopeData, $expressionString, $expected) {
@@ -62,7 +62,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\Expression::render
+     * @covers PhRender\Template\Expression::render
      * @dataProvider renderEvaluateProvider
      */
     public function testRenderEvaluate($scopeData, $expressionString, $expected) {
