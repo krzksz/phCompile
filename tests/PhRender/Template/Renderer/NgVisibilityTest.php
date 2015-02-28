@@ -27,7 +27,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers PhRender\Template\Renderer\Visibility::render
+     * @covers PhRender\Template\Renderer\NgVisibility::render
      * @dataProvider renderVisibleProvider
      */
     public function testRenderVisible($scopeData, $html, $expectedHtml) {
@@ -58,7 +58,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\Visibility::render
+     * @covers PhRender\Template\Renderer\NgVisibility::render
      * @dataProvider renderHiddenProvider
      */
     public function testRenderHidden($scopeData, $html, $expectedHtml) {

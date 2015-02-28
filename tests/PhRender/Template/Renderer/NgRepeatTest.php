@@ -26,7 +26,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\Repeat::render
+     * @covers PhRender\Template\Renderer\NgRepeat::render
      */
     public function testRepeatArray() {
         $this->scope->setData(array(
@@ -54,7 +54,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\Repeat::render
+     * @covers PhRender\Template\Renderer\NgRepeat::render
      */
     public function testRepeatObject() {
         $this->scope->setData(array(

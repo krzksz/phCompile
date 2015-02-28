@@ -27,7 +27,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers PhRender\Template\Renderer\Bind::render
+     * @covers PhRender\Template\Renderer\NgBind::render
      * @dataProvider renderProvider
      */
     public function testRender($scopeData, $bindString, $expected) {
