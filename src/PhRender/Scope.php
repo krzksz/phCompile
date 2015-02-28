@@ -15,6 +15,9 @@ namespace PhRender;
  */
 class Scope
 {
+    /**
+     * @param array $data Scope data to set.
+     */
     public function __construct(array $data = array()) {
         $this->setData($data);
     }

@@ -48,6 +48,9 @@ class Template {
      */
     protected $scope;
 
+    /**
+     * @param PhRender $phRender PhRender object.
+     */
     public function __construct(PhRender $phRender) {
         $this->phRender = $phRender;
         $this->scope = new Scope();

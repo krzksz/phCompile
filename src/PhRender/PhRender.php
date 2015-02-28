@@ -37,7 +37,7 @@ class PhRender
      * @var array
      */
     protected $attributeRenderers = array();
-
+    
     public function __construct()
     {
         $this->registerDefaultRenderers();

@@ -30,6 +30,9 @@ class Expression {
      */
     protected $phRender = null;
 
+    /**
+     * @param PhRender $phRender PhRender object.
+     */
     public function __construct(PhRender $phRender) {
         $this->phRender = $phRender;
     }
