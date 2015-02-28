@@ -1,4 +1,5 @@
 # ngPhRender
+[![Build Status](https://travis-ci.org/krzksz/ngPhRender.svg?branch=master)](https://travis-ci.org/krzksz/ngPhRender)
 
 Library for server-side precompiling AngularJS templates in PHP.
 
