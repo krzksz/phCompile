@@ -54,7 +54,7 @@ class Repeat extends Renderer {
                 /**
                  * Append subrendered DOM elelent.
                  */
-                DOMUtils::appendHtml($domElement->parentNode, $this->subRender(clone($domElement), $subScope));
+                DOMUtils::appendHtml($domElement->parentNode, $this->subRender($domElement->cloneNode(true), $subScope));
                 DOMUtils::addClass($domElement, 'ng-hide');
 
             }
