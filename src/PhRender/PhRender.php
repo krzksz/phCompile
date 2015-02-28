@@ -11,9 +11,9 @@
 namespace PhRender;
 
 use PhRender\Template\Renderer\Renderer,
-    PhRender\Template\Renderer\Visibility,
-    PhRender\Template\Renderer\Repeat,
-    PhRender\Template\Renderer\Bind;
+    PhRender\Template\Renderer\NgVisibility,
+    PhRender\Template\Renderer\NgRepeat,
+    PhRender\Template\Renderer\NgBind;
 
 /**
  * Server side renderer for AngularJS templates.
@@ -129,10 +129,10 @@ class PhRender
     protected function registerDefaultRenderers()
     {
         $defaultAttributes = array(
-            'ng-repeat' => new Repeat($this),
-            'ng-hide' => new Visibility($this),
-            'ng-show' => new Visibility($this),
-            'ng-bind' => new Bind($this)
+            'ng-repeat' => new NgRepeat($this),
+            'ng-hide' => new NgVisibility($this),
+            'ng-show' => new NgVisibility($this),
+            'ng-bind' => new NgBind($this)
         );
 
         foreach ($defaultAttributes as $attribute => $renderer) {

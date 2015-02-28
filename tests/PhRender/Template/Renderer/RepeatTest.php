@@ -10,7 +10,7 @@
 
 namespace PhRender;
 
-use PhRender\Template\Renderer\Repeat,
+use PhRender\Template\Renderer\NgRepeat,
     PhRender\DOM\DOMUtils;
 
 class RepeatTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +21,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phRender = new PhRender();
-        $this->repeat = new Repeat($this->phRender);
+        $this->repeat = new NgRepeat($this->phRender);
         $this->scope = new Scope();
     }
 

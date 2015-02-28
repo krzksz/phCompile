@@ -17,7 +17,7 @@ use PhRender\Scope,
 /**
  * Renders AngularJS ng-show and ng-hide attributes.
  */
-class Repeat extends Renderer {
+class NgRepeat extends Renderer {
 
     /**
      * Renders AngularJS ng-repeat attribute.

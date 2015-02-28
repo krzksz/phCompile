@@ -17,7 +17,7 @@ use PhRender\Scope,
 /**
  * Renders AngularJS ng-show and ng-hide attributes.
  */
-class Visibility extends Renderer {
+class NgVisibility extends Renderer {
 
     /**
      * Renders AngularJS ng-show and ng-hide attributes by evaluating expression

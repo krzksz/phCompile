@@ -10,7 +10,7 @@
 
 namespace PhRender;
 
-use PhRender\Template\Renderer\Repeat;
+use PhRender\Template\Renderer\NgRepeat;
 
 class PhRenderTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class PhRenderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterAndGetAttributeRenderer()
     {
-        $repeat = new Repeat($this->phRender);
+        $repeat = new NgRepeat($this->phRender);
         $this->phRender->registerAttributeRenderer('foo', $repeat);
         $this->assertSame($repeat, $this->phRender->getAttributeRenderer('foo'));
     }

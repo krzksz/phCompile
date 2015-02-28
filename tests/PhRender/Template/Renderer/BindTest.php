@@ -10,7 +10,7 @@
 
 namespace PhRender;
 
-use PhRender\Template\Renderer\Bind,
+use PhRender\Template\Renderer\NgBind,
     PhRender\DOM\DOMUtils;
 
 class BindTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +21,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phRender = new PhRender();
-        $this->bind = new Bind($this->phRender);
+        $this->bind = new NgBind($this->phRender);
         $this->scope = new Scope();
     }
 

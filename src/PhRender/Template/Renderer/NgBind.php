@@ -17,7 +17,7 @@ use PhRender\Scope,
 /**
  * Renders AngularJS ng-bind attribute.
  */
-class Bind extends Renderer{
+class NgBind extends Renderer{
 
     /**
      * Renders AngularJS ng-bind attributes by evaluating expression inside it

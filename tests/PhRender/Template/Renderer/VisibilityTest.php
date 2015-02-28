@@ -10,7 +10,7 @@
 
 namespace PhRender;
 
-use PhRender\Template\Renderer\Visibility,
+use PhRender\Template\Renderer\NgVisibility,
     PhRender\DOM\DOMUtils;
 
 class VisibilityTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +21,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phRender = new PhRender();
-        $this->visibiliy = new Visibility($this->phRender);
+        $this->visibiliy = new NgVisibility($this->phRender);
         $this->scope = new Scope();
     }
 
