@@ -48,7 +48,7 @@ $template->getScope()->setData(array('foo'=>'bar')); // Feed template scope with
 echo $template->render(); // Render template HTML
 ```
 
-#### {{ }} Expressions
+#### {{ }} expressions
 Expressions work just like in AngularJS, any value or code inside {{}} is replaced with it's evaluation. Remember that function calls inside expressions are forbidden and using them will cause `InvalidExpressionException` to be thrown because of `eval` usage and security reasons.
 ```php
 $phRender = new \PhRender\PhRender();
