@@ -17,12 +17,12 @@ ngPhRender is still in alpha state, bugs and api changes may occur.
 ### Supported
 * {{ }} expressions,
 * ng-repeat(special properties like $index, $first etc. are WIP),
-* ng-class,
 * ng-hide,
 * ng-show,
 * ng-bind.
 
 ### Roadmap
+* ng-class,
 * Filters, currently they are expected to break expression that uses them,
 * Custom directives,
 * Expressions priorities(?),
