@@ -46,10 +46,10 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Template::load
+     * @covers PhRender\Template\Template::loadHtml
      * @depends testSetAndGetHtml
      */
-    public function testLoad()
+    public function testLoadHtml()
     {
         $templatePath = TEST_PATH . 'template/overall.html';
         $this->template->loadHtml($templatePath);
