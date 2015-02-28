@@ -12,7 +12,7 @@ namespace PhRender\Template;
 
 use PhRender\PhRender,
     PhRender\Scope,
-    PhRender\Template\Expression,
+    PhRender\DOM\DOMUtils,
     PhRender\DOM\RecursiveDOMIterator;
 
 /**
@@ -75,7 +75,7 @@ class Template {
     /**
      * Loads template HTML from file.
      *
-     * @param type $path Path to template file.
+     * @param string $path Path to template file.
      * @throws TemplateNotFoundException Throw's exception if file does not exist.
      */
     public function loadHtml($path) {
@@ -127,16 +127,23 @@ class Template {
                     new RecursiveDOMIterator($domDocument),
                     \RecursiveIteratorIterator::SELF_FIRST);
 
+        /**
+         * Iterate over every element inside DOM.
+         */
         foreach($domIterator as $domNode) {
             if($domNode->nodeType === XML_ELEMENT_NODE) {
                 $this->renderAttributes($domNode);
             }
         }
-        
-        $this->html = \PhRender\DOM\DOMUtils::saveHtml($domDocument);
+
+        /**
+         * Update template HTML from rendered DOM
+         */
+        $this->html = DOMUtils::saveHtml($domDocument);
         if($decodeEntities === true) {
             $this->html = html_entity_decode($this->html);
         }
+
         $this->renderExpressions();
 
         return $this->html;
@@ -158,27 +165,29 @@ class Template {
     }
 
     /**
-     * Renders DOM elements using registered element renderers.
+     * Finds and renders expressions in templates HTML.
      *
-     * @todo Implement this method.
-     * @todo Write tests.
-     *
-     * @param \DomElement $domElement DOM element to render.
+     * @throws InvalidExpressionException Throws exception if function call is found inside expression.
      */
-    protected function renderElement(\DomElement $domElement) {
-    }
-
     protected function renderExpressions() {
         $foundExpressions = array();
         $renderAttribute = $this->phRender->getConfig('render.attr');
+        $expression = new Expression($this->phRender);
 
+        /**
+         * Find all {{}} expressions.
+         */
         preg_match_all('/{{([^}]+)}}/', $this->html, $foundExpressions);
         foreach($foundExpressions[1] as $foundExpression) {
-            $expression = new Expression($this->phRender);
-            
+            /**
+             * Render and cover with span for easy client-site reverting.
+             */
             $renderedExpression = $expression->render($foundExpression, $this->scope);
             $renderedExpression = '<span ' . $renderAttribute . '="' . $foundExpression . '">' . $renderedExpression . '</span>';
 
+            /**
+             * Replace {{}} expression with rendered value.
+             */
             $this->html = str_replace('{{' . $foundExpression . '}}',
                 $renderedExpression, $this->html);
         }

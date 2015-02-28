@@ -11,7 +11,8 @@
 namespace PhRender\Template\Renderer;
 
 use PhRender\Scope,
-    PhRender\DOM\DOMUtils;
+    PhRender\DOM\DOMUtils,
+    PhRender\Template\Expression;
 
 /**
  * Renders AngularJS ng-bind attribute.
@@ -29,7 +30,7 @@ class Bind extends Renderer{
     public function render(\DOMElement $domElement, Scope $scope) {
         $expressionString = $domElement->getAttribute('ng-bind');
 
-        $expression = new \PhRender\Template\Expression($this->phRender);
+        $expression = new Expression($this->phRender);
         $expressionValue = $expression->render($expressionString, $scope);
 
         if(empty($expressionValue) === false) {

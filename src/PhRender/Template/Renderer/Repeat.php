@@ -26,6 +26,7 @@ class Repeat extends Renderer {
      *
      * @param \DOMElement $domElement DOM element to render.
      * @param Scope $scope Scope object.
+     * @return void
      */
     public function render(\DOMElement $domElement, Scope $scope) {
         $parsedRepeat = $this->parseRepeat($domElement);
