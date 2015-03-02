@@ -139,7 +139,9 @@ class Template {
          */
         foreach($domIterator as $domNode) {
             if($domNode->nodeType === XML_ELEMENT_NODE) {
-                $this->renderAttributes($domNode);
+                if($this->renderAttributes($domNode) === false) {
+                    break;
+                } 
             }
         }
 
@@ -167,8 +169,14 @@ class Template {
             $renderer = $this->phRender->getAttributeRenderer($attribute->name);
             if($renderer !== null) {
                 $renderer->render($domElement, $this->scope);
+
+                if($renderer->haltParsing() === true) {
+                    return false;
+                }
             }
         }
+
+        return true;
     }
 
     /**

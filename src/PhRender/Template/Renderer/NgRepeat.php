@@ -24,6 +24,7 @@ class NgRepeat extends Renderer {
      * Each element copy is treated and rendered as seperate template with it's
      * own Scope data. Those elements are later appended to element's parrent node.
      *
+     *
      * @param \DOMElement $domElement DOM element to render.
      * @param Scope $scope Scope object.
      * @return void
@@ -31,6 +32,10 @@ class NgRepeat extends Renderer {
     public function render(\DOMElement $domElement, Scope $scope) {
         $parsedRepeat = $this->parseRepeat($domElement);
         $repeatObject = $scope->getData($parsedRepeat['object']);
+        /**
+         * Reset halt parsing to it's default value.
+         */
+        $this->setHaltParsing(false);
 
         /**
          * Let's check if variable we're trying to enumerate is array.
@@ -56,9 +61,13 @@ class NgRepeat extends Renderer {
                  * Append subrendered DOM elelent.
                  */
                 DOMUtils::appendHtml($domElement->parentNode, $this->subRender($domElement->cloneNode(true), $subScope));
-                DOMUtils::addClass($domElement, 'ng-hide');
-
             }
+            /**
+             * We stop further rendering of source DOM element, we want it to
+             * be intact and hidden so we can replace it back on the client side.
+             */
+            $this->setHaltParsing(true);
+            DOMUtils::addClass($domElement, 'ng-hide');
         }
     }
 

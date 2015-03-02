@@ -27,12 +27,38 @@ abstract class Renderer {
     protected $phRender = null;
 
     /**
+     * Indicates if parser should stop further rendering of current DOM element.
+     *
+     * @var bool
+     */
+    protected $haltParsing = false;
+
+    /**
      * Creates new Renderer.
      *
      * @param PhRender $phRender PhRender object.
      */
     public function __construct(PhRender $phRender) {
         $this->phRender = $phRender;
+    }
+
+    /**
+     * Returns boolean telling if parser should stop to render current DOM element.
+     *
+     * @return bool Tells parser if it should stop further rendering of certain
+     * DOM element.
+     */
+    public function haltParsing() {
+        return $this->haltParsing;
+    }
+
+    /**
+     * Sets boolean value telling if parser should stop to render current DOM element.
+     *
+     * @param bool $haltParsing True if parsing should stop, false otherwise.
+     */
+    protected function setHaltParsing($haltParsing) {
+        $this->haltParsing = $haltParsing;
     }
 
     /**
