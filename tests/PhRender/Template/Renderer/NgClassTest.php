@@ -58,9 +58,6 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
                 array('foo' => ''), 'foo', ''
             ),
             array(
-                array('foo' => array('bar', 'baz')), 'foo', 'bar baz'
-            ),
-            array(
                 array('foo' => 'bar', 'baz' => 'zaz'), '[foo, baz]', 'bar zaz'
             ),
             array(
@@ -73,7 +70,36 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
                 array('foo' => true, 'bar' => false), '{bar: foo, zaz: bar}', 'bar'
             ),
             array(
-                array('foo' => true, 'bar' => 'foo'), '{bar: foo, zaz: bar}', 'foo bar'
+                array('foo' => true, 'bar' => 'foo'), '{bar: foo, zaz: bar}', 'bar zaz'
+            )
+        );
+    }
+
+    /**
+     * @covers PhRender\Template\Renderer\NgClass::render
+     * @dataProvider renderExceptionProvider
+     * @expectedException PhRender\Template\InvalidExpressionException
+     */
+    public function testRenderException($scopeData, $classString) {
+        $this->scope->setData($scopeData);
+
+        $domDocument = new \DOMDocument();
+        $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
+        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+
+        $renderedHtml = DOMUtils::saveHtml($this->class->render($domElement, $this->scope)->ownerDocument);
+        $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
+
+        $this->assertSame($expectedHtml, $renderedHtml);
+    }
+
+    public function renderExceptionProvider() {
+        return array(
+            array(
+                array('foo' => array('bar', 'baz')), 'foo'
+            ),
+            array(
+                array('foo' => 'bar', 'baz' => array('bar', 'baz')), '[foo, baz]',
             )
         );
     }
