@@ -17,18 +17,18 @@ ngPhRender is still in alpha state, bugs and api changes may occur.
 
 ### Supported
 * {{ }} expressions,
-* ng-repeat(special properties like $index, $first etc. are WIP),
+* ng-repeat(without "track by"),
 * ng-hide,
 * ng-show,
 * ng-class,
-* ng-bind.
+* ng-bind,
+* Render halting.
 
 ### Roadmap
 * Filters, currently they are expected to break expression that uses them,
 * Custom directives,
 * Expressions priorities,
 * Expressions cache,
-* Render halting,
 * Suggestions?
 
 ## Setting up 
