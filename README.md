@@ -20,10 +20,10 @@ ngPhRender is still in alpha state, bugs and api changes may occur.
 * ng-repeat(special properties like $index, $first etc. are WIP),
 * ng-hide,
 * ng-show,
+* ng-class,
 * ng-bind.
 
 ### Roadmap
-* ng-class,
 * Filters, currently they are expected to break expression that uses them,
 * Custom directives,
 * Expressions priorities,
