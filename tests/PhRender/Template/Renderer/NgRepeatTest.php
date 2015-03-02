@@ -78,4 +78,46 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
+
+    /**
+     * @covers PhRender\Template\Renderer\NgRepeat::render
+     * @dataProvider repeatSpectialPropertiesProvider
+     */
+    public function testRepeatSpecialProperties($expression, $expectedArray) {
+        $this->scope->setData(array(
+            'bar'   =>  array(  1, 2, 3, 4, 5, 6)
+        ));
+
+        $domDocument = new \DOMDocument();
+        $domDocument->loadHTML('<span ng-repeat="n in bar">{{' . $expression . '}}</span>');
+        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+
+        $renderClass = $this->phRender->getConfig('render.class');
+        $renderAttr = $this->phRender->getConfig('render.attr');
+
+        $this->repeat->render($domElement, $this->scope);
+        $renderedHtml = DOMUtils::saveHtml($domDocument);
+
+        $expectedHtml = '<span ng-repeat="n in bar" class="ng-hide">{{' . $expression . '}}</span>';
+
+        for($i = 0; $i < 6; $i++) {
+            $expectedHtml .= '<span class="' . $renderClass . '"><span '
+                . $renderAttr . '="' . $expression . '">' . $expectedArray[$i] . '</span></span>';
+        }
+        
+
+        $this->assertSame($expectedHtml, $renderedHtml);
+    }
+
+    public function repeatSpectialPropertiesProvider() {
+        return array(
+            array('n', array('1', '2', '3', '4', '5', '6')),
+            array('$index', array('0', '1', '2', '3', '4', '5')),
+            array('$first', array('true', 'false', 'false', 'false', 'false', 'false')),
+            array('$middle', array('false', 'true', 'true', 'true', 'true', 'false')),
+            array('$last', array('false', 'false', 'false', 'false', 'false', 'true')),
+            array('$even', array('true', 'false', 'true', 'false', 'true', 'false')),
+            array('$odd', array('true', 'false', 'true', 'false', 'true', 'false')),
+        );
+    }
 }
