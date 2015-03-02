@@ -49,6 +49,10 @@ class Template {
     protected $scope;
 
     /**
+     * Creates new Template object.
+     * Templates are used as containers and parsing managers for certain
+     * given HTML fragments.
+     *
      * @param PhRender $phRender PhRender object.
      */
     public function __construct(PhRender $phRender) {

@@ -14,7 +14,8 @@ use PhRender\PhRender,
     PhRender\Scope;
 
 /**
- * Start point for creating other renderers.
+ * Start point for creating other Renderers.
+ * Renderer objects are used for parsing and rendering AngularJS templates.
  */
 abstract class Renderer {
 
@@ -26,6 +27,8 @@ abstract class Renderer {
     protected $phRender = null;
 
     /**
+     * Creates new Renderer.
+     *
      * @param PhRender $phRender PhRender object.
      */
     public function __construct(PhRender $phRender) {

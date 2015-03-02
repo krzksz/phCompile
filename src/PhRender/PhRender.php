@@ -37,7 +37,10 @@ class PhRender
      * @var array
      */
     protected $attributeRenderers = array();
-    
+
+    /**
+     * Creates new PhRender object.
+     */
     public function __construct()
     {
         $this->registerDefaultRenderers();

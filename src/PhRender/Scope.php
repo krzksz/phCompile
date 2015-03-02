@@ -16,6 +16,10 @@ namespace PhRender;
 class Scope
 {
     /**
+     * Creates new Scope object.
+     * You can supply optional parameter with initial data that will be
+     * set to Scope.
+     *
      * @param array $data Scope data to set.
      */
     public function __construct(array $data = array()) {

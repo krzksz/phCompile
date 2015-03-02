@@ -31,6 +31,10 @@ class Expression {
     protected $phRender = null;
 
     /**
+     * Creates new Expression object.
+     * This object is responsible for parsing and evaluating provided
+     * AngularJS expressions.
+     *
      * @param PhRender $phRender PhRender object.
      */
     public function __construct(PhRender $phRender) {
