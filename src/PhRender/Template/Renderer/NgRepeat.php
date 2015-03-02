@@ -17,21 +17,25 @@ use PhRender\Scope,
 /**
  * Renders AngularJS ng-show and ng-hide attributes.
  */
-class NgRepeat extends Renderer {
+class NgRepeat extends Renderer
+{
 
     /**
      * Renders AngularJS ng-repeat attribute.
      * Each element copy is treated and rendered as seperate template with it's
      * own Scope data. Those elements are later appended to element's parrent node.
      *
+     * @todo Think of refactoring methods.
+     * @todo Implement expression cache for better performance.
      *
      * @param \DOMElement $domElement DOM element to render.
      * @param Scope $scope Scope object.
      * @return void
      */
-    public function render(\DOMElement $domElement, Scope $scope) {
-        $parsedRepeat = $this->parseRepeat($domElement);
-        $repeatObject = $scope->getData($parsedRepeat['object']);
+    public function render(\DOMElement $domElement, Scope $scope)
+    {
+        $parsedArray = $this->parseRepeat($domElement);
+        $repeatArray = $scope->getData($parsedArray['array']);
         /**
          * Reset halt parsing to it's default value.
          */
@@ -40,27 +44,20 @@ class NgRepeat extends Renderer {
         /**
          * Let's check if variable we're trying to enumerate is array.
          */
-        if(is_array($repeatObject) === true) {
-            foreach($repeatObject as $repeatKey => $repeatValue) {
-                /**
-                * For each element in array create proper Scope object.
-                */
-                if(empty($parsedRepeat['index']) === false) {
-                    $scopeData = array(
-                        $parsedRepeat['index'] =>  $repeatValue
-                    );
-                } else {
-                    $scopeData = array(
-                        $parsedRepeat['key'] => $repeatKey,
-                        $parsedRepeat['value'] => $repeatValue
-                    );
-                }
+        if (is_array($repeatArray) === true) {
+            $repeatCount = count($repeatArray);
+            $repeatIndex = 0;
+            foreach ($repeatArray as $repeatKey => $repeatValue) {
                 $subScope = new Scope($scope->getData());
-                $subScope->setData($scopeData);
+                $this->setScopeData($subScope, $parsedArray, $repeatKey, $repeatValue);
+                $this->setScopeSpecial($subScope, $repeatCount, $repeatIndex);
+
                 /**
                  * Append subrendered DOM elelent.
                  */
-                DOMUtils::appendHtml($domElement->parentNode, $this->subRender($domElement->cloneNode(true), $subScope));
+                DOMUtils::appendHtml($domElement->parentNode,
+                    $this->subRender($domElement->cloneNode(true), $subScope));
+                $repeatIndex++;
             }
             /**
              * We stop further rendering of source DOM element, we want it to
@@ -69,6 +66,54 @@ class NgRepeat extends Renderer {
             $this->setHaltParsing(true);
             DOMUtils::addClass($domElement, 'ng-hide');
         }
+    }
+
+    /**
+     * Sets data for given scope based on given values from current ng-repeat
+     * cycle.
+     *
+     * @param Scope $scope Scope to set data to.
+     * @param array $parsedArray Parsed ng-repeat expression.
+     * @param string $repeatKey Key of the current element of the array we iterate over.
+     * @param type $repeatValue Value of the current element of the array we iterate over.
+     * @return Scope Scope object with set values.
+     */
+    protected function setScopeData(Scope $scope, $parsedArray, $repeatKey, $repeatValue)
+    {
+        if (empty($parsedArray['index']) === false) {
+            $scopeData = array(
+                $parsedArray['index'] => $repeatValue
+            );
+        } else {
+            $scopeData = array(
+                $parsedArray['key'] => $repeatKey,
+                $parsedArray['value'] => $repeatValue
+            );
+        }
+        $scope->setData($scopeData);
+
+        return $scope;
+    }
+
+    /**
+     * Sets special properties for given scope based on current ng-repeat cycle.
+     *
+     * @param Scope $scope Scope to set data to.
+     * @param int $repeatCount Size of the array we iterate over.
+     * @param int $repeatIndex Current index of the array we iterate over.
+     * @return Scope Scope object with set values.
+     */
+    protected function setScopeSpecial(Scope $scope, $repeatCount, $repeatIndex)
+    {
+        $scopeData['$index'] = $repeatIndex;
+        $scopeData['$first'] = ($repeatIndex === 0);
+        $scopeData['$last'] = ($repeatIndex === $repeatCount - 1);
+        $scopeData['$middle'] = !($scopeData['$first'] || $scopeData['$last']);
+        $scopeData['$even'] = ($repeatIndex % 2 === 0);
+        $scopeData['$odd'] = !($scopeData['$even']);
+        $scope->setData($scopeData);
+
+        return $scope;
     }
 
     /**
@@ -92,9 +137,11 @@ class NgRepeat extends Renderer {
      * @param \DOMElement $domElement DOM element which ng-repeat to parse.
      * @return array Parsed ng-repeat expression.
      */
-    protected function parseRepeat(\DOMElement $domElement) {
+    protected function parseRepeat(\DOMElement $domElement)
+    {
         $repeatString = $domElement->getAttribute('ng-repeat');
-        preg_match('/(?:(?P<index>[^\s,\(\)]+)|\((?P<key>[^,]+)\s*,\s*(?P<value>[^\)]+)\))\s+in\s+(?P<object>[^\s,\(\)]+)/', $repeatString, $repeatMatch);
+        preg_match('/(?:(?P<index>[^\s,\(\)]+)|\((?P<key>[^,]+)\s*,\s*(?P<value>[^\)]+)\))\s+in\s+(?P<array>[^\s,\(\)]+)/',
+            $repeatString, $repeatMatch);
 
         return $repeatMatch;
     }
@@ -106,7 +153,8 @@ class NgRepeat extends Renderer {
      * @param Scope $scope Subtemplate Scope object.
      * @return string Rendered HTML.
      */
-    protected function subRender(\DOMElement $domElement, $scope) {
+    protected function subRender(\DOMElement $domElement, $scope)
+    {
         $template = new Template($this->phRender);
         /**
          * Remove ng-repeat attribute so we won't fall into infinite loop while parsing.
@@ -115,7 +163,8 @@ class NgRepeat extends Renderer {
         /**
          * Tag element with render class, for easy client-side JavaScript manipulation.
          */
-        DOMUtils::addClass($domElement, $this->phRender->getConfig('render.class'));
+        DOMUtils::addClass($domElement,
+            $this->phRender->getConfig('render.class'));
         $template->setHtml($domElement->ownerDocument->saveHTML($domElement));
         $template->setScope($scope);
 

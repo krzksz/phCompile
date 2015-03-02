@@ -113,11 +113,11 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         return array(
             array('n', array('1', '2', '3', '4', '5', '6')),
             array('$index', array('0', '1', '2', '3', '4', '5')),
-            array('$first', array('true', 'false', 'false', 'false', 'false', 'false')),
-            array('$middle', array('false', 'true', 'true', 'true', 'true', 'false')),
-            array('$last', array('false', 'false', 'false', 'false', 'false', 'true')),
-            array('$even', array('true', 'false', 'true', 'false', 'true', 'false')),
-            array('$odd', array('true', 'false', 'true', 'false', 'true', 'false')),
+            array('$first', array(1, '', '', '', '', '')),
+            array('$middle', array('', 1, 1, 1, 1, '')),
+            array('$last', array('', '', '', '', '', 1)),
+            array('$even', array(1, '', 1, '', 1, '')),
+            array('$odd', array('', 1, '', 1, '', 1)),
         );
     }
 }

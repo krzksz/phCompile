@@ -2,61 +2,61 @@
 <ul><li ng-repeat="person in party" ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide">
         <p>Name: <strong ng-bind="person.name"></strong></p>
         <p>Species: <em><span ng-phrender="person.species"></span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries"></span></p>
     </li>
 <li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Thorin</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Fili</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
     </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender ng-hide">
         <p>Name: <strong ng-bind="person.name">Kili</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">13</span></p>
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">13</span></p>
     </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender ng-hide">
         <p>Name: <strong ng-bind="person.name">Balin</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">12</span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">12</span></p>
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Dwalin</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Olin</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
     </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender ng-hide">
         <p>Name: <strong ng-bind="person.name">Gloin</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">10</span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">10</span></p>
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Ori</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Dori</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">8</span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">8</span></p>
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Nori</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
     </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender ng-hide">
         <p>Name: <strong ng-bind="person.name">Bifur</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">13</span></p>
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">13</span></p>
     </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender ng-hide">
         <p>Name: <strong ng-bind="person.name">Bofur</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
-        <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries">23</span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+        <p ng-show="person.injuries">Injuries: <span ng-phrender="person.injuries">23</span></p>
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Bombur</strong></p>
         <p>Species: <em><span ng-phrender="person.species">dwarf</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
-    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-hide ng-phrender">
+    </li><li ng-hide="person.injuries && person.injuries > 9" ng-class="{dwarf: person.species == 'dwarf', hobbit: person.species == 'hobbit', injured: person.injuries}" class="ng-phrender">
         <p>Name: <strong ng-bind="person.name">Bilbo</strong></p>
         <p>Species: <em><span ng-phrender="person.species">hobbit</span></em></p>
         <p ng-show="person.injuries" class="ng-hide">Injuries: <span ng-phrender="person.injuries"></span></p>
