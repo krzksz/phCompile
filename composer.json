@@ -1,5 +1,5 @@
 {
-    "name": "krzksz/ngphrender",
+    "name": "krzksz/ng-phrender",
     "description": "PHP server side pre-renderer for AngularJS apps.",
     "type": "library",
     "keywords": [
