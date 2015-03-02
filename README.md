@@ -26,7 +26,9 @@ ngPhRender is still in alpha state, bugs and api changes may occur.
 * ng-class,
 * Filters, currently they are expected to break expression that uses them,
 * Custom directives,
-* Expressions priorities(?),
+* Expressions priorities,
+* Expressions cache,
+* Render halting,
 * Suggestions?
 
 ## Setting up 
