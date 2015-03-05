@@ -8,37 +8,37 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template\Renderer;
+namespace PhCompile\Template\Directive;
 
-use PhRender\Scope,
-    PhRender\DOM\DOMUtils,
-    PhRender\Template\Expression;
+use PhCompile\Scope,
+    PhCompile\DOM\DOMUtils,
+    PhCompile\Template\Expression;
 
 /**
- * Renders AngularJS ng-class attribute.
+ * Compiles AngularJS ng-class attribute.
  */
-class NgClass extends Renderer
+class NgClass extends Directive
 {
 
     /**
-     * Renders AngularJS ng-class attributes by evaluating expression inside it
+     * Compiles AngularJS ng-class attributes by evaluating expression inside it
      * and setting element's class attribute.
      *
-     * @param \DOMElement $domElement DOM element to render.
+     * @param \DOMElement $domElement DOM element to compile.
      * @param Scope $scope Scope object containg data for expression.
-     * @return \DOMElement Rendered DOM element.
+     * @return \DOMElement Compiled DOM element.
      */
-    public function render(\DOMElement $domElement, Scope $scope)
+    public function compile(\DOMElement $domElement, Scope $scope)
     {
         $classAttr = $domElement->getAttribute('ng-class');
         $classArray      = $this->parseClass($classAttr);
 
         if (isset($classArray['object']) && $classArray['object'] !== '') {
-            $classString = $this->parseClassObject($classAttr, $scope);
+            $classString = $this->compileObject($classAttr, $scope);
         } elseif (isset($classArray['array']) && $classArray['array'] !== '') {
-            $classString = $this->parseClassArray($classAttr, $scope);
+            $classString = $this->compilesArray($classAttr, $scope);
         } else {
-            $classString = $this->parseClassString($classAttr, $scope);
+            $classString = $this->compileString($classAttr, $scope);
         }
 
         if(empty($classString) === false && is_string($classString) === false) {
@@ -73,33 +73,33 @@ class NgClass extends Renderer
     }
 
     /**
-     * Parses ng-class attribute as expression evaluating to string.
+     * Compiles ng-class attribute as expression evaluating to string.
      *
      * @param string $classAttr Ng-class attribute value.
      * @param Scope $scope Scope object with data for current expression.
-     * @return string Rendered class string.
+     * @return string Compiled class string.
      */
-    protected function parseClassString($classAttr, $scope)
+    protected function compileString($classAttr, $scope)
     {
         $expression = new Expression($this->phRender);
 
-        return $expression->render($classAttr, $scope);
+        return $expression->compile($classAttr, $scope);
     }
 
     /**
-     * Parses ng-class attribute as expression evaluating to array containing strings.
+     * Compiles ng-class attribute as expression evaluating to array containing strings.
      *
      * @param string $classAttr Ng-class attribute value.
      * @param Scope $scope Scope object with data for current expression.
-     * @return string Rendered class string.
+     * @return string Compiled class string.
      */
-    protected function parseClassArray($classAttr, $scope)
+    protected function compilesArray($classAttr, $scope)
     {
         $expression           = new Expression($this->phRender);
         $classExpressionArray = explode(',', trim($classAttr, ' []'));
         $classString          = '';
         foreach ($classExpressionArray as $singleClassExpression) {
-            $newClassString = $expression->render(trim($singleClassExpression),
+            $newClassString = $expression->compile(trim($singleClassExpression),
                     $scope);
 
             if(empty($newClassString) === false && is_string($newClassString) === false) {
@@ -118,14 +118,14 @@ class NgClass extends Renderer
     }
 
     /**
-     * Parses ng-class attribute as expression evaluating to object with values
+     * Compiles ng-class attribute as expression evaluating to object with values
      * to evaluate and keys as class names.
      *
      * @param string $classAttr Ng-class attribute value.
      * @param Scope $scope Scope object with data for current expression.
-     * @return string Rendered class string.
+     * @return string Compiled class string.
      */
-    protected function parseClassObject($classAttr, $scope)
+    protected function compileObject($classAttr, $scope)
     {
         $expression = new Expression($this->phRender);
         $classArray = explode(',', trim($classAttr, ' {}'));
@@ -136,7 +136,7 @@ class NgClass extends Renderer
 
         $classString = '';
         foreach ($classArray as $singleClassArray) {
-            if ($expression->render(trim($singleClassArray[1]), $scope) == true) {
+            if ($expression->compile(trim($singleClassArray[1]), $scope) == true) {
                 $classString .= ' '.trim($singleClassArray[0]);
             }
         }

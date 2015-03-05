@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Renderer\NgBind,
     PhRender\DOM\DOMUtils;
@@ -20,7 +20,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhRender();
+        $this->phRender = new PhCompile();
         $this->bind = new NgBind($this->phRender);
         $this->scope = new Scope();
     }
@@ -37,7 +37,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-bind="' . $bindString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
         
-        $renderedHtml = DOMUtils::saveHtml($this->bind->render($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = DOMUtils::saveHtml($this->bind->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
         
         $this->assertSame($expectedHtml, $renderedHtml);

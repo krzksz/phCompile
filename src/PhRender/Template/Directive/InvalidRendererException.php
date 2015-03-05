@@ -1,6 +1,6 @@
 <?php
 
-namespace PhRender\Template\Renderer;
+namespace PhCompile\Template\Directive;
 
 
 class InvalidRendererException extends \Exception{

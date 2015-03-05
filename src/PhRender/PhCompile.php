@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
-use PhRender\Template\Renderer\Renderer,
-    PhRender\Template\Renderer\NgVisibility,
-    PhRender\Template\Renderer\NgRepeat,
-    PhRender\Template\Renderer\NgBind;
+use PhCompile\Template\Compiler\Compiler,
+    PhCompile\Template\Compiler\NgVisibility,
+    PhCompile\Template\Compiler\NgRepeat,
+    PhCompile\Template\Compiler\NgBind;
 
 /**
  * Server side renderer for AngularJS templates.
@@ -21,7 +21,7 @@ use PhRender\Template\Renderer\Renderer,
  * This class is responsible for containing configuration,
  * managing renderers and rendering template.
  */
-class PhRender
+class PhCompile
 {
     /**
      * Scope object containing entire configuration.
@@ -36,14 +36,14 @@ class PhRender
      *
      * @var array
      */
-    protected $attributeRenderers = array();
+    protected $attributeCompilers = array();
 
     /**
      * Creates new PhRender object.
      */
     public function __construct()
     {
-        $this->registerDefaultRenderers();
+        $this->registerDefaultCompilers();
 
         $this->config = new Scope();
 
@@ -57,7 +57,7 @@ class PhRender
     {
         $this->config->setData(
             array(
-                'render' => array(
+                'compile' => array(
                     /**
                      * Class used to tag server side rendered elements.
                      */
@@ -95,30 +95,30 @@ class PhRender
     }
 
     /**
-     * Registers Renderer object for given attribute.
-     * Renderer's method render() will be called each time given attribute is
-     * found inside DOM, render() method is called with DOMElement containing
+     * Registers Directive object for given attribute.
+     * Directive's method compile() will be called each time given attribute is
+     * found inside DOM, compile() method is called with DOMElement containing
      * this attribute.
      *
      * @param string $attribute HTML attribute to register.
-     * @param Renderer $renderer Attribute renderer.
+     * @param Renderer $direvtive Attribute directive.
      */
-    public function registerAttributeRenderer($attribute, Renderer $renderer)
+    public function registerAttributeDirective($attribute, Directive $direvtive)
     {
-        $this->attributeRenderers[$attribute] = $renderer;
+        $this->attributeCompilers[$attribute] = $direvtive;
     }
 
     /**
-     * Returns Renderer registered for given attribute or null if no Renderer
+     * Returns Renderer registered for given attribute or null if no compiler
      * has been registered for it.
      *
      * @param string $attribute HTML attribute.
-     * @return Renderer|null Renderer object or null.
+     * @return Compiler|null Renderer object or null.
      */
-    public function getAttributeRenderer($attribute)
+    public function getAttributeParser($attribute)
     {
-        if (isset($this->attributeRenderers[$attribute])) {
-            $renderer = $this->attributeRenderers[$attribute];
+        if (isset($this->attributeCompilers[$attribute])) {
+            $renderer = $this->attributeCompilers[$attribute];
         } else {
             $renderer = null;
         }
@@ -127,9 +127,9 @@ class PhRender
     }
 
     /**
-     * Registers default renderers for AngularJS attributes.
+     * Registers default compilers for AngularJS attributes.
      */
-    protected function registerDefaultRenderers()
+    protected function registerDefaultCompilers()
     {
         $defaultAttributes = array(
             'ng-repeat' => new NgRepeat($this),
@@ -138,8 +138,8 @@ class PhRender
             'ng-bind' => new NgBind($this)
         );
 
-        foreach ($defaultAttributes as $attribute => $renderer) {
-            $this->registerAttributeRenderer($attribute, $renderer);
+        foreach ($defaultAttributes as $attribute => $compiler) {
+            $this->registerAttributeDirective($attribute, $compiler);
         }
     }
 }

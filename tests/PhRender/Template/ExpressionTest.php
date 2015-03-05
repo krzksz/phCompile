@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Expression;
 
@@ -18,7 +18,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhRender();
+        $this->phRender = new PhCompile();
         $this->scope = new Scope();
     }
 
@@ -29,7 +29,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     public function testRenderReplace($scopeData, $expressionString, $expected) {
         $this->scope->setData($scopeData);
         $expression = new Expression($this->phRender);
-        $this->assertSame($expected, $expression->render($expressionString, $this->scope));
+        $this->assertSame($expected, $expression->compile($expressionString, $this->scope));
     }
 
     public function renderReplaceProvider() {
@@ -68,7 +68,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     public function testRenderEvaluate($scopeData, $expressionString, $expected) {
         $this->scope->setData($scopeData);
         $expression = new Expression($this->phRender);
-        $this->assertEquals($expected, $expression->render($expressionString, $this->scope));
+        $this->assertEquals($expected, $expression->compile($expressionString, $this->scope));
     }
 
     public function renderEvaluateProvider() {
@@ -112,6 +112,6 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     public function testForbidFunction() {
         $this->scope->setData(array());
         $expression = new Expression($this->phRender);
-        $expression->render('system()', $this->scope);
+        $expression->compile('system()', $this->scope);
     }
 }

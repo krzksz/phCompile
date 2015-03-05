@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template;
+namespace PhCompile\Template;
 
-use PhRender\PhRender,
-    PhRender\Scope,
-    PhRender\DOM\DOMUtils,
-    PhRender\DOM\RecursiveDOMIterator;
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\DOM\DOMUtils,
+    PhCompile\DOM\RecursiveDOMIterator;
 
 /**
  * Represents HTML template and contains all it's data.
@@ -21,11 +21,11 @@ use PhRender\PhRender,
 class Template {
 
     /**
-     * PhRender reference for internal use.
+     * PhCompile reference for internal use.
      *
-     * @var PhRender
+     * @var PhCompile
      */
-    protected $phRender;
+    protected $phCompile;
 
     /**
      * Templates path if template was loaded from file.
@@ -50,13 +50,12 @@ class Template {
 
     /**
      * Creates new Template object.
-     * Templates are used as containers and parsing managers for certain
-     * given HTML fragments.
+     * Templates are used as containers and compiling managers for given HTML.
      *
-     * @param PhRender $phRender PhRender object.
+     * @param PhCompile $phCompile PhCompile object.
      */
-    public function __construct(PhRender $phRender) {
-        $this->phRender = $phRender;
+    public function __construct(PhCompile $phCompile) {
+        $this->phCompile = $phCompile;
         $this->scope = new Scope();
         
     }
@@ -118,15 +117,15 @@ class Template {
     }
 
     /**
-     * Renders template HTML.
-     * This method uses registered renderers and expressions to render AngularJS
+     * Compiles template HTML.
+     * This method uses registered compilers and expressions to render AngularJS
      * template with given Scope data.
      *
-     * @param bool $decodeEntities Indicates if method sould decode all HTML entities
+     * @param bool $decodeHTMLEntities Indicates if method sould decode all HTML entities
      * e.g. &amp; back before returning rendered HTML.
-     * @return string Rendered HTML.
+     * @return string Compiled HTML.
      */
-    public function render($decodeEntities = true) {
+    public function compile($decodeHTMLEntities = true) {
         $domDocument = new \DOMDocument();
         @$domDocument->loadHTML($this->html);
 
@@ -139,38 +138,38 @@ class Template {
          */
         foreach($domIterator as $domNode) {
             if($domNode->nodeType === XML_ELEMENT_NODE) {
-                if($this->renderAttributes($domNode) === false) {
+                if($this->compileAttributes($domNode) === false) {
                     break;
                 } 
             }
         }
 
         /**
-         * Update template HTML from rendered DOM
+         * Update template HTML from compiled DOM.
          */
         $this->html = DOMUtils::saveHtml($domDocument);
-        if($decodeEntities === true) {
+        if($decodeHTMLEntities === true) {
             $this->html = html_entity_decode($this->html);
         }
 
-        $this->renderExpressions();
+        $this->compileExpressions();
 
         return $this->html;
     }
 
     /**
-     * Renders DOM elements using registered attribute renderers.
+     * Compiles DOM elements using registered attribute directives.
      *
-     * @see PhRender::registerAttributeRenderer.
-     * @param \DomElement $domElement DOM element which attributes to render.
+     * @see PhCompile::registerAttributeDirective.
+     * @param \DomElement $domElement DOM element which attributes to compile.
      */
-    protected function renderAttributes(\DomElement $domElement) {
+    protected function compileAttributes(\DomElement $domElement) {
         foreach($domElement->attributes as $attribute) {
-            $renderer = $this->phRender->getAttributeRenderer($attribute->name);
-            if($renderer !== null) {
-                $renderer->render($domElement, $this->scope);
+            $directive = $this->phCompile->getAttributeDirective($attribute->name);
+            if($directive !== null) {
+                $directive->compile($domElement, $this->scope);
 
-                if($renderer->haltParsing() === true) {
+                if($directive->haltCompiling() === true) {
                     return false;
                 }
             }
@@ -180,14 +179,14 @@ class Template {
     }
 
     /**
-     * Finds and renders expressions in templates HTML.
+     * Finds and compiles expressions in templates HTML.
      *
      * @throws InvalidExpressionException Throws exception if function call is found inside expression.
      */
-    protected function renderExpressions() {
+    protected function compileExpressions() {
         $foundExpressions = array();
-        $renderAttribute = $this->phRender->getConfig('render.attr');
-        $expression = new Expression($this->phRender);
+        $renderAttribute = $this->phCompile->getConfig('compile.attr');
+        $expression = new Expression($this->phCompile);
 
         /**
          * Find all {{}} expressions.
@@ -197,7 +196,7 @@ class Template {
             /**
              * Render and cover with span for easy client-site reverting.
              */
-            $renderedExpression = $expression->render($foundExpression, $this->scope);
+            $renderedExpression = $expression->compile($foundExpression, $this->scope);
             $renderedExpression = '<span ' . $renderAttribute . '="' . $foundExpression . '">' . $renderedExpression . '</span>';
 
             /**

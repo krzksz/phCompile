@@ -8,16 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template\Renderer;
+namespace PhCompile\Template\Directive;
 
-use PhRender\Scope,
-    PhRender\Template\Expression,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Scope,
+    PhCompile\Template\Expression,
+    PhCompile\DOM\DOMUtils;
 
 /**
- * Renders AngularJS ng-show and ng-hide attributes.
+ * Compiles AngularJS ng-show and ng-hide attributes.
  */
-class NgVisibility extends Renderer {
+class NgVisibility extends Directive {
 
     /**
      * Renders AngularJS ng-show and ng-hide attributes by evaluating expression
@@ -25,9 +25,9 @@ class NgVisibility extends Renderer {
      *
      * @param \DOMElement $domElement DOM element to render.
      * @param Scope $scope Scope object containg data for expression.
-     * @return \DOMElement Rendered DOM element.
+     * @return \DOMElement Compiled DOM element.
      */
-    public function render(\DOMElement $domElement, Scope $scope) {
+    public function compile(\DOMElement $domElement, Scope $scope) {
         /**
          * Let's check if we are dealing with "ng-hide" or "ng-show" attribute.
          */
@@ -42,8 +42,8 @@ class NgVisibility extends Renderer {
         /**
          * Get attribute expression's value.
          */
-        $expression = new Expression($this->phRender);
-        $expressionValue = (bool)$expression->render($expressionString, $scope);
+        $expression = new Expression($this->phCompile);
+        $expressionValue = (bool)$expression->compile($expressionString, $scope);
 
         /**
          * Set appropriate class to DOM element if needed.

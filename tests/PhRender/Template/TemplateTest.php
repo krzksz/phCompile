@@ -10,7 +10,7 @@
 
 namespace PhRender\Template;
 
-use PhRender\PhRender,
+use PhRender\PhCompile,
     PhRender\Scope;
 
 class TemplateTest extends \PHPUnit_Framework_TestCase
@@ -20,7 +20,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->template = new Template(new PhRender);
+        $this->template = new Template(new PhCompile);
     }
 
     /**
@@ -67,6 +67,6 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $domDocument = new \DOMDocument();
         @$domDocument->loadHTMLFile(TEST_PATH . 'template/overallRendered.html');
         $this->assertEquals(html_entity_decode(\PhRender\DOM\DOMUtils::saveHtml($domDocument)),
-            $this->template->render());
+            $this->template->compile());
     }
 }

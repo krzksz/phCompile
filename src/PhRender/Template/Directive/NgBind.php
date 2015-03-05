@@ -8,30 +8,30 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template\Renderer;
+namespace PhCompile\Template\Directive;
 
-use PhRender\Scope,
-    PhRender\DOM\DOMUtils,
-    PhRender\Template\Expression;
+use PhCompile\Scope,
+    PhCompile\DOM\DOMUtils,
+    PhCompile\Template\Expression;
 
 /**
- * Renders AngularJS ng-bind attribute.
+ * Compiles AngularJS ng-bind attribute.
  */
-class NgBind extends Renderer{
+class NgBind extends Directive{
 
     /**
-     * Renders AngularJS ng-bind attributes by evaluating expression inside it
+     * Compiles AngularJS ng-bind attributes by evaluating expression inside it
      * and setting inner HTML.
      *
-     * @param \DOMElement $domElement DOM element to render.
+     * @param \DOMElement $domElement DOM element to compile.
      * @param Scope $scope Scope object containg data for expression.
-     * @return \DOMElement Rendered DOM element.
+     * @return \DOMElement Compiled DOM element.
      */
-    public function render(\DOMElement $domElement, Scope $scope) {
+    public function compile(\DOMElement $domElement, Scope $scope) {
         $expressionString = $domElement->getAttribute('ng-bind');
 
         $expression = new Expression($this->phRender);
-        $expressionValue = $expression->render($expressionString, $scope);
+        $expressionValue = $expression->compile($expressionString, $scope);
 
         if(empty($expressionValue) === false) {
             DOMUtils::appendHtml($domElement, $expressionValue);

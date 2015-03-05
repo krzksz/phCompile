@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Renderer\NgRepeat;
 
@@ -19,7 +19,7 @@ class PhRenderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->phRender = new PhRender;
+        $this->phRender = new PhCompile;
     }
 
     /**
@@ -39,8 +39,8 @@ class PhRenderTest extends \PHPUnit_Framework_TestCase
     public function testRegisterAndGetAttributeRenderer()
     {
         $repeat = new NgRepeat($this->phRender);
-        $this->phRender->registerAttributeRenderer('foo', $repeat);
-        $this->assertSame($repeat, $this->phRender->getAttributeRenderer('foo'));
+        $this->phRender->registerAttributeDirective('foo', $repeat);
+        $this->assertSame($repeat, $this->phRender->getAttributeParser('foo'));
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhRender\Template;
+namespace PhCompile\Template;
 
 /**
  * Exception thrown when exception string that application have to parse has

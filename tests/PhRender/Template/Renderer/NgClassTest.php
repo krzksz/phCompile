@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Renderer\NgClass,
     PhRender\DOM\DOMUtils;
@@ -20,7 +20,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhRender();
+        $this->phRender = new PhCompile();
         $this->class = new NgClass($this->phRender);
         $this->scope = new Scope();
     }
@@ -37,7 +37,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->class->render($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $renderedHtml);
@@ -87,7 +87,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->class->render($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $renderedHtml);

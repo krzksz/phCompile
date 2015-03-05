@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Renderer\NgRepeat,
     PhRender\DOM\DOMUtils;
@@ -20,7 +20,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhRender();
+        $this->phRender = new PhCompile();
         $this->repeat = new NgRepeat($this->phRender);
         $this->scope = new Scope();
     }
@@ -44,7 +44,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderClass = $this->phRender->getConfig('render.class');
         $renderAttr = $this->phRender->getConfig('render.attr');
 
-        $this->repeat->render($domElement, $this->scope);
+        $this->repeat->compile($domElement, $this->scope);
         $renderedHtml = DOMUtils::saveHtml($domDocument);
         
         $expectedHtml = '<span ng-repeat="foo in bar" class="ng-hide">{{foo.baz}}</span>';
@@ -70,7 +70,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderClass = $this->phRender->getConfig('render.class');
         $renderAttr = $this->phRender->getConfig('render.attr');
 
-        $this->repeat->render($domElement, $this->scope);
+        $this->repeat->compile($domElement, $this->scope);
         $renderedHtml = DOMUtils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="(key, value) in bar" class="ng-hide">{{key}}{{value}}</span>';
@@ -95,7 +95,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderClass = $this->phRender->getConfig('render.class');
         $renderAttr = $this->phRender->getConfig('render.attr');
 
-        $this->repeat->render($domElement, $this->scope);
+        $this->repeat->compile($domElement, $this->scope);
         $renderedHtml = DOMUtils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="n in bar" class="ng-hide">{{' . $expression . '}}</span>';

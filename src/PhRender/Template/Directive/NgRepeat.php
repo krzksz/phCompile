@@ -8,38 +8,38 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template\Renderer;
+namespace PhCompile\Template\Directive;
 
-use PhRender\Scope,
-    PhRender\Template\Template,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Scope,
+    PhCompile\Template\Template,
+    PhCompile\DOM\DOMUtils;
 
 /**
- * Renders AngularJS ng-show and ng-hide attributes.
+ * Compiles AngularJS ng-show and ng-hide attributes.
  */
-class NgRepeat extends Renderer
+class NgRepeat extends Directive
 {
 
     /**
-     * Renders AngularJS ng-repeat attribute.
-     * Each element copy is treated and rendered as seperate template with it's
-     * own Scope data. Those elements are later appended to element's parrent node.
+     * Compiles AngularJS ng-repeat attribute.
+     * Each element's copy is treated and rendered as seperate template with it's
+     * own Scope data. Those elements are later appended to element's parent node.
      *
      * @todo Think of refactoring methods.
      * @todo Implement expression cache for better performance.
      *
-     * @param \DOMElement $domElement DOM element to render.
+     * @param \DOMElement $domElement DOM element to compile.
      * @param Scope $scope Scope object.
      * @return void
      */
-    public function render(\DOMElement $domElement, Scope $scope)
+    public function compile(\DOMElement $domElement, Scope $scope)
     {
         $parsedArray = $this->parseRepeat($domElement);
         $repeatArray = $scope->getData($parsedArray['array']);
         /**
-         * Reset halt parsing to it's default value.
+         * Reset halt compiling to it's default value.
          */
-        $this->setHaltParsing(false);
+        $this->setHaltCompiling(false);
 
         /**
          * Let's check if variable we're trying to enumerate is array.
@@ -53,17 +53,17 @@ class NgRepeat extends Renderer
                 $this->setScopeSpecial($subScope, $repeatCount, $repeatIndex);
 
                 /**
-                 * Append subrendered DOM elelent.
+                 * Append subcompiled DOM elelent.
                  */
                 DOMUtils::appendHtml($domElement->parentNode,
-                    $this->subRender($domElement->cloneNode(true), $subScope));
+                    $this->subcompile($domElement->cloneNode(true), $subScope));
                 $repeatIndex++;
             }
             /**
-             * We stop further rendering of source DOM element, we want it to
+             * We stop further compiling of source DOM element, we want it to
              * be intact and hidden so we can replace it back on the client side.
              */
-            $this->setHaltParsing(true);
+            $this->setHaltCompiling(true);
             DOMUtils::addClass($domElement, 'ng-hide');
         }
     }
@@ -73,7 +73,7 @@ class NgRepeat extends Renderer
      * cycle.
      *
      * @param Scope $scope Scope to set data to.
-     * @param array $parsedArray Parsed ng-repeat expression.
+     * @param array $parsedArray Parsed ng-repeat attribute.
      * @param string $repeatKey Key of the current element of the array we iterate over.
      * @param type $repeatValue Value of the current element of the array we iterate over.
      * @return Scope Scope object with set values.
@@ -153,7 +153,7 @@ class NgRepeat extends Renderer
      * @param Scope $scope Subtemplate Scope object.
      * @return string Rendered HTML.
      */
-    protected function subRender(\DOMElement $domElement, $scope)
+    protected function subcompile(\DOMElement $domElement, $scope)
     {
         $template = new Template($this->phRender);
         /**
@@ -164,10 +164,10 @@ class NgRepeat extends Renderer
          * Tag element with render class, for easy client-side JavaScript manipulation.
          */
         DOMUtils::addClass($domElement,
-            $this->phRender->getConfig('render.class'));
+            $this->phCompile->getConfig('compile.class'));
         $template->setHtml($domElement->ownerDocument->saveHTML($domElement));
         $template->setScope($scope);
 
-        return $template->render(false);
+        return $template->compile(false);
     }
 }

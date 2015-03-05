@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 class ScopeTest extends \PHPUnit_Framework_TestCase
 {

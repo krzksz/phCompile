@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender;
+namespace PhCompile;
 
 use PhRender\Template\Renderer\NgVisibility,
     PhRender\DOM\DOMUtils;
@@ -20,7 +20,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhRender();
+        $this->phRender = new PhCompile();
         $this->visibiliy = new NgVisibility($this->phRender);
         $this->scope = new Scope();
     }
@@ -37,7 +37,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
         
-        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->render($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->compile($domElement, $this->scope)->ownerDocument);
         
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -68,7 +68,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->render($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->compile($domElement, $this->scope)->ownerDocument);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

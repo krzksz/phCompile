@@ -10,7 +10,7 @@
 
 namespace PhRender\Template;
 
-use PhRender\PhRender,
+use PhRender\PhCompile,
     PhRender\Scope;
 
 /**
@@ -26,31 +26,31 @@ class Expression {
     /**
      * PhRender object reference.
      *
-     * @var PhRender
+     * @var PhCompile
      */
-    protected $phRender = null;
+    protected $phCompile = null;
 
     /**
      * Creates new Expression object.
      * This object is responsible for parsing and evaluating provided
      * AngularJS expressions.
      *
-     * @param PhRender $phRender PhRender object.
+     * @param PhCompile $phCompile PhRender object.
      */
-    public function __construct(PhRender $phRender) {
-        $this->phRender = $phRender;
+    public function __construct(PhCompile $phCompile) {
+        $this->phCompile = $phCompile;
     }
 
     /**
      * Compiles given AngularJS expression with given Scope data.
      *
-     * @param string $expression Expression to compile.
+     * @param string $expression Expression string to compile.
      * @param Scope $scope Scope object containing data for expression.
      * @return string Compiled expression.
      * @throws InvalidExpressionException Exception is thrown if expression contains brackets "()"
      * to prevent eval from calling functions for security reasons.
      */
-    public function render($expression, Scope $scope) {
+    public function compile($expression, Scope $scope) {
         $expression = trim($expression, '{} ');
 
         /**
