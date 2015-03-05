@@ -17,8 +17,8 @@ use PhCompile\PhCompile,
  * Start point for creating other Directives.
  * Directive objects are used for parsing DOM elements with given data.
  */
-abstract class Directive {
-
+abstract class Directive
+{
     /**
      * PhCompile object reference.
      *
@@ -38,27 +38,9 @@ abstract class Directive {
      *
      * @param PhCompile $phCompile PhRender object.
      */
-    public function __construct(PhCompile $phCompile) {
+    public function __construct(PhCompile $phCompile)
+    {
         $this->phCompile = $phCompile;
-    }
-
-    /**
-     * Returns boolean telling if parser should stop compiling current DOM element.
-     *
-     * @return bool Tells compiler if it should stop further compiling of certain
-     * DOM element.
-     */
-    public function haltCompiling() {
-        return $this->haltCompiling;
-    }
-
-    /**
-     * Sets boolean value telling if parser should stop compiling current DOM element.
-     *
-     * @param bool $haltCompiling True if compiling should stop, false otherwise.
-     */
-    protected function setHaltCompiling($haltCompiling) {
-        $this->haltCompiling = $haltCompiling;
     }
 
     /**
@@ -68,7 +50,29 @@ abstract class Directive {
      * @param Scope $scope Scope oblect containg data for rendering.
      * @return \DOMElement Renderer DOM element.
      */
-    public function compile(\DOMElement $domElement, Scope $scope) {
+    public function compile(\DOMElement $domElement, Scope $scope)
+    {
         return $domElement;
+    }
+
+    /**
+     * Returns boolean telling if parser should stop compiling current DOM element.
+     *
+     * @return bool Tells compiler if it should stop further compiling of certain
+     * DOM element.
+     */
+    public function haltCompiling()
+    {
+        return $this->haltCompiling;
+    }
+
+    /**
+     * Sets boolean value telling if parser should stop compiling current DOM element.
+     *
+     * @param bool $haltCompiling True if compiling should stop, false otherwise.
+     */
+    protected function setHaltCompiling($haltCompiling)
+    {
+        $this->haltCompiling = $haltCompiling;
     }
 }
