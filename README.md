@@ -22,9 +22,11 @@ ngPhCompile is still in alpha state, bugs and api changes may occur.
 * ng-show,
 * ng-class,
 * ng-bind,
-* Render halting.
+* Compile halting.
 
 ### Roadmap
+* Docs and wiki update,
+* Performance benchmark,
 * Filters, currently they are expected to break expression that uses them,
 * Custom directives,
 * Expressions priorities,
@@ -48,7 +50,7 @@ $template = new \PhCompile\Template\Template($phCompile);
 $template->setHtml('<span></span>');
 
 $template->getScope()->setData(array('foo'=>'bar')); // Feed template scope with data
-echo $template->compile(); // Render template HTML
+echo $template->compile(); // Compile template HTML
 ```
 
 #### {{ }} expressions
@@ -147,8 +149,8 @@ $phCompile->setConfig(
 );
 echo $phCompile->getConfig('compile.class'); // Outputs "custom-class"
 echo $phCompile->getConfig('compile["class"]'); // Also outputs "custom-class"
-echo $pgRender->getConfig('compile.attr'); // Outputs "ng-phcompile"
-echo $pgRender->getConfig('compile["attr"]'); // Also outputs "ng-phcompile"
+echo $phCompile->getConfig('compile.attr'); // Outputs "ng-phcompile"
+echo $phCompile->getConfig('compile["attr"]'); // Also outputs "ng-phcompile"
 ```
 
 ## Directives
