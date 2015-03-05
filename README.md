@@ -151,8 +151,8 @@ echo $pgRender->getConfig('compile.attr'); // Outputs "ng-phcompile"
 echo $pgRender->getConfig('compile["attr"]'); // Also outputs "ng-phcompile"
 ```
 
-## Renderers
-Renderers are objects responsible for parsing provided `DOMElement` using given `Scope` data. ngPhCompile comes with some default `Renderer` objects that correspond with standard AngularJS templating attributes. Those objects must extend `Renderer` object to be accepted by `PhCompile`.
+## Directives
+Directive are objects responsible for compiling provided `DOMElement` using given `Scope` data. ngPhCompile comes with some default `Directive` objects that correspond with standard AngularJS directives. Those objects must extend `Directive` object to be accepted by `PhCompile`.
 
 
 ## Thanks

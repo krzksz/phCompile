@@ -67,7 +67,7 @@ class Scope
         }
 
         $dataKeys = array_map(function($dataKey) {
-            return trim($dataKey, '.[]\'\"');
+            return trim($dataKey, '.[]\'"');
         }, $this->parseAccessString($accessString));
 
         $currentData = $this->data;
