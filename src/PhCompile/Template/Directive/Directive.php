@@ -34,7 +34,7 @@ abstract class Directive {
     protected $haltCompiling = false;
 
     /**
-     * Creates new Expression.
+     * Creates new Directive.
      *
      * @param PhCompile $phCompile PhRender object.
      */
