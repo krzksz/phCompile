@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhRender package.
+ * This file is part of the ngPhCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *
@@ -41,8 +41,8 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(array(
                 'compile' => array(
-                    'class' => 'ng-phrender',
-                    'attr' => 'ng-phrender'
+                    'class' => 'ng-phcompile',
+                    'attr' => 'ng-phcompile'
                 )
             ), $this->phCompile->getConfig());
     }

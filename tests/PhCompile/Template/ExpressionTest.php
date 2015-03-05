@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhRender package.
+ * This file is part of the ngPhCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *

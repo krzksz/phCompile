@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhRender package.
+ * This file is part of the ngPhCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *
@@ -16,10 +16,10 @@ use PhCompile\Template\Directive\Directive,
     PhCompile\Template\Directive\NgBind;
 
 /**
- * Server side renderer for AngularJS templates.
+ * Server side compiler for AngularJS templates.
  *
  * This class is responsible for containing configuration,
- * managing renderers and rendering template.
+ * managing compilers and compiling template.
  */
 class PhCompile
 {
@@ -31,7 +31,7 @@ class PhCompile
     protected $config = null;
 
     /**
-     * Contains all registered attributes with corresponding renderer
+     * Contains all registered attributes with corresponding compiler
      * objects.
      *
      * @var array
@@ -59,13 +59,13 @@ class PhCompile
             array(
                 'compile' => array(
                     /**
-                     * Class used to tag server side rendered elements.
+                     * Class used to tag server side compiled elements.
                      */
-                    'class' => 'ng-phrender',
+                    'class' => 'ng-phcompile',
                     /**
                      * Attribute used to tag server side compiled expressions.
                      */
-                    'attr' => 'ng-phrender'
+                    'attr' => 'ng-phcompile'
                 )
             )
         );
@@ -119,12 +119,12 @@ class PhCompile
     public function getAttributeDirective($attribute)
     {
         if (isset($this->attributeCompilers[$attribute])) {
-            $renderer = $this->attributeCompilers[$attribute];
+            $compiler = $this->attributeCompilers[$attribute];
         } else {
-            $renderer = null;
+            $compiler = null;
         }
 
-        return $renderer;
+        return $compiler;
     }
 
     /**

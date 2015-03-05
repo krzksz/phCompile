@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhRender package.
+ * This file is part of the ngPhCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *
@@ -53,7 +53,11 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 array('foo' => array('bar' => 'baz')), 'foo.bar', 'baz'
+            ),
+            array(
+                array('foo' => array('bar' => 'baz')), 'foo[\'bar\']', 'baz'
             )
+
         );
     }
 
@@ -87,6 +91,9 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 array('foo' => array('bar' => 'baz')), 'foo.bar', true
+            ),
+            array(
+                array('foo' => array('bar' => 'baz')), 'foo[\'bar\']', true
             )
         );
     }

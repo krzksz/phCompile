@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhRender package.
+ * This file is part of the ngPhCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *
@@ -67,7 +67,7 @@ class Scope
         }
 
         $dataKeys = array_map(function($dataKey) {
-            return trim($dataKey, '.[]');
+            return trim($dataKey, '.[]\'\"');
         }, $this->parseAccessString($accessString));
 
         $currentData = $this->data;
