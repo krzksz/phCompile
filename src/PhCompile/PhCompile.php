@@ -85,11 +85,12 @@ class PhCompile
     /**
      * Returns value corresponding to given access string.
      *
-     * @param string $accessString Access string to wanted config value.
+     * @param string|null $accessString Access string to wanted config value,
+     * null if you want entire config array.
      * @return mixed Value corresponding to given access string or null if value
      * does not exist.
      */
-    public function getConfig($accessString)
+    public function getConfig($accessString = null)
     {
         return $this->config->getData($accessString);
     }

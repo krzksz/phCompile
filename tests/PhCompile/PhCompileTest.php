@@ -28,13 +28,29 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAndGetConfig()
     {
-        $this->phCompile->setConfig(array('foo' => array('bar' => 'baz')));
+        $config = array('foo' => array('bar' => 'baz'));
+        $this->phCompile->setConfig($config);
         $this->assertEquals('baz', $this->phCompile->getConfig('foo.bar'));
     }
 
+
     /**
-     * @covers PhCompile\PhCompile::registerAttributeRenderer
-     * @covers PhCompile\PhCompile::getAttributeRenderer
+     * @covers PhCompile\PhCompile::setConfig
+     * @covers PhCompile\PhCompile::getConfig
+     */
+    public function testSetDefaultConfig()
+    {
+        $this->assertEquals(array(
+                'compile' => array(
+                    'class' => 'ng-phrender',
+                    'attr' => 'ng-phrender'
+                )
+            ), $this->phCompile->getConfig());
+    }
+
+    /**
+     * @covers PhCompile\PhCompile::registerAttributeDirective
+     * @covers PhCompile\PhCompile::getAttributeDirective
      */
     public function testRegisterAndGetAttributeRenderer()
     {
