@@ -10,25 +10,25 @@
 
 namespace PhCompile;
 
-use PhRender\Template\Renderer\NgClass,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Template\Directive\NgClass,
+    PhCompile\DOM\DOMUtils;
 
 class NgClassTest extends \PHPUnit_Framework_TestCase
 {
-    protected $phRender;
+    protected $phCompile;
     protected $class;
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhCompile();
-        $this->class = new NgClass($this->phRender);
+        $this->phCompile = new PhCompile();
+        $this->class = new NgClass($this->phCompile);
         $this->scope = new Scope();
     }
 
 
     /**
-     * @covers PhRender\Template\Renderer\NgClass::render
-     * @dataProvider renderProvider
+     * @covers PhRender\Template\Directive\NgClass::compile
+     * @dataProvider compileProvider
      */
     public function testRender($scopeData, $classString, $expected) {
         $this->scope->setData($scopeData);
@@ -37,13 +37,13 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
+        $compiledHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $compiledHtml);
     }
 
-    public function renderProvider() {
+    public function compileProvider() {
         return array(
             array(
                 array('foo' => 'bar'), 'foo', 'bar'
@@ -76,24 +76,24 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\NgClass::render
-     * @dataProvider renderExceptionProvider
-     * @expectedException PhRender\Template\InvalidExpressionException
+     * @covers PhCompile\Template\Directive\NgClass::compile
+     * @dataProvider compileExceptionProvider
+     * @expectedException PhCompile\Template\InvalidExpressionException
      */
-    public function testRenderException($scopeData, $classString) {
+    public function testCompileException($scopeData, $classString) {
         $this->scope->setData($scopeData);
 
         $domDocument = new \DOMDocument();
         $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
+        $compiledHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $compiledHtml);
     }
 
-    public function renderExceptionProvider() {
+    public function compileExceptionProvider() {
         return array(
             array(
                 array('foo' => array('bar', 'baz')), 'foo'

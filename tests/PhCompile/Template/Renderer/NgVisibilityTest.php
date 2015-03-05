@@ -10,27 +10,27 @@
 
 namespace PhCompile;
 
-use PhRender\Template\Renderer\NgVisibility,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Template\Directive\NgVisibility,
+    PhCompile\DOM\DOMUtils;
 
 class VisibilityTest extends \PHPUnit_Framework_TestCase
 {
-    protected $phRender;
+    protected $phCompile;
     protected $visibiliy;
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhCompile();
-        $this->visibiliy = new NgVisibility($this->phRender);
+        $this->phCompile = new PhCompile();
+        $this->visibiliy = new NgVisibility($this->phCompile);
         $this->scope = new Scope();
     }
 
 
     /**
-     * @covers PhRender\Template\Renderer\NgVisibility::render
-     * @dataProvider renderVisibleProvider
+     * @covers PhCompile\Template\Directive\NgVisibility::compile
+     * @dataProvider compileVisibleProvider
      */
-    public function testRenderVisible($scopeData, $html, $expectedHtml) {
+    public function testCompileVisible($scopeData, $html, $expectedHtml) {
         $this->scope->setData($scopeData);
         
         $domDocument = new \DOMDocument();
@@ -42,7 +42,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedHtml, $renderedHtml);
     }
 
-    public function renderVisibleProvider() {
+    public function compileVisibleProvider() {
         return array(
             array(
                 array('foo' => true),
@@ -58,10 +58,10 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Renderer\NgVisibility::render
-     * @dataProvider renderHiddenProvider
+     * @covers PhCompile\Template\Directive\NgVisibility::compile
+     * @dataProvider compileHiddenProvider
      */
-    public function testRenderHidden($scopeData, $html, $expectedHtml) {
+    public function testCompileHidden($scopeData, $html, $expectedHtml) {
         $this->scope->setData($scopeData);
 
         $domDocument = new \DOMDocument();
@@ -73,7 +73,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedHtml, $renderedHtml);
     }
 
-    public function renderHiddenProvider() {
+    public function compileHiddenProvider() {
         return array(
             array(
                 array('foo' => true),

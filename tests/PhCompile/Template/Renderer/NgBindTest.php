@@ -10,40 +10,40 @@
 
 namespace PhCompile;
 
-use PhRender\Template\Renderer\NgBind,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Template\Directive\NgBind,
+    PhCompile\DOM\DOMUtils;
 
 class BindTest extends \PHPUnit_Framework_TestCase
 {
-    protected $phRender;
+    protected $phCompile;
     protected $bind;
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhCompile();
-        $this->bind = new NgBind($this->phRender);
+        $this->phCompile = new PhCompile();
+        $this->bind = new NgBind($this->phCompile);
         $this->scope = new Scope();
     }
 
 
     /**
-     * @covers PhRender\Template\Renderer\NgBind::render
-     * @dataProvider renderProvider
+     * @covers PhCompile\Template\Directive\NgBind::compile
+     * @dataProvider compileProvider
      */
-    public function testRender($scopeData, $bindString, $expected) {
+    public function testCompile($scopeData, $bindString, $expected) {
         $this->scope->setData($scopeData);
         
         $domDocument = new \DOMDocument();
         $domDocument->loadHTML('<span ng-bind="' . $bindString . '"></span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
         
-        $renderedHtml = DOMUtils::saveHtml($this->bind->compile($domElement, $this->scope)->ownerDocument);
+        $compiledHtml = DOMUtils::saveHtml($this->bind->compile($domElement, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
         
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $compiledHtml);
     }
 
-    public function renderProvider() {
+    public function compileProvider() {
         return array(
             array(
                 array('foo' => 'bar'), 'foo', 'bar'

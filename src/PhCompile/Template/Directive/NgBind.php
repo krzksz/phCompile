@@ -30,7 +30,7 @@ class NgBind extends Directive{
     public function compile(\DOMElement $domElement, Scope $scope) {
         $expressionString = $domElement->getAttribute('ng-bind');
 
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
         $expressionValue = $expression->compile($expressionString, $scope);
 
         if(empty($expressionValue) === false) {

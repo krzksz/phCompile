@@ -8,10 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template;
+namespace PhCompile\Template;
 
-use PhRender\PhCompile,
-    PhRender\Scope;
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\DOM\DOMUtils;
 
 class TemplateTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,8 +25,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Template::setScope
-     * @covers PhRender\Template\Template::getScope
+     * @covers PhCompile\Template\Template::setScope
+     * @covers PhCompile\Template\Template::getScope
      */
     public function testSetAndGetScope()
     {
@@ -35,8 +36,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Template::setHtml
-     * @covers PhRender\Template\Template::getHtml
+     * @covers PhCompile\Template\Template::setHtml
+     * @covers PhCompile\Template\Template::getHtml
      */
     public function testSetAndGetHtml()
     {
@@ -46,7 +47,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Template::loadHtml
+     * @covers PhCompile\Template\Template::loadHtml
      * @depends testSetAndGetHtml
      */
     public function testLoadHtml()
@@ -57,16 +58,16 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Template::render
+     * @covers PhCompile\Template\Template::compile
      */
-    public function testRender()
+    public function testCompile()
     {
         $this->template->loadHtml(TEST_PATH . 'template/overall.html');
         $scopeData = json_decode(file_get_contents(TEST_PATH . 'template/overallData.json'), true);
         $this->template->getScope()->setData($scopeData);
         $domDocument = new \DOMDocument();
         @$domDocument->loadHTMLFile(TEST_PATH . 'template/overallRendered.html');
-        $this->assertEquals(html_entity_decode(\PhRender\DOM\DOMUtils::saveHtml($domDocument)),
+        $this->assertEquals(html_entity_decode(DOMUtils::saveHtml($domDocument)),
             $this->template->compile());
     }
 }

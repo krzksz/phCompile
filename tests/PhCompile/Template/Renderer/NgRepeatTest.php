@@ -10,23 +10,23 @@
 
 namespace PhCompile;
 
-use PhRender\Template\Renderer\NgRepeat,
-    PhRender\DOM\DOMUtils;
+use PhCompile\Template\Directive\NgRepeat,
+    PhCompile\DOM\DOMUtils;
 
 class RepeatTest extends \PHPUnit_Framework_TestCase
 {
-    protected $phRender;
+    protected $phCompile;
     protected $repeat;
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhCompile();
-        $this->repeat = new NgRepeat($this->phRender);
+        $this->phCompile = new PhCompile();
+        $this->repeat = new NgRepeat($this->phCompile);
         $this->scope = new Scope();
     }
 
     /**
-     * @covers PhRender\Template\Renderer\NgRepeat::render
+     * @covers PhCompile\Template\Directive\NgRepeat::compile
      */
     public function testRepeatArray() {
         $this->scope->setData(array(
@@ -41,20 +41,20 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-repeat="foo in bar">{{foo.baz}}</span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderClass = $this->phRender->getConfig('render.class');
-        $renderAttr = $this->phRender->getConfig('render.attr');
+        $renderClass = $this->phCompile->getConfig('compile.class');
+        $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        $compiledHtml = DOMUtils::saveHtml($domDocument);
         
         $expectedHtml = '<span ng-repeat="foo in bar" class="ng-hide">{{foo.baz}}</span>';
         $expectedHtml .= '<span class="' . $renderClass . '"><span ' . $renderAttr . '="foo.baz">zaz</span></span>';
 
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $compiledHtml);
     }
 
     /**
-     * @covers PhRender\Template\Renderer\NgRepeat::render
+     * @covers PhCompile\Template\Directive\NgRepeat::compile
      */
     public function testRepeatObject() {
         $this->scope->setData(array(
@@ -67,20 +67,20 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-repeat="(key, value) in bar">{{key}}{{value}}</span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderClass = $this->phRender->getConfig('render.class');
-        $renderAttr = $this->phRender->getConfig('render.attr');
+        $renderClass = $this->phCompile->getConfig('compile.class');
+        $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        $comiledHtml = DOMUtils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="(key, value) in bar" class="ng-hide">{{key}}{{value}}</span>';
         $expectedHtml .= '<span class="' . $renderClass . '"><span ' . $renderAttr . '="key">baz</span><span ' . $renderAttr . '="value">zaz</span></span>';
 
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $comiledHtml);
     }
 
     /**
-     * @covers PhRender\Template\Renderer\NgRepeat::render
+     * @covers PhCompile\Template\Directive\NgRepeat::compile
      * @dataProvider repeatSpectialPropertiesProvider
      */
     public function testRepeatSpecialProperties($expression, $expectedArray) {
@@ -92,11 +92,11 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $domDocument->loadHTML('<span ng-repeat="n in bar">{{' . $expression . '}}</span>');
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderClass = $this->phRender->getConfig('render.class');
-        $renderAttr = $this->phRender->getConfig('render.attr');
+        $renderClass = $this->phCompile->getConfig('compile.class');
+        $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        $compiledHtml = DOMUtils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="n in bar" class="ng-hide">{{' . $expression . '}}</span>';
 
@@ -106,7 +106,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         }
         
 
-        $this->assertSame($expectedHtml, $renderedHtml);
+        $this->assertSame($expectedHtml, $compiledHtml);
     }
 
     public function repeatSpectialPropertiesProvider() {

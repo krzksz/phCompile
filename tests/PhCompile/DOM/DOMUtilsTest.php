@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\DOM;
+namespace PhCompile\DOM;
 
 class DOMUtilsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers PhRender\DOM\DOMUtils::addClass
+     * @covers PhCompile\DOM\DOMUtils::addClass
      * @dataProvider addClassProvider
      */
     public function testAddClass($className, $html, $expectedHtml) {
@@ -49,7 +49,7 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\DOM\DOMUtils::removeClass
+     * @covers PhCompile\DOM\DOMUtils::removeClass
      * @dataProvider removeClassProvider
      */
     public function testRemoveClass($className, $html, $expectedHtml) {
@@ -84,7 +84,7 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\DOM\DOMUtils::appendHtml
+     * @covers PhCompile\DOM\DOMUtils::appendHtml
      * @dataProvider appendHtmlProvider
      */
     public function testAppendHtml($html, $appendHtml, $expectedHtml) {
@@ -119,7 +119,7 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\DOM\DOMUtils::saveHtml
+     * @covers PhCompile\DOM\DOMUtils::saveHtml
      * @dataProvider saveHtmlProvider
      */
     public function testSaveHtml($expectedHtml) {

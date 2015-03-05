@@ -23,8 +23,8 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Scope::setData
-     * @covers PhRender\Scope::getData
+     * @covers PhCompile\Scope::setData
+     * @covers PhCompile\Scope::getData
      * @dataProvider setAndGetDataProvider
      */
     public function testSetAndGetData($data, $accessString, $expected)
@@ -58,7 +58,7 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Scope::hasData
+     * @covers PhCompile\Scope::hasData
      * @dataProvider hasDataProvider
      * @depends testSetAndGetData
      */

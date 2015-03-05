@@ -155,7 +155,7 @@ class NgRepeat extends Directive
      */
     protected function subcompile(\DOMElement $domElement, $scope)
     {
-        $template = new Template($this->phRender);
+        $template = new Template($this->phCompile);
         /**
          * Remove ng-repeat attribute so we won't fall into infinite loop while parsing.
          */

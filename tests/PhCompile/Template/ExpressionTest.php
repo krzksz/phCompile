@@ -10,29 +10,29 @@
 
 namespace PhCompile;
 
-use PhRender\Template\Expression;
+use PhCompile\Template\Expression;
 
 class ExpressionTest extends \PHPUnit_Framework_TestCase
 {
-    protected $phRender;
+    protected $phCompile;
     protected $scope;
 
     public function setUp() {
-        $this->phRender = new PhCompile();
+        $this->phCompile = new PhCompile();
         $this->scope = new Scope();
     }
 
     /**
-     * @covers PhRender\Template\Expression::render
-     * @dataProvider renderReplaceProvider
+     * @covers PhCompile\Template\Expression::compile
+     * @dataProvider renderCompileProvider
      */
-    public function testRenderReplace($scopeData, $expressionString, $expected) {
+    public function testCompileReplace($scopeData, $expressionString, $expected) {
         $this->scope->setData($scopeData);
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
         $this->assertSame($expected, $expression->compile($expressionString, $this->scope));
     }
 
-    public function renderReplaceProvider() {
+    public function renderCompileProvider() {
         return array(
             array(
                 array('foo' => 'bar'), 'foo', 'bar'
@@ -62,16 +62,16 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhRender\Template\Expression::render
-     * @dataProvider renderEvaluateProvider
+     * @covers PhCompile\Template\Expression::compile
+     * @dataProvider compileEvaluateProvider
      */
-    public function testRenderEvaluate($scopeData, $expressionString, $expected) {
+    public function testCompileEvaluate($scopeData, $expressionString, $expected) {
         $this->scope->setData($scopeData);
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
         $this->assertEquals($expected, $expression->compile($expressionString, $this->scope));
     }
 
-    public function renderEvaluateProvider() {
+    public function compileEvaluateProvider() {
         return array(
             array(
                 array(), '1+2', '3'
@@ -107,11 +107,11 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PhRender\Template\InvalidExpressionException
+     * @expectedException PhCompile\Template\InvalidExpressionException
      */
     public function testForbidFunction() {
         $this->scope->setData(array());
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
         $expression->compile('system()', $this->scope);
     }
 }

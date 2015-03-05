@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace PhRender\Template;
+namespace PhCompile\Template;
 
-use PhRender\PhCompile,
-    PhRender\Scope;
+use PhCompile\PhCompile,
+    PhCompile\Scope;
 
 /**
  * AngularJS' expressions compiler.

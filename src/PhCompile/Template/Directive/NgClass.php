@@ -12,7 +12,8 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
     PhCompile\DOM\DOMUtils,
-    PhCompile\Template\Expression;
+    PhCompile\Template\Expression,
+    PhCompile\Template\InvalidExpressionException;
 
 /**
  * Compiles AngularJS ng-class attribute.
@@ -42,7 +43,7 @@ class NgClass extends Directive
         }
 
         if(empty($classString) === false && is_string($classString) === false) {
-            throw new \PhRender\Template\InvalidExpressionException(
+            throw new InvalidExpressionException(
                 sprintf(
                     'Expression: "%s" inside ng-class does not evaluate to string!',
                     $classAttr
@@ -81,7 +82,7 @@ class NgClass extends Directive
      */
     protected function compileString($classAttr, $scope)
     {
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
 
         return $expression->compile($classAttr, $scope);
     }
@@ -95,7 +96,7 @@ class NgClass extends Directive
      */
     protected function compilesArray($classAttr, $scope)
     {
-        $expression           = new Expression($this->phRender);
+        $expression           = new Expression($this->phCompile);
         $classExpressionArray = explode(',', trim($classAttr, ' []'));
         $classString          = '';
         foreach ($classExpressionArray as $singleClassExpression) {
@@ -103,7 +104,7 @@ class NgClass extends Directive
                     $scope);
 
             if(empty($newClassString) === false && is_string($newClassString) === false) {
-                throw new \PhRender\Template\InvalidExpressionException(
+                throw new InvalidExpressionException(
                     sprintf(
                         'Expression: "%s" inside ng-class does not evaluate to string!',
                         $classAttr
@@ -127,7 +128,7 @@ class NgClass extends Directive
      */
     protected function compileObject($classAttr, $scope)
     {
-        $expression = new Expression($this->phRender);
+        $expression = new Expression($this->phCompile);
         $classArray = explode(',', trim($classAttr, ' {}'));
         array_walk($classArray,
             function(&$singleExpression) {

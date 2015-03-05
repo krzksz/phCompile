@@ -10,10 +10,10 @@
 
 namespace PhCompile;
 
-use PhCompile\Template\Compiler\Compiler,
-    PhCompile\Template\Compiler\NgVisibility,
-    PhCompile\Template\Compiler\NgRepeat,
-    PhCompile\Template\Compiler\NgBind;
+use PhCompile\Template\Directive\Directive,
+    PhCompile\Template\Directive\NgVisibility,
+    PhCompile\Template\Directive\NgRepeat,
+    PhCompile\Template\Directive\NgBind;
 
 /**
  * Server side renderer for AngularJS templates.
@@ -115,7 +115,7 @@ class PhCompile
      * @param string $attribute HTML attribute.
      * @return Compiler|null Renderer object or null.
      */
-    public function getAttributeParser($attribute)
+    public function getAttributeDirective($attribute)
     {
         if (isset($this->attributeCompilers[$attribute])) {
             $renderer = $this->attributeCompilers[$attribute];
