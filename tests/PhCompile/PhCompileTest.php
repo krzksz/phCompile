@@ -35,8 +35,7 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers PhCompile\PhCompile::setConfig
-     * @covers PhCompile\PhCompile::getConfig
+     * @covers PhCompile\PhCompile::setDefaultConfig
      */
     public function testSetDefaultConfig()
     {
