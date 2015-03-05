@@ -4,6 +4,7 @@
     "type": "library",
     "keywords": [
         "angular",
+        "compile",
         "render",
         "server"
     ],
@@ -22,7 +23,7 @@
     },
     "autoload": {
         "psr-0": {
-            "PhRender": "src"
+            "PhCompile": "src"
         }
     }
 }
