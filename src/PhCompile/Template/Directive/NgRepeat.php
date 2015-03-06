@@ -12,7 +12,7 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
     PhCompile\Template\Template,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 /**
  * Compiles AngularJS ng-show and ng-hide attributes.
@@ -55,7 +55,7 @@ class NgRepeat extends Directive
                 /**
                  * Append subcompiled DOM elelent.
                  */
-                DOMUtils::appendHtml($domElement->parentNode,
+                Utils::appendHtml($domElement->parentNode,
                     $this->subcompile($domElement->cloneNode(true), $subScope));
                 $repeatIndex++;
             }
@@ -64,7 +64,7 @@ class NgRepeat extends Directive
              * be intact and hidden so we can replace it back on the client side.
              */
             $this->setHaltCompiling(true);
-            DOMUtils::addClass($domElement, 'ng-hide');
+            Utils::addClass($domElement, 'ng-hide');
         }
     }
 
@@ -163,7 +163,7 @@ class NgRepeat extends Directive
         /**
          * Tag element with render class, for easy client-side JavaScript manipulation.
          */
-        DOMUtils::addClass($domElement,
+        Utils::addClass($domElement,
             $this->phCompile->getConfig('compile.class'));
         $template->setHtml($domElement->ownerDocument->saveHTML($domElement));
         $template->setScope($scope);

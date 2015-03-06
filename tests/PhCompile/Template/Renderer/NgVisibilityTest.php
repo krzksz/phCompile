@@ -33,11 +33,11 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     public function testCompileVisible($scopeData, $html, $expectedHtml) {
         $this->scope->setData($scopeData);
         
-        $domDocument = new \DOMDocument();
+        $domDocument = new Document();
         $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
         
-        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->compile($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = $this->visibiliy->compile($domElement, $this->scope)->ownerDocument->saveHTML();
         
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -64,11 +64,11 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
     public function testCompileHidden($scopeData, $html, $expectedHtml) {
         $this->scope->setData($scopeData);
 
-        $domDocument = new \DOMDocument();
+        $domDocument = new Document();
         $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = DOMUtils::saveHtml($this->visibiliy->compile($domElement, $this->scope)->ownerDocument);
+        $renderedHtml = $this->visibiliy->compile($domElement, $this->scope)->ownerDocument->saveHTML();
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

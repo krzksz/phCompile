@@ -10,7 +10,7 @@
 
 namespace PhCompile\DOM;
 
-class DOMUtilsTest extends \PHPUnit_Framework_TestCase
+class UtilsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -18,12 +18,12 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider addClassProvider
      */
     public function testAddClass($className, $html, $expectedHtml) {
-        $domDocument = new \DOMDocument();
-        @$domDocument->loadHTML($html);
+        $domDocument = new Document();
+        $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        DOMUtils::addClass($domElement, $className);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        Utils::addClass($domElement, $className);
+        $renderedHtml = $domDocument->saveHtml();
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -53,12 +53,12 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider removeClassProvider
      */
     public function testRemoveClass($className, $html, $expectedHtml) {
-        $domDocument = new \DOMDocument();
-        @$domDocument->loadHTML($html);
+        $domDocument = new Document();
+        $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        DOMUtils::removeClass($domElement, $className);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        Utils::removeClass($domElement, $className);
+        $renderedHtml = $domDocument->saveHtml();
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -88,12 +88,12 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider appendHtmlProvider
      */
     public function testAppendHtml($html, $appendHtml, $expectedHtml) {
-        $domDocument = new \DOMDocument();
-        @$domDocument->loadHTML($html);
+        $domDocument = new Document();
+        $domDocument->loadHTML($html);
         $domElement = $domDocument->getElementsByTagName('span')->item(0);
 
-        DOMUtils::appendHtml($domElement, $appendHtml);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
+        Utils::appendHtml($domElement, $appendHtml);
+        $renderedHtml = $domDocument->saveHtml();
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -114,36 +114,6 @@ class DOMUtilsTest extends \PHPUnit_Framework_TestCase
                 '<span></span>',
                 '<span>foo</span>',
                 '<span><span>foo</span></span>'
-            )
-        );
-    }
-
-    /**
-     * @covers PhCompile\DOM\DOMUtils::saveHtml
-     * @dataProvider saveHtmlProvider
-     */
-    public function testSaveHtml($expectedHtml) {
-        $domDocument = new \DOMDocument();
-
-        @$domDocument->loadHTML($expectedHtml);
-        $renderedHtml = DOMUtils::saveHtml($domDocument);
-
-        $this->assertSame($expectedHtml, $renderedHtml);
-    }
-
-    public function saveHtmlProvider() {
-        return array(
-            array(
-                '<span></span>'
-            ),
-            array(
-                '<span>foo</span>'
-            ),
-            array(
-                '<span><span>foo</span></span>'
-            ),
-            array(
-                '<div>Wizard {{wizard.name}}</div>'
             )
         );
     }

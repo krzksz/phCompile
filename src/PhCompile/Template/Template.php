@@ -12,14 +12,14 @@ namespace PhCompile\Template;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
-    PhCompile\DOM\DOMUtils,
+    PhCompile\DOM\Document,
     PhCompile\DOM\RecursiveDOMIterator;
 
 /**
  * Represents HTML template and contains all it's data.
  */
-class Template {
-
+class Template
+{
     /**
      * PhCompile reference for internal use.
      *
@@ -54,10 +54,10 @@ class Template {
      *
      * @param PhCompile $phCompile PhCompile object.
      */
-    public function __construct(PhCompile $phCompile) {
+    public function __construct(PhCompile $phCompile)
+    {
         $this->phCompile = $phCompile;
-        $this->scope = new Scope();
-        
+        $this->scope     = new Scope();
     }
 
     /**
@@ -65,7 +65,8 @@ class Template {
      *
      * @param Scope $scope Scope object with template data.
      */
-    public function setScope(Scope $scope) {
+    public function setScope(Scope $scope)
+    {
         $this->scope = $scope;
     }
 
@@ -74,7 +75,8 @@ class Template {
      *
      * @return Scope Template Scope object.
      */
-    public function getScope() {
+    public function getScope()
+    {
         return $this->scope;
     }
 
@@ -84,35 +86,38 @@ class Template {
      * @param string $path Path to template file.
      * @throws TemplateNotFoundException Throw's exception if file does not exist.
      */
-    public function loadHtml($path) {
-        if(file_exists($path) === false) {
+    public function loadHtml($path)
+    {
+        $html = file_get_contents($path);
+
+        if ($html === false) {
             throw new TemplateNotFoundException(
                 sprintf(
-                    'Template file: "%s" does not exist!',
-                    $path
+                    'Template file: "%s" does not exist!', $path
                 )
             );
         }
-
-        $this->html = file_get_contents($path);
+        $this->html = $html;
         $this->path = $path;
     }
 
     /**
      * Sets template HTML.
      *
-     * @param string $html New template HTML.
+     * @param string $html Template HTML string.
      */
-    public function setHtml($html) {
+    public function setHtml($html)
+    {
         $this->html = $html;
     }
 
     /**
      * Returns template HTML.
      *
-     * @return string Template HTML.
+     * @return string Template HTML string.
      */
-    public function getHtml() {
+    public function getHtml()
+    {
         return $this->html;
     }
 
@@ -125,36 +130,34 @@ class Template {
      * e.g. &amp; back before returning rendered HTML.
      * @return string Compiled HTML.
      */
-    public function compile($decodeHTMLEntities = true) {
-        $domDocument = new \DOMDocument();
-        @$domDocument->loadHTML($this->html);
+    public function compile()
+    {
+        $domDocument = new Document;
+        $domDocument->loadHTML($this->html);
 
         $domIterator = new \RecursiveIteratorIterator(
-                    new RecursiveDOMIterator($domDocument),
-                    \RecursiveIteratorIterator::SELF_FIRST);
+            new RecursiveDOMIterator($domDocument),
+            \RecursiveIteratorIterator::SELF_FIRST);
 
         /**
          * Iterate over every element inside DOM.
          */
-        foreach($domIterator as $domNode) {
-            if($domNode->nodeType === XML_ELEMENT_NODE) {
-                if($this->compileAttributes($domNode) === false) {
+        foreach ($domIterator as $domNode) {
+            if ($domNode->nodeType === XML_ELEMENT_NODE) {
+                if ($this->compileAttributes($domNode) === false) {
                     break;
-                } 
+                }
             }
         }
 
         /**
          * Update template HTML from compiled DOM.
          */
-        $this->html = DOMUtils::saveHtml($domDocument);
-//        if($decodeHTMLEntities === true) {
-//            $this->html = html_entity_decode($this->html);
-//        }
+        $this->html = $domDocument->saveHtml();
 
         $this->compileExpressions();
 
-        return html_entity_decode($this->html);
+        return $this->html;
     }
 
     /**
@@ -163,13 +166,14 @@ class Template {
      * @see PhCompile::registerAttributeDirective.
      * @param \DomElement $domElement DOM element which attributes to compile.
      */
-    protected function compileAttributes(\DomElement $domElement) {
-        foreach($domElement->attributes as $attribute) {
+    protected function compileAttributes(\DomElement $domElement)
+    {
+        foreach ($domElement->attributes as $attribute) {
             $directive = $this->phCompile->getAttributeDirective($attribute->name);
-            if($directive !== null) {
+            if ($directive !== null) {
                 $directive->compile($domElement, $this->scope);
 
-                if($directive->haltCompiling() === true) {
+                if ($directive->haltCompiling() === true) {
                     return false;
                 }
             }
@@ -183,28 +187,29 @@ class Template {
      *
      * @throws InvalidExpressionException Throws exception if function call is found inside expression.
      */
-    protected function compileExpressions() {
+    protected function compileExpressions()
+    {
         $foundExpressions = array();
-        $renderAttribute = $this->phCompile->getConfig('compile.attr');
-        $expression = new Expression($this->phCompile);
+        $renderAttribute  = $this->phCompile->getConfig('compile.attr');
+        $expression       = new Expression($this->phCompile);
 
         /**
          * Find all {{}} expressions.
          */
         preg_match_all('/{{([^}]+)}}/', $this->html, $foundExpressions);
-        foreach($foundExpressions[1] as $foundExpression) {
+        foreach ($foundExpressions[1] as $foundExpression) {
             /**
              * Render and cover with span for easy client-site reverting.
              */
-            $renderedExpression = $expression->compile($foundExpression, $this->scope);
-            $renderedExpression = '<span ' . $renderAttribute . '="' . $foundExpression . '">' . $renderedExpression . '</span>';
+            $renderedExpression = $expression->compile($foundExpression,
+                $this->scope);
+            $renderedExpression = '<span '.$renderAttribute.'="'.$foundExpression.'">'.$renderedExpression.'</span>';
 
             /**
              * Replace {{}} expression with rendered value.
              */
-            $this->html = str_replace('{{' . $foundExpression . '}}',
+            $this->html = str_replace('{{'.$foundExpression.'}}',
                 $renderedExpression, $this->html);
         }
     }
-    
 }

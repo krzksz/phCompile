@@ -11,7 +11,7 @@
 namespace PhCompile;
 
 use PhCompile\Template\Directive\NgRepeat,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 class RepeatTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,7 +45,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $compiledHtml = DOMUtils::saveHtml($domDocument);
+        $compiledHtml = Utils::saveHtml($domDocument);
         
         $expectedHtml = '<span ng-repeat="foo in bar" class="ng-hide">{{foo.baz}}</span>';
         $expectedHtml .= '<span class="' . $renderClass . '"><span ' . $renderAttr . '="foo.baz">zaz</span></span>';
@@ -71,7 +71,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $comiledHtml = DOMUtils::saveHtml($domDocument);
+        $comiledHtml = Utils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="(key, value) in bar" class="ng-hide">{{key}}{{value}}</span>';
         $expectedHtml .= '<span class="' . $renderClass . '"><span ' . $renderAttr . '="key">baz</span><span ' . $renderAttr . '="value">zaz</span></span>';
@@ -96,7 +96,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $renderAttr = $this->phCompile->getConfig('compile.attr');
 
         $this->repeat->compile($domElement, $this->scope);
-        $compiledHtml = DOMUtils::saveHtml($domDocument);
+        $compiledHtml = Utils::saveHtml($domDocument);
 
         $expectedHtml = '<span ng-repeat="n in bar" class="ng-hide">{{' . $expression . '}}</span>';
 
