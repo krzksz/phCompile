@@ -21,14 +21,13 @@ class Utils
      * which standard DOMDocument has trouble with.
      *
      * @param string $filename The path to the HTML file.
-     * @param int $options Since PHP 5.4.0 and Libxml 2.6.0, you may also use the options parameter to specify additional Libxml parameters.
      * @return \DOMDocument|null Returns \DOMDocument on success, null if file doesn't exist.
      */
-    public static function loadHTMLFile($filename, $options = 0)
+    public static function loadHTMLFile($filename)
     {
         $source = file_get_contents($filename);
         if ($source !== false) {
-            return self::loadHTML($source, $options = 0);
+            return self::loadHTML($source);
         }
 
         return null;
@@ -40,18 +39,16 @@ class Utils
      * which standard DOMDocument has trouble with.
      *
      * @param string $source The HTML string.
-     * @param int $options Since PHP 5.4.0 and Libxml 2.6.0, you may also use the options parameter to specify additional Libxml parameters.
      * @return \DOMDocument Returns \DOMDocument representing given HTML string.
      */
-    public static function loadHTML($source, $options = 0)
+    public static function loadHTML($source)
     {
         $document = new \DOMDocument();
         /**
          * We have to surpress warnings of invalid HTML e.g. when giving only
          * fragments like "<span></span>" not entire valid document.
          */
-        @$document->loadHTML(mb_convert_encoding($source, 'HTML-ENTITIES', 'UTF-8'),
-            $options);
+        $document->loadHTML(mb_convert_encoding($source, 'HTML-ENTITIES', 'UTF-8'));
 
         return $document;
     }
@@ -65,9 +62,14 @@ class Utils
      */
     public static function saveHTML(\DOMDocument $document)
     {
-        return html_entity_decode(trim(preg_replace('/<!DOCTYPE.+?>/', '',
+        return html_entity_decode(
+            trim(
+                preg_replace(
+                    '/<!DOCTYPE.+?>/', '',
                     str_replace(array('<html>', '</html>', '<body>', '</body>'),
-                        array('', '', '', ''), $document->saveHTML()))));
+                        array('', '', '', ''), $document->saveHTML())
+                )
+            ), ENT_COMPAT, 'UTF-8');
     }
 
 

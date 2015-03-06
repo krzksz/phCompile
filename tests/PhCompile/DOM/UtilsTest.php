@@ -35,7 +35,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     {
         $filepath = TEST_PATH.'template/overall.html';
         $document = Utils::loadHTMLFile($filepath);
-
+        
         $this->assertEquals(Utils::loadHTML(file_get_contents($filepath)),
             $document);
     }
