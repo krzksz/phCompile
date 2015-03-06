@@ -77,7 +77,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\NgClass::compile
      * @dataProvider compileExceptionProvider
-     * @expectedException PhCompile\Template\InvalidExpressionException
+     * @expectedException PhCompile\Template\Expression\InvalidExpressionException
      */
     public function testCompileException($scopeData, $classString) {
         $this->scope->setData($scopeData);

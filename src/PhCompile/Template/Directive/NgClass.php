@@ -12,8 +12,8 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
     PhCompile\DOM\Utils,
-    PhCompile\Template\Expression,
-    PhCompile\Template\InvalidExpressionException;
+    PhCompile\Template\Expression\Expression,
+    PhCompile\Template\Expression\InvalidExpressionException;
 
 /**
  * Compiles AngularJS ng-class attribute.

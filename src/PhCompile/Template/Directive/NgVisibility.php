@@ -11,7 +11,7 @@
 namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
-    PhCompile\Template\Expression,
+    PhCompile\Template\Expression\Expression,
     PhCompile\DOM\Utils;
 
 /**

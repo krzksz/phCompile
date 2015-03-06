@@ -12,7 +12,7 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
     PhCompile\DOM\Utils,
-    PhCompile\Template\Expression;
+    PhCompile\Template\Expression\Expression;
 
 /**
  * Compiles AngularJS ng-bind attribute.

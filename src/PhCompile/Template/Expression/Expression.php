@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile\Template;
+namespace PhCompile\Template\Expression;
 
 use PhCompile\PhCompile,
     PhCompile\Scope;

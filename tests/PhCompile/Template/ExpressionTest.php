@@ -10,7 +10,7 @@
 
 namespace PhCompile;
 
-use PhCompile\Template\Expression;
+use PhCompile\Template\Expression\Expression;
 
 class ExpressionTest extends \PHPUnit_Framework_TestCase
 {
@@ -107,7 +107,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PhCompile\Template\InvalidExpressionException
+     * @expectedException PhCompile\Template\Expression\InvalidExpressionException
      */
     public function testForbidFunction() {
         $this->scope->setData(array());

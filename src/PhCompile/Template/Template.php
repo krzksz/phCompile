@@ -12,6 +12,7 @@ namespace PhCompile\Template;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
+    PhCompile\Template\Expression\Expression,
     PhCompile\DOM\Utils,
     PhCompile\DOM\RecursiveDOMIterator;
 
