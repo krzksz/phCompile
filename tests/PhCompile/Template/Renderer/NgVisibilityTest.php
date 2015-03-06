@@ -38,7 +38,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
 
         $this->visibiliy->compile($element, $this->scope);
 
-        $renderedHtml = Utils::saveHtml($element->ownerDocument);
+        $renderedHtml = Utils::saveHTML($element->ownerDocument);
         
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -70,7 +70,7 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
 
         $this->visibiliy->compile($element, $this->scope);
 
-        $renderedHtml = Utils::saveHtml($element->ownerDocument);
+        $renderedHtml = Utils::saveHTML($element->ownerDocument);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

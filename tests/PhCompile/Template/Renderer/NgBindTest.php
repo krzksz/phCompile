@@ -36,7 +36,7 @@ class BindTest extends \PHPUnit_Framework_TestCase
         $document = Utils::loadHTML('<span ng-bind="' . $bindString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
         
-        $compiledHtml = Utils::saveHtml($this->bind->compile($element, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHTML($this->bind->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
         
         $this->assertSame($expectedHtml, $compiledHtml);

@@ -55,7 +55,7 @@ class NgRepeat extends Directive
                 /**
                  * Append subcompiled DOM elelent.
                  */
-                Utils::appendHtml($domElement->parentNode,
+                Utils::appendHTML($domElement->parentNode,
                     $this->subcompile($domElement->cloneNode(true), $subScope));
                 $repeatIndex++;
             }

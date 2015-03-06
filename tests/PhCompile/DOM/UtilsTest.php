@@ -14,7 +14,29 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers PhCompile\DOM\DOMUtils::addClass
+     * @covers PhCompile\DOM\Utils::loadHTML
+     * @covers PhCompile\DOM\Utils::saveHTML
+     */
+    public function testLoadSaveHTML() {
+        $source = '<span>śćąłó©®℗™</span>';
+        $document = Utils::loadHTML($source);
+
+        $this->assertEquals($source, Utils::saveHTML($document));
+    }
+
+    /**
+     * @covers PhCompile\DOM\Utils::loadHTMLFile
+     * @depends testLoadSaveHTML
+     */
+    public function testLoadHTMLFile() {
+        $filepath = TEST_PATH . 'template/overall.html';
+        $document = Utils::loadHTMLFile($filepath);
+
+        $this->assertEquals(Utils::loadHTML(file_get_contents($filepath)), $document);
+    }
+
+    /**
+     * @covers PhCompile\DOM\Utils::addClass
      * @dataProvider addClassProvider
      */
     public function testAddClass($className, $html, $expectedHtml) {
@@ -22,7 +44,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $element = $document->getElementsByTagName('span')->item(0);
 
         Utils::addClass($element, $className);
-        $renderedHtml = Utils::saveHtml($document);
+        $renderedHtml = Utils::saveHTML($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -56,7 +78,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $element = $document->getElementsByTagName('span')->item(0);
 
         Utils::removeClass($element, $className);
-        $renderedHtml = Utils::saveHtml($document);
+        $renderedHtml = Utils::saveHTML($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -85,12 +107,12 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\DOM\DOMUtils::appendHtml
      * @dataProvider appendHtmlProvider
      */
-    public function testAppendHtml($html, $appendHtml, $expectedHtml) {
+    public function testAppendHTML($html, $appendHtml, $expectedHtml) {
         $document = Utils::loadHTML($html);
         $element = $document->getElementsByTagName('span')->item(0);
 
-        Utils::appendHtml($element, $appendHtml);
-        $renderedHtml = Utils::saveHtml($document);
+        Utils::appendHTML($element, $appendHtml);
+        $renderedHtml = Utils::saveHTML($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

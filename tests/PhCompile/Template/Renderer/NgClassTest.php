@@ -36,7 +36,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
 
-        $compiledHtml = Utils::saveHtml($this->class->compile($element, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHTML($this->class->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $compiledHtml);

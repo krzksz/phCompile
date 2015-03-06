@@ -28,7 +28,7 @@ class Utils
     {
         $source = file_get_contents($filename);
         if ($source !== false) {
-            return self::loadHTML($filename, $options = 0);
+            return self::loadHTML($source, $options = 0);
         }
 
         return null;
@@ -63,7 +63,7 @@ class Utils
      *
      * @return string HTML representation of \DOMDocument document.
      */
-    public static function saveHtml(\DOMDocument $document)
+    public static function saveHTML(\DOMDocument $document)
     {
         return html_entity_decode(trim(preg_replace('/<!DOCTYPE.+?>/', '',
                     str_replace(array('<html>', '</html>', '<body>', '</body>'),
@@ -106,10 +106,9 @@ class Utils
      * @param type $html HTML to append.
      * @return \DOMElement DOM element with appended contents.
      */
-    public static function appendHtml(\DOMElement $domElement, $html)
+    public static function appendHTML(\DOMElement $domElement, $html)
     {
         $domFragment = $domElement->ownerDocument->createDocumentFragment();
-        var_dump($html);
         $domFragment->appendXml($html);
         $domElement->appendChild($domFragment);
 

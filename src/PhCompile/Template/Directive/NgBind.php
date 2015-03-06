@@ -34,7 +34,7 @@ class NgBind extends Directive{
         $expressionValue = $expression->compile($expressionString, $scope);
 
         if(empty($expressionValue) === false) {
-            Utils::appendHtml($domElement, $expressionValue);
+            Utils::appendHTML($domElement, $expressionValue);
         }
 
         return $domElement;

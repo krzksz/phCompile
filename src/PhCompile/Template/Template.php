@@ -152,7 +152,7 @@ class Template
         /**
          * Update template HTML from compiled DOM.
          */
-        $this->html = Utils::saveHtml($document);
+        $this->html = Utils::saveHTML($document);
 
         $this->compileExpressions();
 
