@@ -148,13 +148,13 @@ class Template {
          * Update template HTML from compiled DOM.
          */
         $this->html = DOMUtils::saveHtml($domDocument);
-        if($decodeHTMLEntities === true) {
-            $this->html = html_entity_decode($this->html);
-        }
+//        if($decodeHTMLEntities === true) {
+//            $this->html = html_entity_decode($this->html);
+//        }
 
         $this->compileExpressions();
 
-        return $this->html;
+        return html_entity_decode($this->html);
     }
 
     /**

@@ -66,8 +66,10 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $scopeData = json_decode(file_get_contents(TEST_PATH . 'template/overallData.json'), true);
         $this->template->getScope()->setData($scopeData);
         $domDocument = new \DOMDocument();
-        @$domDocument->loadHTMLFile(TEST_PATH . 'template/overallRendered.html');
-        $this->assertEquals(html_entity_decode(DOMUtils::saveHtml($domDocument)),
+
+        @$domDocument->loadHTML(mb_convert_encoding(file_get_contents(TEST_PATH . 'template/overallRendered.html'), 'HTML-ENTITIES', 'UTF-8'));
+
+        $this->assertEquals(DOMUtils::saveHtml($domDocument),
             $this->template->compile());
     }
 }

@@ -70,8 +70,8 @@ class DOMUtils
      */
     public static function saveHtml(\DOMDocument $domDocument)
     {
-        return trim(preg_replace('/<!DOCTYPE.+?>/', '',
+        return html_entity_decode(trim(preg_replace('/<!DOCTYPE.+?>/', '',
                 str_replace(array('<html>', '</html>', '<body>', '</body>'),
-                    array('', '', '', ''), $domDocument->saveHTML())));
+                    array('', '', '', ''), $domDocument->saveHTML()))));
     }
 }
