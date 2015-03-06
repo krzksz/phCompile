@@ -8,9 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests\Template\Directive;
 
-use PhCompile\Template\Directive\NgRepeat,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\Template\Directive\NgRepeat,
     PhCompile\DOM\Utils;
 
 class RepeatTest extends \PHPUnit_Framework_TestCase

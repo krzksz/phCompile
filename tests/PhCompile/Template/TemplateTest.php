@@ -8,9 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile\Template;
+namespace PhCompile\Tests\Template;
 
-use PhCompile\PhCompile,
+use PhCompile\Template\Template,
+    PhCompile\PhCompile,
     PhCompile\Scope;
 
 class TemplateTest extends \PHPUnit_Framework_TestCase

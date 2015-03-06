@@ -8,9 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests\Template\Directive;
 
-use PhCompile\Template\Directive\NgVisibility,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\Template\Directive\NgVisibility,
     PhCompile\DOM\Utils;
 
 class VisibilityTest extends \PHPUnit_Framework_TestCase

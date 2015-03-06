@@ -8,9 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests\Template\Directive;
 
-use PhCompile\Template\Directive\NgBind,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\Template\Directive\NgBind,
     PhCompile\DOM\Utils;
 
 class BindTest extends \PHPUnit_Framework_TestCase

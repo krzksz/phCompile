@@ -8,9 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests\Template\Directive;
 
-use PhCompile\Template\Directive\NgClass,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\Template\Directive\NgClass,
     PhCompile\DOM\Utils;
 
 class NgClassTest extends \PHPUnit_Framework_TestCase
@@ -27,7 +29,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers PhRender\Template\Directive\NgClass::compile
+     * @covers PhCompile\Template\Directive\NgClass::compile
      * @dataProvider compileProvider
      */
     public function testRender($scopeData, $classString, $expected) {

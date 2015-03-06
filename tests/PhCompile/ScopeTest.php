@@ -8,7 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests;
+
+use PhCompile\Scope;
 
 class ScopeTest extends \PHPUnit_Framework_TestCase
 {

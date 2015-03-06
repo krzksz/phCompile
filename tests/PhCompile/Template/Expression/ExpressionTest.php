@@ -8,9 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile;
+namespace PhCompile\Tests\Template\Expression;
 
-use PhCompile\Template\Expression\Expression;
+use PhCompile\PhCompile,
+    PhCompile\Scope,
+    PhCompile\Template\Expression\Expression;
 
 class ExpressionTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +25,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\Template\Expression::compile
+     * @covers PhCompile\Template\Expression\Expression::compile
      * @dataProvider renderCompileProvider
      */
     public function testCompileReplace($scopeData, $expressionString, $expected) {
@@ -62,7 +64,7 @@ class ExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\Template\Expression::compile
+     * @covers PhCompile\Template\Expression\Expression::compile
      * @dataProvider compileEvaluateProvider
      */
     public function testCompileEvaluate($scopeData, $expressionString, $expected) {

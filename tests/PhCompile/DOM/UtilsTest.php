@@ -8,7 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace PhCompile\DOM;
+namespace PhCompile\Tests\DOM;
+
+use PhCompile\DOM\Utils;
 
 class UtilsTest extends \PHPUnit_Framework_TestCase
 {
