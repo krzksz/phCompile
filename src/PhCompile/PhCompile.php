@@ -10,10 +10,12 @@
 
 namespace PhCompile;
 
-use PhCompile\Template\Directive\Directive,
+use SplPriorityQueue,
+    PhCompile\Template\Directive\Directive,
     PhCompile\Template\Directive\NgVisibility,
     PhCompile\Template\Directive\NgRepeat,
-    PhCompile\Template\Directive\NgBind;
+    PhCompile\Template\Directive\NgBind,
+    PhCompile\Template\Directive\NgClass;
 
 /**
  * Server side compiler for AngularJS templates.
@@ -36,18 +38,18 @@ class PhCompile
      *
      * @var array
      */
-    protected $attributeCompilers = array();
+    protected $directives = null;
 
     /**
      * Creates new PhRender object.
      */
     public function __construct()
     {
-        $this->registerDefaultCompilers();
-
         $this->config = new Scope();
-
         $this->setDefaultConfig();
+
+        $this->directives = new SplPriorityQueue();
+        $this->addDefaultDirectives();
     }
 
     /**
@@ -96,51 +98,43 @@ class PhCompile
     }
 
     /**
-     * Registers Directive object for given attribute.
-     * Directive's method compile() will be called each time given attribute is
-     * found inside DOM, compile() method is called with DOMElement containing
-     * this attribute.
+     * Registers Directive object.
+     * Directive's method compile() will be called each time given name is
+     * found inside matching restrict DOM part.
+     * compile() method is called with entire\ DOMElement.
      *
-     * @param string $attribute HTML attribute to register.
-     * @param Renderer $direvtive Attribute directive.
+     * @param string $string String that directive matches.
+     * @param Directive $directive New directive object.
      */
-    public function registerAttributeDirective($attribute, Directive $direvtive)
+    public function addDirective(Directive $directive)
     {
-        $this->attributeCompilers[$attribute] = $direvtive;
+        $this->directives->insert($directive, $directive->getPriority());
     }
 
     /**
-     * Returns Renderer registered for given attribute or null if no compiler
-     * has been registered for it.
+     * Returns entire directives priority queue.
      *
-     * @param string $attribute HTML attribute.
-     * @return Compiler|null Renderer object or null.
+     * @return SplPriorityQueue Derectives queue.
      */
-    public function getAttributeDirective($attribute)
-    {
-        if (isset($this->attributeCompilers[$attribute])) {
-            $compiler = $this->attributeCompilers[$attribute];
-        } else {
-            $compiler = null;
-        }
-
-        return $compiler;
+    public function getDirectives() {
+        return $this->directives;
     }
 
     /**
-     * Registers default compilers for AngularJS attributes.
+     * Registers default directives.
      */
-    protected function registerDefaultCompilers()
+    protected function addDefaultDirectives()
     {
         $defaultAttributes = array(
-            'ng-repeat' => new NgRepeat($this),
-            'ng-hide' => new NgVisibility($this),
-            'ng-show' => new NgVisibility($this),
-            'ng-bind' => new NgBind($this)
+            new NgRepeat($this),
+            new NgVisibility($this),
+            new NgVisibility($this),
+            new NgBind($this),
+            new NgClass($this)
         );
 
-        foreach ($defaultAttributes as $attribute => $compiler) {
-            $this->registerAttributeDirective($attribute, $compiler);
+        foreach ($defaultAttributes as $directive) {
+            $this->addDirective($directive);
         }
     }
 }

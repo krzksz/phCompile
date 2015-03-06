@@ -20,19 +20,6 @@ use PhCompile\PhCompile,
 abstract class Directive
 {
     /**
-     * Directive for attributes.
-     */
-    const RESTRICT_A = 1;
-    /**
-     * Directive for elements.
-     */
-    const RESTRICT_E = 2;
-    /**
-     * Directive for classes.
-     */
-    const RESTRICT_C = 4;
-
-    /**
      * PhCompile object reference.
      *
      * @var PhCompile
@@ -53,7 +40,19 @@ abstract class Directive
      */
     protected $restrict;
 
+    /**
+     * Default directive priority.
+     *
+     * @var int
+     */
     protected $prioriy = 0;
+
+    /**
+     * Name that identifies directive.
+     *
+     * @var string
+     */
+    protected $name = null;
 
     /**
      * Creates new directive.
@@ -63,7 +62,25 @@ abstract class Directive
     public function __construct(PhCompile $phCompile)
     {
         $this->phCompile = $phCompile;
-        $this->restrict = self::RESTRICT_A | self::RESTRICT_C | self::RESTRICT_E;
+        $this->restrict = 'ACE';
+    }
+
+    /**
+     * Returns directive name.
+     *
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Sets directive name.
+     *
+     * @param string $name Directive name
+     */
+    protected function setName($name) {
+        $this->name = $name;
     }
 
     /**
@@ -76,12 +93,27 @@ abstract class Directive
     }
 
     /**
-     * Sets directive restriction.
+     * Sets directive restriction just like in AngularJS.
+     * Supported restrictions are:
+     *  'A' - attribute,
+     *  'E' - element,
+     *  'C' - class.
+     * You can combine them as you want e.g. 'AE', 'AC', 'EC' etc.
      *
-     * @param int $restrict New directive restriction.
+     * @param string $restrict New directive restriction.
      */
     public function setRestrict($restrict) {
-        $this->restrict = $restrict;
+        $this->restrict = strtoupper($restrict);
+    }
+
+    /**
+     * Tells if directive has given restriction.
+     *
+     * @param type $restrict
+     * @return type
+     */
+    public function isRestrict($restrict) {
+        return strpos($this->getRestrict(), strtoupper($restrict)) !== false;
     }
 
     /**
@@ -90,7 +122,7 @@ abstract class Directive
      *
      * @param int $priority New directive priority.
      */
-    public function setPriority(int $priority) {
+    public function setPriority($priority) {
         $this->prioriy = $priority;
     }
 

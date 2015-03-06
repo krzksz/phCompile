@@ -27,7 +27,8 @@ class NgBind extends Directive{
     public function __construct(\PhCompile\PhCompile $phCompile)
     {
         parent::__construct($phCompile);
-        $this->setRestrict(Directive::RESTRICT_A);
+        $this->setName('ng-bind');
+        $this->setRestrict('A');
     }
 
     /**

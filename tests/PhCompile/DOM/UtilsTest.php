@@ -17,8 +17,9 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\DOM\Utils::loadHTML
      * @covers PhCompile\DOM\Utils::saveHTML
      */
-    public function testLoadSaveHTML() {
-        $source = '<span>śćąłó©®℗™</span>';
+    public function testLoadSaveHTML()
+    {
+        $source   = '<span>śćąłó©®℗™</span>';
         $document = Utils::loadHTML($source);
 
         $this->assertEquals($source, Utils::saveHTML($document));
@@ -28,20 +29,23 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\DOM\Utils::loadHTMLFile
      * @depends testLoadSaveHTML
      */
-    public function testLoadHTMLFile() {
-        $filepath = TEST_PATH . 'template/overall.html';
+    public function testLoadHTMLFile()
+    {
+        $filepath = TEST_PATH.'template/overall.html';
         $document = Utils::loadHTMLFile($filepath);
 
-        $this->assertEquals(Utils::loadHTML(file_get_contents($filepath)), $document);
+        $this->assertEquals(Utils::loadHTML(file_get_contents($filepath)),
+            $document);
     }
 
     /**
      * @covers PhCompile\DOM\Utils::addClass
      * @dataProvider addClassProvider
      */
-    public function testAddClass($className, $html, $expectedHtml) {
+    public function testAddClass($className, $html, $expectedHtml)
+    {
         $document = Utils::loadHTML($html);
-        $element = $document->getElementsByTagName('span')->item(0);
+        $element  = $document->getElementsByTagName('span')->item(0);
 
         Utils::addClass($element, $className);
         $renderedHtml = Utils::saveHTML($document);
@@ -49,7 +53,8 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedHtml, $renderedHtml);
     }
 
-    public function addClassProvider() {
+    public function addClassProvider()
+    {
         return array(
             array(
                 'foo',
@@ -73,9 +78,10 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\DOM\DOMUtils::removeClass
      * @dataProvider removeClassProvider
      */
-    public function testRemoveClass($className, $html, $expectedHtml) {
+    public function testRemoveClass($className, $html, $expectedHtml)
+    {
         $document = Utils::loadHTML($html);
-        $element = $document->getElementsByTagName('span')->item(0);
+        $element  = $document->getElementsByTagName('span')->item(0);
 
         Utils::removeClass($element, $className);
         $renderedHtml = Utils::saveHTML($document);
@@ -83,7 +89,8 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedHtml, $renderedHtml);
     }
 
-    public function removeClassProvider() {
+    public function removeClassProvider()
+    {
         return array(
             array(
                 'foo',
@@ -104,12 +111,27 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhCompile\DOM\DOMUtils::hasClass
+     * @depends testAddClass
+     */
+    public function testHasClass()
+    {
+        $document = Utils::loadHTML('<span></span>');
+        $element  = $document->getElementsByTagName('span')->item(0);
+
+        $this->assertFalse(Utils::hasClass($element, 'foo'));
+        Utils::addClass($element, 'foo');
+        $this->assertTrue(Utils::hasClass($element, 'foo'));
+    }
+
+    /**
      * @covers PhCompile\DOM\DOMUtils::appendHtml
      * @dataProvider appendHtmlProvider
      */
-    public function testAppendHTML($html, $appendHtml, $expectedHtml) {
+    public function testAppendHTML($html, $appendHtml, $expectedHtml)
+    {
         $document = Utils::loadHTML($html);
-        $element = $document->getElementsByTagName('span')->item(0);
+        $element  = $document->getElementsByTagName('span')->item(0);
 
         Utils::appendHTML($element, $appendHtml);
         $renderedHtml = Utils::saveHTML($document);
@@ -117,7 +139,8 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedHtml, $renderedHtml);
     }
 
-    public function appendHtmlProvider() {
+    public function appendHtmlProvider()
+    {
         return array(
             array(
                 '<span></span>',

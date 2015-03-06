@@ -29,7 +29,8 @@ class NgClass extends Directive
     public function __construct(\PhCompile\PhCompile $phCompile)
     {
         parent::__construct($phCompile);
-        $this->setRestrict(Directive::RESTRICT_A);
+        $this->setName('ng-class');
+        $this->setRestrict('A');
     }
 
     /**

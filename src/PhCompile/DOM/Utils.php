@@ -100,6 +100,17 @@ class Utils
     }
 
     /**
+     * Tells if given DOM element has given class.
+     *
+     * @param \DOMElement $domElement DOM element to search in.
+     * @param type $className Class name to search for.
+     */
+    public static function hasClass(\DOMElement $domElement, $className)
+    {
+        return strpos($domElement->getAttribute('class'), $className) !== false;
+    }
+
+    /**
      * Appends given HTML inside given DOM element.
      *
      * @param \DOMElement $domElement DOM element to with contents HTML should be appended.

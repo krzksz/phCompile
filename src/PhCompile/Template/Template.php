@@ -14,7 +14,8 @@ use PhCompile\PhCompile,
     PhCompile\Scope,
     PhCompile\Template\Expression\Expression,
     PhCompile\DOM\Utils,
-    PhCompile\DOM\RecursiveDOMIterator;
+    PhCompile\DOM\RecursiveDOMIterator,
+    PhCompile\Template\Directive\Directive;
 
 /**
  * Represents HTML template and contains all it's data.
@@ -124,11 +125,9 @@ class Template
 
     /**
      * Compiles template HTML.
-     * This method uses registered compilers and expressions to render AngularJS
-     * template with given Scope data.
+     * This method uses registered directives and expressions to render AngularJS
+     * template with given scope data.
      *
-     * @param bool $decodeHTMLEntities Indicates if method sould decode all HTML entities
-     * e.g. &amp; back before returning rendered HTML.
      * @return string Compiled HTML.
      */
     public function compile()
@@ -138,18 +137,14 @@ class Template
         $domIterator = new \RecursiveIteratorIterator(
             new RecursiveDOMIterator($document),
             \RecursiveIteratorIterator::SELF_FIRST);
-
         /**
          * Iterate over every element inside DOM.
          */
         foreach ($domIterator as $domNode) {
             if ($domNode->nodeType === XML_ELEMENT_NODE) {
-                if ($this->compileAttributes($domNode) === false) {
-                    break;
-                }
+                $this->compileNode($domNode);
             }
         }
-
         /**
          * Update template HTML from compiled DOM.
          */
@@ -160,30 +155,79 @@ class Template
         return $this->html;
     }
 
-    protected function compileElement(\DOMElement $element) {
-        
-    }
-
     /**
-     * Compiles DOM elements using registered attribute directives.
+     * Compiles given DOM element with directives added to main PhCompile object.
      *
-     * @see PhCompile::registerAttributeDirective.
-     * @param \DomElement $domElement DOM element which attributes to compile.
+     * @param \DOMElement $element Dom element to compile.
+     * @return boolean Returns false if compilation was interrupted, true otherwise.
      */
-    protected function compileAttributes(\DomElement $domElement)
-    {
-        foreach ($domElement->attributes as $attribute) {
-            $directive = $this->phCompile->getAttributeDirective($attribute->name);
-            if ($directive !== null) {
-                $directive->compile($domElement, $this->scope);
-
-                if ($directive->haltCompiling() === true) {
-                    return false;
-                }
+    protected function compileNode(\DOMElement $element) {
+        $directives = $this->phCompile->getDirectives();
+        $stop = false;
+        foreach($directives as $directive) {
+            if($directive->isRestrict('E') === true) {
+                $stop = $this->compileElement($element, $directive);
+            }
+            if($stop === false && $directive->isRestrict('A') === true) {
+                $stop = $this->compileAttribute($element, $directive);
+            }
+            if($stop === false && $directive->isRestrict('C') === true) {
+                $stop = $this->compileClass($element, $directive);
+            }
+            if($stop === true) {
+                return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Compiles given DOM element with directive restricted to elements.
+     *
+     * @param \DOMElement $element DOM element to compile.
+     * @param Directive $directive Directive with elements restriction('E').
+     * @return boolean Returns false if compilation should stop, true otherwise.
+     */
+    protected function compileElement(\DOMElement $element, Directive $directive) {
+        $directiveName = $directive->getName();
+        if($element->tagName === $directiveName) {
+            $directive->compile($element, $this->getScope());
+        }
+
+        return $directive->haltCompiling();
+    }
+
+    /**
+     * Compiles given DOM element with directive restricted to attributes.
+     *
+     * @param \DOMElement $element DOM element to compile.
+     * @param Directive $directive Directive with attributes restriction('A').
+     * @return boolean Returns false if compilation should stop, true otherwise.
+     */
+    protected function compileAttribute(\DOMElement $element, Directive $directive) {
+        $directiveName = $directive->getName();
+        if($element->hasAttribute($directiveName) === true) {
+            $directive->compile($element, $this->getScope());
+        }
+
+        return $directive->haltCompiling();
+    }
+
+    /**
+     * Compiles given DOM element with directive restricted to classes.
+     *
+     * @param \DOMElement $element DOM element to compile.
+     * @param Directive $directive Directive with classes restriction('C').
+     * @return boolean Returns false if compilation should stop, true otherwise.
+     */
+    protected function compileClass(\DOMElement $element, Directive $directive) {
+        $directiveName = $directive->getName();
+        if(Utils::hasClass($element, $directiveName) === true) {
+            $directive->compile($element, $this->getScope());
+        }
+
+        return $directive->haltCompiling();
     }
 
     /**

@@ -10,6 +10,6 @@
 
 namespace PhCompile\Template\Directive;
 
-class InvalidRendererException extends \Exception{
+class InvalidDirectiveException extends \Exception{
 
 }

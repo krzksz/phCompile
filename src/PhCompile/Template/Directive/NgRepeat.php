@@ -28,7 +28,8 @@ class NgRepeat extends Directive
     public function __construct(\PhCompile\PhCompile $phCompile)
     {
         parent::__construct($phCompile);
-        $this->setRestrict(Directive::RESTRICT_A);
+        $this->setName('ng-repeat');
+        $this->setRestrict('A');
         $this->setPriority(1000);
     }
 

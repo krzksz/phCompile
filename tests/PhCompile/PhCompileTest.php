@@ -47,15 +47,4 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
             ), $this->phCompile->getConfig());
     }
 
-    /**
-     * @covers PhCompile\PhCompile::registerAttributeDirective
-     * @covers PhCompile\PhCompile::getAttributeDirective
-     */
-    public function testRegisterAndGetAttributeRenderer()
-    {
-        $repeat = new NgRepeat($this->phCompile);
-        $this->phCompile->registerAttributeDirective('foo', $repeat);
-        $this->assertSame($repeat, $this->phCompile->getAttributeDirective('foo'));
-    }
-
 }

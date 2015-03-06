@@ -28,7 +28,8 @@ class NgVisibility extends Directive
     public function __construct(\PhCompile\PhCompile $phCompile)
     {
         parent::__construct($phCompile);
-        $this->setRestrict(Directive::RESTRICT_A);
+        $this->setName('ng-visibility');
+        $this->setRestrict('A');
     }
 
     /**

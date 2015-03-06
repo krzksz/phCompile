@@ -34,7 +34,8 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $this->scope->getData($accessString));
     }
 
-    public function setAndGetDataProvider() {
+    public function setAndGetDataProvider()
+    {
         return array(
             array(
                 array('foo' => 'bar'), 'foo', 'bar'
@@ -57,7 +58,6 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
             array(
                 array('foo' => array('bar' => 'baz')), 'foo[\'bar\']', 'baz'
             )
-
         );
     }
 
@@ -72,13 +72,14 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $this->scope->hasData($accessString));
     }
 
-    public function hasDataProvider() {
+    public function hasDataProvider()
+    {
         return array(
             array(
                 array('foo' => 'bar'), 'foo', true
             ),
             array(
-                array('foo' => array('bar', 'baz')), 'foo[1]',true
+                array('foo' => array('bar', 'baz')), 'foo[1]', true
             ),
             array(
                 array('foo' => array('bar', 'baz')), 'foo[0]', true
@@ -97,5 +98,4 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-
 }
