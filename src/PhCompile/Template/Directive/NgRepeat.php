@@ -29,6 +29,7 @@ class NgRepeat extends Directive
     {
         parent::__construct($phCompile);
         $this->setRestrict(Directive::RESTRICT_A);
+        $this->setPriority(1000);
     }
 
     /**

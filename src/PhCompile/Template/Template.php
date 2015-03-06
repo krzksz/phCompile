@@ -160,6 +160,10 @@ class Template
         return $this->html;
     }
 
+    protected function compileElement(\DOMElement $element) {
+        
+    }
+
     /**
      * Compiles DOM elements using registered attribute directives.
      *

@@ -46,7 +46,14 @@ abstract class Directive
      */
     protected $haltCompiling = false;
 
+    /**
+     * Directive restriction, can be element, attribute or class.
+     *
+     * @var int
+     */
     protected $restrict;
+
+    protected $prioriy = 0;
 
     /**
      * Creates new directive.
@@ -75,6 +82,25 @@ abstract class Directive
      */
     public function setRestrict($restrict) {
         $this->restrict = $restrict;
+    }
+
+    /**
+     * Sets directive priority.
+     * Default directive priority is 0.
+     *
+     * @param int $priority New directive priority.
+     */
+    public function setPriority(int $priority) {
+        $this->prioriy = $priority;
+    }
+
+    /**
+     * Returns directive priority.
+     *
+     * @return int
+     */
+    public function getPriority() {
+        return $this->prioriy;
     }
 
     /**
