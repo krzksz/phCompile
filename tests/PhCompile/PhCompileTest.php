@@ -10,11 +10,8 @@
 
 namespace PhCompile;
 
-use PhCompile\Template\Directive\NgRepeat;
-
 class PhCompileTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $phCompile;
 
     protected function setUp()
@@ -33,18 +30,16 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $this->phCompile->getConfig('foo.bar'));
     }
 
-
     /**
      * @covers PhCompile\PhCompile::setDefaultConfig
      */
     public function testSetDefaultConfig()
     {
         $this->assertEquals(array(
-                'compile' => array(
-                    'class' => 'ng-phcompile',
-                    'attr' => 'ng-phcompile'
-                )
+            'compile' => array(
+                'class' => 'ng-phcompile',
+                'attr' => 'ng-phcompile'
+            )
             ), $this->phCompile->getConfig());
     }
-
 }

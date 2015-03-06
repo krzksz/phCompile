@@ -11,12 +11,10 @@
 namespace PhCompile\Template;
 
 use PhCompile\PhCompile,
-    PhCompile\Scope,
-    PhCompile\DOM\Utils;
+    PhCompile\Scope;
 
 class TemplateTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $template;
 
     protected function setUp()
@@ -41,7 +39,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAndGetHtml()
     {
-        $html = file_get_contents(TEST_PATH . 'template/overall.html');
+        $html = file_get_contents(TEST_PATH.'template/overall.html');
         $this->template->setHtml($html);
         $this->assertSame($html, $this->template->getHtml());
     }
@@ -52,24 +50,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadHtml()
     {
-        $templatePath = TEST_PATH . 'template/overall.html';
+        $templatePath = TEST_PATH.'template/overall.html';
         $this->template->loadHtml($templatePath);
-        $this->assertSame(file_get_contents($templatePath), $this->template->getHtml());
+        $this->assertSame(file_get_contents($templatePath),
+            $this->template->getHtml());
     }
-
-    /**
-     * @covers PhCompile\Template\Template::compile
-     */
-//    public function testCompile()
-//    {
-//        $this->template->loadHtml(TEST_PATH . 'template/overall.html');
-//        $scopeData = json_decode(file_get_contents(TEST_PATH . 'template/overallData.json'), true);
-//        $this->template->getScope()->setData($scopeData);
-//        $domDocument = new \DOMDocument();
-//
-//        @$domDocument->loadHTML(mb_convert_encoding(file_get_contents(TEST_PATH . 'template/overallRendered.html'), 'HTML-ENTITIES', 'UTF-8'));
-//
-//        $this->assertEquals(DOMUtils::saveHtml($domDocument),
-//            $this->template->compile());
-//    }
 }

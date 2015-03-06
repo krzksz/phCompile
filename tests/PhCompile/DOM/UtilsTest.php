@@ -75,7 +75,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\DOM\DOMUtils::removeClass
+     * @covers PhCompile\DOM\Utils::removeClass
      * @dataProvider removeClassProvider
      */
     public function testRemoveClass($className, $html, $expectedHtml)
@@ -111,7 +111,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\DOM\DOMUtils::hasClass
+     * @covers PhCompile\DOM\Utils::hasClass
      * @depends testAddClass
      */
     public function testHasClass()
@@ -125,7 +125,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\DOM\DOMUtils::appendHtml
+     * @covers PhCompile\DOM\Utils::appendHTML
      * @dataProvider appendHtmlProvider
      */
     public function testAppendHTML($html, $appendHtml, $expectedHtml)
