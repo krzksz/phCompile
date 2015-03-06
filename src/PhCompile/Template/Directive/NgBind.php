@@ -20,6 +20,17 @@ use PhCompile\Scope,
 class NgBind extends Directive{
 
     /**
+     * Creates new ng-bind directive.
+     *
+     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     */
+    public function __construct(\PhCompile\PhCompile $phCompile)
+    {
+        parent::__construct($phCompile);
+        $this->setRestrict(Directive::RESTRICT_A);
+    }
+
+    /**
      * Compiles AngularJS ng-bind attributes by evaluating expression inside it
      * and setting inner HTML.
      *

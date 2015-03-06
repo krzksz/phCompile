@@ -17,7 +17,19 @@ use PhCompile\Scope,
 /**
  * Compiles AngularJS ng-show and ng-hide attributes.
  */
-class NgVisibility extends Directive {
+class NgVisibility extends Directive
+{
+
+    /**
+     * Creates new ng-show and ng-hide directive.
+     *
+     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     */
+    public function __construct(\PhCompile\PhCompile $phCompile)
+    {
+        parent::__construct($phCompile);
+        $this->setRestrict(Directive::RESTRICT_A);
+    }
 
     /**
      * Renders AngularJS ng-show and ng-hide attributes by evaluating expression
@@ -27,32 +39,33 @@ class NgVisibility extends Directive {
      * @param Scope $scope Scope object containg data for expression.
      * @return \DOMElement Compiled DOM element.
      */
-    public function compile(\DOMElement $domElement, Scope $scope) {
+    public function compile(\DOMElement $domElement, Scope $scope)
+    {
         /**
          * Let's check if we are dealing with "ng-hide" or "ng-show" attribute.
          */
-        if($domElement->hasAttribute('ng-hide')) {
+        if ($domElement->hasAttribute('ng-hide')) {
             $expressionString = $domElement->getAttribute('ng-hide');
-            $ngAttribute = 'ng-hide';
+            $ngAttribute      = 'ng-hide';
         } else {
             $expressionString = $domElement->getAttribute('ng-show');
-            $ngAttribute = 'ng-show';
+            $ngAttribute      = 'ng-show';
         }
 
         /**
          * Get attribute expression's value.
          */
-        $expression = new Expression($this->phCompile);
-        $expressionValue = (bool)$expression->compile($expressionString, $scope);
+        $expression      = new Expression($this->phCompile);
+        $expressionValue = (bool) $expression->compile($expressionString, $scope);
 
         /**
          * Set appropriate class to DOM element if needed.
          */
-        if(($ngAttribute === 'ng-hide' && $expressionValue === true)
-            || ($ngAttribute === 'ng-show' && $expressionValue === false)) {
+        if (($ngAttribute === 'ng-hide' && $expressionValue === true) || ($ngAttribute
+            === 'ng-show' && $expressionValue === false)) {
             Utils::addClass($domElement, 'ng-hide');
         }
-        
+
         return $domElement;
     }
 }

@@ -22,6 +22,17 @@ class NgClass extends Directive
 {
 
     /**
+     * Creates new ng-class directive.
+     *
+     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     */
+    public function __construct(\PhCompile\PhCompile $phCompile)
+    {
+        parent::__construct($phCompile);
+        $this->setRestrict(Directive::RESTRICT_A);
+    }
+
+    /**
      * Compiles AngularJS ng-class attributes by evaluating expression inside it
      * and setting element's class attribute.
      *
@@ -31,8 +42,8 @@ class NgClass extends Directive
      */
     public function compile(\DOMElement $element, Scope $scope)
     {
-        $classAttr = $element->getAttribute('ng-class');
-        $classArray      = $this->parseClass($classAttr);
+        $classAttr  = $element->getAttribute('ng-class');
+        $classArray = $this->parseClass($classAttr);
 
         if (isset($classArray['object']) && $classArray['object'] !== '') {
             $classString = $this->compileObject($classAttr, $scope);
@@ -42,12 +53,12 @@ class NgClass extends Directive
             $classString = $this->compileString($classAttr, $scope);
         }
 
-        if(empty($classString) === false && is_string($classString) === false) {
+        if (empty($classString) === false && is_string($classString) === false) {
             throw new InvalidExpressionException(
-                sprintf(
-                    'Expression: "%s" inside ng-class does not evaluate to string!',
-                    $classAttr
-                )
+            sprintf(
+                'Expression: "%s" inside ng-class does not evaluate to string!',
+                $classAttr
+            )
             );
         }
 
@@ -67,8 +78,8 @@ class NgClass extends Directive
     protected function parseClass($classAttr)
     {
         preg_match('/^(?P<string>[^\[\]\,\{\}:\s]+)$'
-            . '|^\[(?P<array>[^\]]+)\]$'
-            . '|^{(?P<object>[^\}]+)}$/', $classAttr, $classMatches);
+            .'|^\[(?P<array>[^\]]+)\]$'
+            .'|^{(?P<object>[^\}]+)}$/', $classAttr, $classMatches);
 
         return $classMatches;
     }
@@ -101,18 +112,18 @@ class NgClass extends Directive
         $classString          = '';
         foreach ($classExpressionArray as $singleClassExpression) {
             $newClassString = $expression->compile(trim($singleClassExpression),
-                    $scope);
+                $scope);
 
-            if(empty($newClassString) === false && is_string($newClassString) === false) {
+            if (empty($newClassString) === false && is_string($newClassString) === false) {
                 throw new InvalidExpressionException(
-                    sprintf(
-                        'Expression: "%s" inside ng-class does not evaluate to string!',
-                        $classAttr
-                    )
+                sprintf(
+                    'Expression: "%s" inside ng-class does not evaluate to string!',
+                    $classAttr
+                )
                 );
             }
 
-            $classString .= ' ' . $newClassString;
+            $classString .= ' '.$newClassString;
         }
 
         return trim($classString);

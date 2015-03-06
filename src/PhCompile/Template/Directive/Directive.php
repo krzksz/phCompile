@@ -20,6 +20,19 @@ use PhCompile\PhCompile,
 abstract class Directive
 {
     /**
+     * Directive for attributes.
+     */
+    const RESTRICT_A = 1;
+    /**
+     * Directive for elements.
+     */
+    const RESTRICT_E = 2;
+    /**
+     * Directive for classes.
+     */
+    const RESTRICT_C = 4;
+
+    /**
      * PhCompile object reference.
      *
      * @var PhCompile
@@ -33,14 +46,35 @@ abstract class Directive
      */
     protected $haltCompiling = false;
 
+    protected $restrict;
+
     /**
-     * Creates new Directive.
+     * Creates new directive.
      *
      * @param PhCompile $phCompile PhRender object.
      */
     public function __construct(PhCompile $phCompile)
     {
         $this->phCompile = $phCompile;
+        $this->restrict = self::RESTRICT_A | self::RESTRICT_C | self::RESTRICT_E;
+    }
+
+    /**
+     * Returns directive restriction.
+     *
+     * @return int Directive restriction.
+     */
+    public function getRestrict() {
+        return $this->restrict;
+    }
+
+    /**
+     * Sets directive restriction.
+     *
+     * @param int $restrict New directive restriction.
+     */
+    public function setRestrict($restrict) {
+        $this->restrict = $restrict;
     }
 
     /**

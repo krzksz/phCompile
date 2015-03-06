@@ -21,6 +21,17 @@ class NgRepeat extends Directive
 {
 
     /**
+     * Creates new ng-repeat directive.
+     *
+     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     */
+    public function __construct(\PhCompile\PhCompile $phCompile)
+    {
+        parent::__construct($phCompile);
+        $this->setRestrict(Directive::RESTRICT_A);
+    }
+
+    /**
      * Compiles AngularJS ng-repeat attribute.
      * Each element's copy is treated and rendered as seperate template with it's
      * own Scope data. Those elements are later appended to element's parent node.
@@ -49,7 +60,8 @@ class NgRepeat extends Directive
             $repeatIndex = 0;
             foreach ($repeatArray as $repeatKey => $repeatValue) {
                 $subScope = new Scope($scope->getData());
-                $this->setScopeData($subScope, $parsedArray, $repeatKey, $repeatValue);
+                $this->setScopeData($subScope, $parsedArray, $repeatKey,
+                    $repeatValue);
                 $this->setScopeSpecial($subScope, $repeatCount, $repeatIndex);
 
                 /**
@@ -78,7 +90,8 @@ class NgRepeat extends Directive
      * @param type $repeatValue Value of the current element of the array we iterate over.
      * @return Scope Scope object with set values.
      */
-    protected function setScopeData(Scope $scope, $parsedArray, $repeatKey, $repeatValue)
+    protected function setScopeData(Scope $scope, $parsedArray, $repeatKey,
+                                    $repeatValue)
     {
         if (empty($parsedArray['index']) === false) {
             $scopeData = array(
@@ -105,12 +118,12 @@ class NgRepeat extends Directive
      */
     protected function setScopeSpecial(Scope $scope, $repeatCount, $repeatIndex)
     {
-        $scopeData['$index'] = $repeatIndex;
-        $scopeData['$first'] = ($repeatIndex === 0);
-        $scopeData['$last'] = ($repeatIndex === $repeatCount - 1);
+        $scopeData['$index']  = $repeatIndex;
+        $scopeData['$first']  = ($repeatIndex === 0);
+        $scopeData['$last']   = ($repeatIndex === $repeatCount - 1);
         $scopeData['$middle'] = !($scopeData['$first'] || $scopeData['$last']);
-        $scopeData['$even'] = ($repeatIndex % 2 === 0);
-        $scopeData['$odd'] = !($scopeData['$even']);
+        $scopeData['$even']   = ($repeatIndex % 2 === 0);
+        $scopeData['$odd']    = !($scopeData['$even']);
         $scope->setData($scopeData);
 
         return $scope;
