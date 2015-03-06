@@ -168,6 +168,6 @@ class NgRepeat extends Directive
         $template->setHtml($domElement->ownerDocument->saveHTML($domElement));
         $template->setScope($scope);
 
-        return $template->compile(false);
+        return $template->compile();
     }
 }

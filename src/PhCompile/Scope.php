@@ -41,7 +41,6 @@ class Scope
      */
     public function setData(array $data)
     {
-        var_dump($data);
         $this->data = array_replace($this->data, $data);
     }
 

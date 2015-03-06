@@ -11,7 +11,7 @@
 namespace PhCompile;
 
 use PhCompile\Template\Directive\NgBind,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 class BindTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,12 +32,11 @@ class BindTest extends \PHPUnit_Framework_TestCase
      */
     public function testCompile($scopeData, $bindString, $expected) {
         $this->scope->setData($scopeData);
+
+        $document = Utils::loadHTML('<span ng-bind="' . $bindString . '"></span>');
+        $element = $document->getElementsByTagName('span')->item(0);
         
-        $domDocument = new \DOMDocument();
-        $domDocument->loadHTML('<span ng-bind="' . $bindString . '"></span>');
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
-        
-        $compiledHtml = DOMUtils::saveHtml($this->bind->compile($domElement, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHtml($this->bind->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
         
         $this->assertSame($expectedHtml, $compiledHtml);

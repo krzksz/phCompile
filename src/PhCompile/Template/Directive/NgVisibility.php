@@ -12,7 +12,7 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
     PhCompile\Template\Expression,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 /**
  * Compiles AngularJS ng-show and ng-hide attributes.
@@ -50,7 +50,7 @@ class NgVisibility extends Directive {
          */
         if(($ngAttribute === 'ng-hide' && $expressionValue === true)
             || ($ngAttribute === 'ng-show' && $expressionValue === false)) {
-            DOMUtils::addClass($domElement, 'ng-hide');
+            Utils::addClass($domElement, 'ng-hide');
         }
         
         return $domElement;

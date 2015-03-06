@@ -11,7 +11,7 @@
 namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
-    PhCompile\DOM\DOMUtils,
+    PhCompile\DOM\Utils,
     PhCompile\Template\Expression,
     PhCompile\Template\InvalidExpressionException;
 
@@ -25,13 +25,13 @@ class NgClass extends Directive
      * Compiles AngularJS ng-class attributes by evaluating expression inside it
      * and setting element's class attribute.
      *
-     * @param \DOMElement $domElement DOM element to compile.
+     * @param \DOMElement $element DOM element to compile.
      * @param Scope $scope Scope object containg data for expression.
      * @return \DOMElement Compiled DOM element.
      */
-    public function compile(\DOMElement $domElement, Scope $scope)
+    public function compile(\DOMElement $element, Scope $scope)
     {
-        $classAttr = $domElement->getAttribute('ng-class');
+        $classAttr = $element->getAttribute('ng-class');
         $classArray      = $this->parseClass($classAttr);
 
         if (isset($classArray['object']) && $classArray['object'] !== '') {
@@ -51,9 +51,9 @@ class NgClass extends Directive
             );
         }
 
-        DOMUtils::addClass($domElement, $classString);
+        Utils::addClass($element, $classString);
 
-        return $domElement;
+        return $element;
     }
 
     /**

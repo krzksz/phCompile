@@ -11,7 +11,7 @@
 namespace PhCompile;
 
 use PhCompile\Template\Directive\NgVisibility,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 class VisibilityTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,14 +30,15 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\Template\Directive\NgVisibility::compile
      * @dataProvider compileVisibleProvider
      */
-    public function testCompileVisible($scopeData, $html, $expectedHtml) {
+    public function testCompileVisible($scopeData, $source, $expectedHtml) {
         $this->scope->setData($scopeData);
         
-        $domDocument = new Document();
-        $domDocument->loadHTML($html);
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
-        
-        $renderedHtml = $this->visibiliy->compile($domElement, $this->scope)->ownerDocument->saveHTML();
+        $document = Utils::loadHTML($source);
+        $element = $document->getElementsByTagName('span')->item(0);
+
+        $this->visibiliy->compile($element, $this->scope);
+
+        $renderedHtml = Utils::saveHtml($element->ownerDocument);
         
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -61,14 +62,15 @@ class VisibilityTest extends \PHPUnit_Framework_TestCase
      * @covers PhCompile\Template\Directive\NgVisibility::compile
      * @dataProvider compileHiddenProvider
      */
-    public function testCompileHidden($scopeData, $html, $expectedHtml) {
+    public function testCompileHidden($scopeData, $source, $expectedHtml) {
         $this->scope->setData($scopeData);
 
-        $domDocument = new Document();
-        $domDocument->loadHTML($html);
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML($source);
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        $renderedHtml = $this->visibiliy->compile($domElement, $this->scope)->ownerDocument->saveHTML();
+        $this->visibiliy->compile($element, $this->scope);
+
+        $renderedHtml = Utils::saveHtml($element->ownerDocument);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

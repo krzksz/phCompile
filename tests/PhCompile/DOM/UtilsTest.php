@@ -18,12 +18,11 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider addClassProvider
      */
     public function testAddClass($className, $html, $expectedHtml) {
-        $domDocument = new Document();
-        $domDocument->loadHTML($html);
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML($html);
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        Utils::addClass($domElement, $className);
-        $renderedHtml = $domDocument->saveHtml();
+        Utils::addClass($element, $className);
+        $renderedHtml = Utils::saveHtml($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -53,12 +52,11 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider removeClassProvider
      */
     public function testRemoveClass($className, $html, $expectedHtml) {
-        $domDocument = new Document();
-        $domDocument->loadHTML($html);
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML($html);
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        Utils::removeClass($domElement, $className);
-        $renderedHtml = $domDocument->saveHtml();
+        Utils::removeClass($element, $className);
+        $renderedHtml = Utils::saveHtml($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }
@@ -88,12 +86,11 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider appendHtmlProvider
      */
     public function testAppendHtml($html, $appendHtml, $expectedHtml) {
-        $domDocument = new Document();
-        $domDocument->loadHTML($html);
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML($html);
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        Utils::appendHtml($domElement, $appendHtml);
-        $renderedHtml = $domDocument->saveHtml();
+        Utils::appendHtml($element, $appendHtml);
+        $renderedHtml = Utils::saveHtml($document);
 
         $this->assertSame($expectedHtml, $renderedHtml);
     }

@@ -11,7 +11,7 @@
 namespace PhCompile\Template\Directive;
 
 use PhCompile\Scope,
-    PhCompile\DOM\DOMUtils,
+    PhCompile\DOM\Utils,
     PhCompile\Template\Expression;
 
 /**
@@ -34,7 +34,7 @@ class NgBind extends Directive{
         $expressionValue = $expression->compile($expressionString, $scope);
 
         if(empty($expressionValue) === false) {
-            DOMUtils::appendHtml($domElement, $expressionValue);
+            Utils::appendHtml($domElement, $expressionValue);
         }
 
         return $domElement;

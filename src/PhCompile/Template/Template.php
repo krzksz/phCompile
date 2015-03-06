@@ -12,7 +12,7 @@ namespace PhCompile\Template;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
-    PhCompile\DOM\Document,
+    PhCompile\DOM\Utils,
     PhCompile\DOM\RecursiveDOMIterator;
 
 /**
@@ -132,11 +132,10 @@ class Template
      */
     public function compile()
     {
-        $domDocument = new Document;
-        $domDocument->loadHTML($this->html);
+        $document = Utils::loadHTML($this->html);
 
         $domIterator = new \RecursiveIteratorIterator(
-            new RecursiveDOMIterator($domDocument),
+            new RecursiveDOMIterator($document),
             \RecursiveIteratorIterator::SELF_FIRST);
 
         /**
@@ -153,7 +152,7 @@ class Template
         /**
          * Update template HTML from compiled DOM.
          */
-        $this->html = $domDocument->saveHtml();
+        $this->html = Utils::saveHtml($document);
 
         $this->compileExpressions();
 

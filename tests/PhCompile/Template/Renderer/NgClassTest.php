@@ -11,7 +11,7 @@
 namespace PhCompile;
 
 use PhCompile\Template\Directive\NgClass,
-    PhCompile\DOM\DOMUtils;
+    PhCompile\DOM\Utils;
 
 class NgClassTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,11 +33,10 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     public function testRender($scopeData, $classString, $expected) {
         $this->scope->setData($scopeData);
 
-        $domDocument = new \DOMDocument();
-        $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        $compiledHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHtml($this->class->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $compiledHtml);
@@ -83,14 +82,10 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     public function testCompileException($scopeData, $classString) {
         $this->scope->setData($scopeData);
 
-        $domDocument = new \DOMDocument();
-        $domDocument->loadHTML('<span ng-class="' . $classString . '"></span>');
-        $domElement = $domDocument->getElementsByTagName('span')->item(0);
+        $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
+        $element = $document->getElementsByTagName('span')->item(0);
 
-        $compiledHtml = DOMUtils::saveHtml($this->class->compile($domElement, $this->scope)->ownerDocument);
-        $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
-
-        $this->assertSame($expectedHtml, $compiledHtml);
+        $this->class->compile($element, $this->scope);
     }
 
     public function compileExceptionProvider() {

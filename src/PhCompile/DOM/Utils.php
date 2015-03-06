@@ -13,7 +13,7 @@ namespace PhCompile\DOM;
 /**
  * Utility class that provides some features missing from PHP's DOM implementation.
  */
-class DOMUtils
+class Utils
 {
     /**
      * Create \DOMDocument form HTML file.
@@ -35,12 +35,13 @@ class DOMUtils
     }
 
     /**
-     * Create \DOMDocument form HTML string.
+     * Create DOM document form HTML string.
      * This custom implementation takes care of different character encodings
      * which standard DOMDocument has trouble with.
      *
      * @param string $source The HTML string.
      * @param int $options Since PHP 5.4.0 and Libxml 2.6.0, you may also use the options parameter to specify additional Libxml parameters.
+     * @return \DOMDocument Returns \DOMDocument representing given HTML string.
      */
     public static function loadHTML($source, $options = 0)
     {
@@ -56,13 +57,13 @@ class DOMUtils
     }
 
     /**
-     * Returns HTML representation of \DOMDocument.
+     * Returns HTML representation of DOM document.
      * This method removes some additional HTML added by PHP's DOM parser if
      * given HTML is not entirely valid e.g. when parsing HTML chunks.
      *
      * @return string HTML representation of \DOMDocument document.
      */
-    public function saveHtml(\DOMDocument $document)
+    public static function saveHtml(\DOMDocument $document)
     {
         return html_entity_decode(trim(preg_replace('/<!DOCTYPE.+?>/', '',
                     str_replace(array('<html>', '</html>', '<body>', '</body>'),
@@ -108,6 +109,7 @@ class DOMUtils
     public static function appendHtml(\DOMElement $domElement, $html)
     {
         $domFragment = $domElement->ownerDocument->createDocumentFragment();
+        var_dump($html);
         $domFragment->appendXml($html);
         $domElement->appendChild($domFragment);
 
