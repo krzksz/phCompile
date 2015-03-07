@@ -86,4 +86,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeSame($html, 'html', $this->template);
         $this->assertSame($html, $this->template->getHTML());
     }
+
+    /**
+     * @covers PhCompile\Template\Template::loadHTML
+     * @expectedException \InvalidArgumentException
+     */
+    public function testLoadHTMLNotExisting() {
+        $this->template->loadHTML('non-existing-file');
+    }
 }

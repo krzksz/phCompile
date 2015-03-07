@@ -10,7 +10,8 @@
 
 namespace PhCompile\Template;
 
-use PhCompile\PhCompile,
+use InvalidArgumentException,
+    PhCompile\PhCompile,
     PhCompile\Scope,
     PhCompile\Template\Expression\Expression,
     PhCompile\DOM\Utils,
@@ -85,22 +86,21 @@ class Template
     /**
      * Loads template HTML from file.
      *
-     * @param string $path Path to template file.
+     * @param string $filepath Path to template file.
      * @throws TemplateNotFoundException Throw's exception if file does not exist.
      */
-    public function loadHTML($path)
+    public function loadHTML($filepath)
     {
-        $html = file_get_contents($path);
-
-        if ($html === false) {
-            throw new TemplateNotFoundException(
-                sprintf(
-                    'Template file: "%s" does not exist!', $path
-                )
+        if (file_exists($filepath) === false) {
+            throw new InvalidArgumentException(
+            sprintf(
+                'Template file: "%s" does not exist!', $filepath
+            )
             );
         }
-        $this->html = $html;
-        $this->path = $path;
+
+        $this->html = file_get_contents($filepath);
+        $this->path = $filepath;
     }
 
     /**
@@ -161,20 +161,21 @@ class Template
      * @param \DOMElement $element Dom element to compile.
      * @return boolean Returns false if compilation was interrupted, true otherwise.
      */
-    protected function compileNode(\DOMElement $element) {
+    protected function compileNode(\DOMElement $element)
+    {
         $directives = $this->phCompile->getDirectives();
-        $interrupt = false;
-        foreach($directives as $directive) {
-            if($directive->isRestrict('E') === true) {
+        $interrupt  = false;
+        foreach ($directives as $directive) {
+            if ($directive->isRestrict('E') === true) {
                 $interrupt = $this->compileElement($element, $directive);
             }
-            if($interrupt === false && $directive->isRestrict('A') === true) {
+            if ($interrupt === false && $directive->isRestrict('A') === true) {
                 $interrupt = $this->compileAttribute($element, $directive);
             }
-            if($interrupt === false && $directive->isRestrict('C') === true) {
+            if ($interrupt === false && $directive->isRestrict('C') === true) {
                 $interrupt = $this->compileClass($element, $directive);
             }
-            if($interrupt === true) {
+            if ($interrupt === true) {
                 return false;
             }
         }
@@ -189,9 +190,10 @@ class Template
      * @param Directive $directive Directive with elements restriction('E').
      * @return boolean Returns false if compilation should stop, true otherwise.
      */
-    protected function compileElement(\DOMElement $element, Directive $directive) {
+    protected function compileElement(\DOMElement $element, Directive $directive)
+    {
         $directiveName = $directive->getName();
-        if($element->tagName === $directiveName) {
+        if ($element->tagName === $directiveName) {
             $directive->compile($element, $this->getScope());
         }
 
@@ -205,9 +207,11 @@ class Template
      * @param Directive $directive Directive with attributes restriction('A').
      * @return boolean Returns false if compilation should stop, true otherwise.
      */
-    protected function compileAttribute(\DOMElement $element, Directive $directive) {
+    protected function compileAttribute(\DOMElement $element,
+                                        Directive $directive)
+    {
         $directiveName = $directive->getName();
-        if($element->hasAttribute($directiveName) === true) {
+        if ($element->hasAttribute($directiveName) === true) {
             $directive->compile($element, $this->getScope());
         }
 
@@ -221,9 +225,10 @@ class Template
      * @param Directive $directive Directive with classes restriction('C').
      * @return boolean Returns false if compilation should stop, true otherwise.
      */
-    protected function compileClass(\DOMElement $element, Directive $directive) {
+    protected function compileClass(\DOMElement $element, Directive $directive)
+    {
         $directiveName = $directive->getName();
-        if(Utils::hasClass($element, $directiveName) === true) {
+        if (Utils::hasClass($element, $directiveName) === true) {
             $directive->compile($element, $this->getScope());
         }
 
