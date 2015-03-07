@@ -242,10 +242,10 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\Template\Directive\Directive::getInterrupt
+     * @covers PhCompile\Template\Directive\Directive::doesInterrupt
      * @depends testSetInterrupt
      */
-    public function testGetInterrupt()
+    public function testDoesInterrupt()
     {
         $interrupt = true;
         $this->directiveStub->setInterrupt($interrupt);
@@ -254,10 +254,10 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\Template\Directive\Directive::getInterrupt
+     * @covers PhCompile\Template\Directive\Directive::doesInterrupt
      * @depends testSetInterrupt
      */
-    public function testGetInterruptDefault()
+    public function testDoesInterruptDefault()
     {
         $this->assertSame(false, $this->directiveStub->doesInterrupt());
     }
