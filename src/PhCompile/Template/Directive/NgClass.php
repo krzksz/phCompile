@@ -49,7 +49,7 @@ class NgClass extends Directive
         if (isset($classArray['object']) && $classArray['object'] !== '') {
             $classString = $this->compileObject($classAttr, $scope);
         } elseif (isset($classArray['array']) && $classArray['array'] !== '') {
-            $classString = $this->compilesArray($classAttr, $scope);
+            $classString = $this->compileArray($classAttr, $scope);
         } else {
             $classString = $this->compileString($classAttr, $scope);
         }
@@ -106,7 +106,7 @@ class NgClass extends Directive
      * @param Scope $scope Scope object with data for current expression.
      * @return string Compiled class string.
      */
-    protected function compilesArray($classAttr, $scope)
+    protected function compileArray($classAttr, $scope)
     {
         $expression           = new Expression($this->phCompile);
         $classExpressionArray = explode(',', trim($classAttr, ' []'));

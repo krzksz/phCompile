@@ -30,9 +30,12 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhCompile\Template\Directive\NgClass::compile
+     * @covers PhCompile\Template\Directive\NgClass::compileString
+     * @covers PhCompile\Template\Directive\NgClass::compileArray
+     * @covers PhCompile\Template\Directive\NgClass::compileObject
      * @dataProvider compileProvider
      */
-    public function testRender($scopeData, $classString, $expected) {
+    public function testCompile($scopeData, $classString, $expected) {
         $this->scope->setData($scopeData);
 
         $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
