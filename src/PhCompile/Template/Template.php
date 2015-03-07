@@ -88,7 +88,7 @@ class Template
      * @param string $path Path to template file.
      * @throws TemplateNotFoundException Throw's exception if file does not exist.
      */
-    public function loadHtml($path)
+    public function loadHTML($path)
     {
         $html = file_get_contents($path);
 
@@ -108,7 +108,7 @@ class Template
      *
      * @param string $html Template HTML string.
      */
-    public function setHtml($html)
+    public function setHTML($html)
     {
         $this->html = $html;
     }
@@ -118,7 +118,7 @@ class Template
      *
      * @return string Template HTML string.
      */
-    public function getHtml()
+    public function getHTML()
     {
         return $this->html;
     }
@@ -163,18 +163,18 @@ class Template
      */
     protected function compileNode(\DOMElement $element) {
         $directives = $this->phCompile->getDirectives();
-        $stop = false;
+        $interrupt = false;
         foreach($directives as $directive) {
             if($directive->isRestrict('E') === true) {
-                $stop = $this->compileElement($element, $directive);
+                $interrupt = $this->compileElement($element, $directive);
             }
-            if($stop === false && $directive->isRestrict('A') === true) {
-                $stop = $this->compileAttribute($element, $directive);
+            if($interrupt === false && $directive->isRestrict('A') === true) {
+                $interrupt = $this->compileAttribute($element, $directive);
             }
-            if($stop === false && $directive->isRestrict('C') === true) {
-                $stop = $this->compileClass($element, $directive);
+            if($interrupt === false && $directive->isRestrict('C') === true) {
+                $interrupt = $this->compileClass($element, $directive);
             }
-            if($stop === true) {
+            if($interrupt === true) {
                 return false;
             }
         }
@@ -195,7 +195,7 @@ class Template
             $directive->compile($element, $this->getScope());
         }
 
-        return $directive->haltCompiling();
+        return $directive->doesInterrupt();
     }
 
     /**
@@ -211,7 +211,7 @@ class Template
             $directive->compile($element, $this->getScope());
         }
 
-        return $directive->haltCompiling();
+        return $directive->doesInterrupt();
     }
 
     /**
@@ -227,7 +227,7 @@ class Template
             $directive->compile($element, $this->getScope());
         }
 
-        return $directive->haltCompiling();
+        return $directive->doesInterrupt();
     }
 
     /**

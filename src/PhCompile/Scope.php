@@ -16,22 +16,23 @@ namespace PhCompile;
 class Scope
 {
     /**
+     * Array containing all of the data.
+     *
+     * @var array
+     */
+    protected $data = array();
+
+    /**
      * Creates new Scope object.
      * You can supply optional parameter with initial data that will be
      * set to Scope.
      *
      * @param array $data Scope data to set.
      */
-    public function __construct(array $data = array()) {
+    public function __construct(array $data = array())
+    {
         $this->setData($data);
     }
-
-    /**
-     * Array containing all of the data.
-     *
-     * @var array
-     */
-    protected $data = array();
 
     /**
      * Sets new data.
@@ -62,7 +63,7 @@ class Scope
      */
     public function getData($accessString = null)
     {
-        if($accessString === null) {
+        if ($accessString === null) {
             return $this->data;
         }
 

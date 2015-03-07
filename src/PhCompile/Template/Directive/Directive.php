@@ -11,7 +11,8 @@
 namespace PhCompile\Template\Directive;
 
 use PhCompile\PhCompile,
-    PhCompile\Scope;
+    PhCompile\Scope,
+    InvalidArgumentException;
 
 /**
  * Start point for creating other Directives.
@@ -27,11 +28,11 @@ abstract class Directive
     protected $phCompile = null;
 
     /**
-     * Indicates if parser should stop further rendering of current DOM element.
+     * Indicates if compiler should stop further compiling of current DOM element.
      *
      * @var bool
      */
-    protected $haltCompiling = false;
+    protected $interrupt = false;
 
     /**
      * Directive restriction, can be element, attribute or class.
@@ -45,14 +46,14 @@ abstract class Directive
      *
      * @var int
      */
-    protected $prioriy = 0;
+    protected $priority = 0;
 
     /**
      * Name that identifies directive.
      *
      * @var string
      */
-    protected $name = null;
+    protected $name = '';
 
     /**
      * Creates new directive.
@@ -62,7 +63,7 @@ abstract class Directive
     public function __construct(PhCompile $phCompile)
     {
         $this->phCompile = $phCompile;
-        $this->restrict = 'ACE';
+        $this->restrict  = 'ACE';
     }
 
     /**
@@ -70,7 +71,8 @@ abstract class Directive
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -78,18 +80,19 @@ abstract class Directive
      * Sets directive name.
      *
      * @param string $name Directive name
+     * @throws InvalidArgumentException Throws exception if given name is not a string.
      */
-    protected function setName($name) {
-        $this->name = $name;
-    }
+    protected function setName($name)
+    {
+        if (is_string($name) === false) {
+            throw new InvalidArgumentException(
+            sprintf(
+                'Directive name must be a string, "%s" given!', gettype($name)
+            )
+            );
+        }
 
-    /**
-     * Returns directive restriction.
-     *
-     * @return int Directive restriction.
-     */
-    public function getRestrict() {
-        return $this->restrict;
+        $this->name = $name;
     }
 
     /**
@@ -101,18 +104,57 @@ abstract class Directive
      * You can combine them as you want e.g. 'AE', 'AC', 'EC' etc.
      *
      * @param string $restrict New directive restriction.
+     * @throws InvalidArgumentException Throws exception if given restrict is not a string.
      */
-    public function setRestrict($restrict) {
+    public function setRestrict($restrict)
+    {
+        if (is_string($restrict) === false) {
+            throw new InvalidArgumentException(
+            sprintf(
+                'Directive restrict must be a string, "%s" given!',
+                gettype($restrict)
+            )
+            );
+        }
+
         $this->restrict = strtoupper($restrict);
     }
 
     /**
+     * Returns directive restriction.
+     *
+     * @return int Directive restriction.
+     */
+    public function getRestrict()
+    {
+        return $this->restrict;
+    }
+
+    /**
      * Tells if directive has given restriction.
+     * You should check for only one restrict at a time!
      *
      * @param type $restrict
      * @return type
+     * @throws InvalidArgumentException Throws exception if restrict is not a string
+     * or it contains more then one letter.
      */
-    public function isRestrict($restrict) {
+    public function isRestrict($restrict)
+    {
+        if (is_string($restrict) === false) {
+            throw new InvalidArgumentException(
+            sprintf(
+                'Directive restrict must be a string, "%s" given!',
+                gettype($restrict)
+            )
+            );
+        }
+        if (strlen($restrict) !== 1) {
+            throw new InvalidArgumentException(
+            'You should check for only one restrict at a time!'
+            );
+        }
+
         return strpos($this->getRestrict(), strtoupper($restrict)) !== false;
     }
 
@@ -122,8 +164,18 @@ abstract class Directive
      *
      * @param int $priority New directive priority.
      */
-    public function setPriority($priority) {
-        $this->prioriy = $priority;
+    public function setPriority($priority)
+    {
+        if (is_numeric($priority) === false) {
+            throw new InvalidArgumentException(
+            sprintf(
+                'Directive priority must be a number, "%s" given!',
+                gettype($priority)
+            )
+            );
+        }
+
+        $this->priority = $priority;
     }
 
     /**
@@ -131,8 +183,9 @@ abstract class Directive
      *
      * @return int
      */
-    public function getPriority() {
-        return $this->prioriy;
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     /**
@@ -148,23 +201,21 @@ abstract class Directive
     }
 
     /**
-     * Returns boolean telling if parser should stop compiling current DOM element.
+     * Sets the boolean telling compiler if it should stop compiling current element.
+     */
+    public function setInterrupt($interrupt)
+    {
+        $this->interrupt = $interrupt;
+    }
+
+    /**
+     * Returns boolean telling if compiler should stop compiling current DOM element.
      *
      * @return bool Tells compiler if it should stop further compiling of certain
      * DOM element.
      */
-    public function haltCompiling()
+    public function doesInterrupt()
     {
-        return $this->haltCompiling;
-    }
-
-    /**
-     * Sets boolean value telling if parser should stop compiling current DOM element.
-     *
-     * @param bool $haltCompiling True if compiling should stop, false otherwise.
-     */
-    protected function setHaltCompiling($haltCompiling)
-    {
-        $this->haltCompiling = $haltCompiling;
+        return $this->interrupt;
     }
 }

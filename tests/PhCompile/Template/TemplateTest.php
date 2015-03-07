@@ -25,35 +25,65 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhCompile\Template\Template::setScope
-     * @covers PhCompile\Template\Template::getScope
      */
-    public function testSetAndGetScope()
-    {
+    public function testSetScope() {
         $scope = new Scope();
         $this->template->setScope($scope);
+
+        $this->assertAttributeEquals($scope, 'scope', $this->template);
+    }
+
+    /**
+     * @covers PhCompile\Template\Template::getScope
+     * @depends testSetScope
+     */
+    public function testGetScope() {
+        $scope = new Scope();
+        $this->template->setScope($scope);
+
         $this->assertSame($scope, $this->template->getScope());
     }
 
     /**
-     * @covers PhCompile\Template\Template::setHtml
-     * @covers PhCompile\Template\Template::getHtml
+     * @covers PhCompile\Template\Template::getScope
      */
-    public function testSetAndGetHtml()
-    {
-        $html = file_get_contents(TEST_PATH.'template/overall.html');
-        $this->template->setHtml($html);
-        $this->assertSame($html, $this->template->getHtml());
+    public function testGetDefaultScope() {
+        $this->assertInstanceOf('PhCompile\Scope', $this->template->getScope());
     }
 
     /**
-     * @covers PhCompile\Template\Template::loadHtml
-     * @depends testSetAndGetHtml
+     * @covers PhCompile\Template\Template::setHTML
      */
-    public function testLoadHtml()
+    public function testSetHTML() {
+        $html = file_get_contents(TEST_PATH.'template/overall.html');
+        $this->template->setHTML($html);
+
+        $this->assertAttributeSame($html, 'html', $this->template);
+    }
+
+    /**
+     * @covers PhCompile\Template\Template::getHTML
+     * @depends testSetHTML
+     */
+    public function testGetHTML() {
+        $html = file_get_contents(TEST_PATH.'template/overall.html');
+        $this->template->setHTML($html);
+
+        $this->assertSame($html, $this->template->getHTML());
+    }
+
+    /**
+     * @covers PhCompile\Template\Template::loadHTML
+     * @depends testGetHTML
+     */
+    public function testLoadHTML()
     {
         $templatePath = TEST_PATH.'template/overall.html';
-        $this->template->loadHtml($templatePath);
-        $this->assertSame(file_get_contents($templatePath),
-            $this->template->getHtml());
+        $html = file_get_contents($templatePath);
+
+        $this->template->loadHTML($templatePath);
+
+        $this->assertAttributeSame($html, 'html', $this->template);
+        $this->assertSame($html, $this->template->getHTML());
     }
 }

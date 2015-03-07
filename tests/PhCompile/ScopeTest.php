@@ -25,18 +25,48 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhCompile\Scope::setData
-     * @covers PhCompile\Scope::getData
-     * @dataProvider setAndGetDataProvider
+     * @covers PhCompile\Scope::__construct
      */
-    public function testSetAndGetData($data, $accessString, $expected)
-    {
-        $this->scope->setData($data);
-        $this->assertSame($data, $this->scope->getData());
-        $this->assertSame($expected, $this->scope->getData($accessString));
+    public function testSetDataConstruct() {
+        $data = array('foo' => 'bar');
+        $scope = new Scope($data);
+
+        $this->assertAttributeEquals($data, 'data', $scope);
     }
 
-    public function setAndGetDataProvider()
+    /**
+     * @covers PhCompile\Scope::setData
+     */
+    public function testSetData() {
+        $data = array('foo' => 'bar');
+        $this->scope->setData($data);
+
+        $this->assertAttributeEquals($data, 'data', $this->scope);
+    }
+
+    /**
+     * @covers PhCompile\Scope::getData
+     * @depends testSetData
+     * @dataProvider getDataProvider
+     */
+    public function testGetData($data, $access, $expected) {
+        $this->scope->setData($data);
+        
+        $this->assertSame($expected, $this->scope->getData($access));
+    }
+
+    /**
+     * @covers PhCompile\Scope::getData
+     * @depends testSetData
+     * @dataProvider getDataProvider
+     */
+    public function testGetAllData($data, $access, $expected) {
+        $this->scope->setData($data);
+
+        $this->assertSame($data, $this->scope->getData());
+    }
+
+    public function getDataProvider()
     {
         return array(
             array(
@@ -66,7 +96,7 @@ class ScopeTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Scope::hasData
      * @dataProvider hasDataProvider
-     * @depends testSetAndGetData
+     * @depends testGetData
      */
     public function testHasData($data, $accessString, $expected)
     {

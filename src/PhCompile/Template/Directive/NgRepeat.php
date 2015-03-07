@@ -52,7 +52,7 @@ class NgRepeat extends Directive
         /**
          * Reset halt compiling to it's default value.
          */
-        $this->setHaltCompiling(false);
+        $this->setInterrupt(false);
 
         /**
          * Let's check if variable we're trying to enumerate is array.
@@ -77,7 +77,7 @@ class NgRepeat extends Directive
              * We stop further compiling of source DOM element, we want it to
              * be intact and hidden so we can replace it back on the client side.
              */
-            $this->setHaltCompiling(true);
+            $this->setInterrupt(true);
             Utils::addClass($domElement, 'ng-hide');
         }
     }
@@ -180,7 +180,7 @@ class NgRepeat extends Directive
          */
         Utils::addClass($domElement,
             $this->phCompile->getConfig('compile.class'));
-        $template->setHtml($domElement->ownerDocument->saveHTML($domElement));
+        $template->setHTML($domElement->ownerDocument->saveHTML($domElement));
         $template->setScope($scope);
 
         return $template->compile();

@@ -10,7 +10,8 @@
 
 namespace PhCompile\Tests;
 
-use PhCompile\PhCompile;
+use PhCompile\PhCompile,
+    PhCompile\Template\Directive\NgRepeat;
 
 class PhCompileTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,5 +44,40 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
                 'attr' => 'ng-phcompile'
             )
             ), $this->phCompile->getConfig());
+    }
+
+    /**
+     * @covers PhCompile\PhCompile::addDirective
+     */
+    public function testAddDirective()
+    {
+        $repeat = new NgRepeat($this->phCompile);
+        $this->phCompile->addDirective($repeat);
+
+        $this->assertAttributeContains($repeat, 'directives', $this->phCompile);
+    }
+
+    /**
+     * @covers PhCompile\PhCompile::getDirectives
+     * @depends testAddDirective
+     */
+    public function testGetDirectives()
+    {
+        $repeat     = new NgRepeat($this->phCompile);
+        $this->phCompile->addDirective($repeat);
+        $directives = $this->phCompile->getDirectives();
+
+        $this->assertContains($repeat, $directives);
+    }
+
+    /**
+     * @covers PhCompile\PhCompile::addDefaultDirectives
+     * @depends testGetDirectives
+     */
+    public function testAddDefaultDirectives()
+    {
+        $directives = $this->phCompile->getDirectives();
+
+        $this->assertNotEmpty($directives);
     }
 }
