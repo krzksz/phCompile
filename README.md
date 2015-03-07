@@ -3,8 +3,7 @@
 
 Library for server-side precompiling AngularJS templates in PHP.
 
-ngPhCompile tries to mimic AngularJS behaviour for easier usage, you can notice that specially when using `Scope` object
-which allows you to use both PHP's `foo['bar']` and JS' `foo.bar` notation to access it's data.
+The goal of using ngPhCompile is to let you compile your HTML templates using your existing JSON REST api.
 
 ngPhCompile is still in alpha state, bugs and api changes may occur.
 
