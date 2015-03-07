@@ -14,21 +14,18 @@ ngPhCompile is still in alpha state, bugs and api changes may occur.
 * Faster website rendering when using big data chunks.
 * Making your website preserve minimal functionality without JavaScript enabled.
 
-### Supported
+### Supported AngularJS features
 * {{ }} expressions,
 * ng-repeat(without "track by"),
 * ng-hide,
 * ng-show,
 * ng-class,
-* ng-bind,
-* Compile halting.
+* ng-bind.
 
 ### Roadmap
 * Docs and wiki update,
 * Performance benchmark,
 * Filters, currently they are expected to break expression that uses them,
-* Custom directives,
-* Expressions priorities,
 * Expressions cache,
 * Suggestions?
 
@@ -155,6 +152,11 @@ echo $phCompile->getConfig('compile["attr"]'); // Also outputs "ng-phcompile"
 ## Directives
 Directive are objects responsible for compiling provided `DOMElement` using given `Scope` data. ngPhCompile comes with some default `Directive` objects that correspond with standard AngularJS directives. Those objects must extend `Directive` object to be accepted by `PhCompile`.
 
+##Contribute
+You are welcome to contribute your own improvements and ideas. If you have any issues and feature ideas please post them at [project's issues page](https://github.com/krzksz/ngPhCompile/issues).
+
+##Contact
+If you would like you can contact me or follow via Twitter [@krzksz](https://twitter.com/krzksz).
 
 ## Thanks
 I would like to thank [@danchoi](https://github.com/danchoi) for creating his [AngularJS template parser in Haskell](https://github.com/danchoi/ngrender) which gave me inspiration and ideas for this project.
