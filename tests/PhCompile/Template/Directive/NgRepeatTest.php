@@ -28,6 +28,27 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhCompile\Template\Directive\NgRepeat::__construct
+     */
+    public function testName() {
+        $this->assertEquals('ng-repeat', $this->repeat->getName());
+    }
+
+    /**
+     * @covers PhCompile\Template\Directive\NgRepeat::__construct
+     */
+    public function testRestrict() {
+        $this->assertEquals('A', $this->repeat->getRestrict());
+    }
+
+    /**
+     * @covers PhCompile\Template\Directive\NgRepeat::__construct
+     */
+    public function testPriority() {
+        $this->assertEquals(1000, $this->repeat->getPriority());
+    }
+
+    /**
      * @covers PhCompile\Template\Directive\NgRepeat::compile
      */
     public function testRepeatArray() {

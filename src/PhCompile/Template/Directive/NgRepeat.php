@@ -50,7 +50,7 @@ class NgRepeat extends Directive
         $parsedArray = $this->parseRepeat($domElement);
         $repeatArray = $scope->getData($parsedArray['array']);
         /**
-         * Reset halt compiling to it's default value.
+         * Reset interrupting to default value.
          */
         $this->setInterrupt(false);
 
@@ -58,6 +58,9 @@ class NgRepeat extends Directive
          * Let's check if variable we're trying to enumerate is array.
          */
         if (is_array($repeatArray) === true) {
+            /**
+             * Helper variables for ng-repeat special scope variables e.g. $index.
+             */
             $repeatCount = count($repeatArray);
             $repeatIndex = 0;
             foreach ($repeatArray as $repeatKey => $repeatValue) {
