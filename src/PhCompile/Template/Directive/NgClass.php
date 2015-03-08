@@ -10,7 +10,8 @@
 
 namespace PhCompile\Template\Directive;
 
-use PhCompile\Scope,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
     PhCompile\DOM\Utils,
     PhCompile\Template\Expression\Expression,
     PhCompile\Template\Expression\InvalidExpressionException;
@@ -24,9 +25,9 @@ class NgClass extends Directive
     /**
      * Creates new ng-class directive.
      *
-     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     * @param PhCompile $phCompile PhCompile object.
      */
-    public function __construct(\PhCompile\PhCompile $phCompile)
+    public function __construct(PhCompile $phCompile)
     {
         parent::__construct($phCompile);
         $this->setName('ng-class');
@@ -38,7 +39,7 @@ class NgClass extends Directive
      * and setting element's class attribute.
      *
      * @param \DOMElement $element DOM element to compile.
-     * @param Scope $scope Scope object containg data for expression.
+     * @param Scope $scope Scope object containing data for expression.
      * @return \DOMElement Compiled DOM element.
      */
     public function compile(\DOMElement $element, Scope $scope)

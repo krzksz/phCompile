@@ -104,7 +104,6 @@ class PhCompile
      * found inside matching restrict DOM part.
      * compile() method is called with entire\ DOMElement.
      *
-     * @param string $string String that directive matches.
      * @param Directive $directive New directive object.
      */
     public function addDirective(Directive $directive)
@@ -117,7 +116,8 @@ class PhCompile
      *
      * @return SplPriorityQueue Derectives queue.
      */
-    public function getDirectives() {
+    public function getDirectives()
+    {
         return $this->directives;
     }
 

@@ -10,7 +10,8 @@
 
 namespace PhCompile\Template\Directive;
 
-use PhCompile\Scope,
+use PhCompile\PhCompile,
+    PhCompile\Scope,
     PhCompile\Template\Template,
     PhCompile\DOM\Utils;
 
@@ -23,9 +24,9 @@ class NgRepeat extends Directive
     /**
      * Creates new ng-repeat directive.
      *
-     * @param \PhCompile\PhCompile $phCompile PhCompile object.
+     * @param PhCompile $phCompile PhCompile object.
      */
-    public function __construct(\PhCompile\PhCompile $phCompile)
+    public function __construct(PhCompile $phCompile)
     {
         parent::__construct($phCompile);
         $this->setName('ng-repeat');
@@ -35,7 +36,7 @@ class NgRepeat extends Directive
 
     /**
      * Compiles AngularJS ng-repeat attribute.
-     * Each element's copy is treated and rendered as seperate template with it's
+     * Each element's copy is treated and rendered as separate template with it's
      * own Scope data. Those elements are later appended to element's parent node.
      *
      * @todo Think of refactoring methods.
@@ -70,7 +71,7 @@ class NgRepeat extends Directive
                 $this->setScopeSpecial($subScope, $repeatCount, $repeatIndex);
 
                 /**
-                 * Append subcompiled DOM elelent.
+                 * Append subcompiled DOM element.
                  */
                 Utils::appendHTML($domElement->parentNode,
                     $this->subcompile($domElement->cloneNode(true), $subScope));
@@ -92,7 +93,7 @@ class NgRepeat extends Directive
      * @param Scope $scope Scope to set data to.
      * @param array $parsedArray Parsed ng-repeat attribute.
      * @param string $repeatKey Key of the current element of the array we iterate over.
-     * @param type $repeatValue Value of the current element of the array we iterate over.
+     * @param mixed $repeatValue Value of the current element of the array we iterate over.
      * @return Scope Scope object with set values.
      */
     protected function setScopeData(Scope $scope, $parsedArray, $repeatKey,

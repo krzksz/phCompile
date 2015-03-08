@@ -31,7 +31,7 @@ class RecursiveDOMIterator implements \RecursiveIterator
     protected $_nodeList;
 
     /**
-     * @param DOMNode $domNode
+     * @param \DOMNode $domNode
      * @return void
      */
     public function __construct(\DOMNode $domNode)

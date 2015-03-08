@@ -87,7 +87,7 @@ class Template
      * Loads template HTML from file.
      *
      * @param string $filepath Path to template file.
-     * @throws TemplateNotFoundException Throw's exception if file does not exist.
+     * @throws InvalidArgumentException Throw's exception if file does not exist.
      */
     public function loadHTML($filepath)
     {
@@ -142,6 +142,7 @@ class Template
          */
         foreach ($domIterator as $domNode) {
             if ($domNode->nodeType === XML_ELEMENT_NODE) {
+                var_dump($domNode->tagName);
                 $this->compileNode($domNode);
             }
         }
@@ -239,9 +240,7 @@ class Template
     }
 
     /**
-     * Finds and compiles expressions in templates HTML.
-     *
-     * @throws InvalidExpressionException Throws exception if function call is found inside expression.
+     * Finds and compiles expressions in template's HTML.
      */
     protected function compileExpressions()
     {

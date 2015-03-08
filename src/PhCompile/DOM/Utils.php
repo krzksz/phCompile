@@ -45,7 +45,7 @@ class Utils
     {
         $document = new \DOMDocument();
         /**
-         * We have to surpress warnings of invalid HTML e.g. when giving only
+         * We have to suppress warnings of invalid HTML e.g. when giving only
          * fragments like "<span></span>" not entire valid document.
          */
         $document->loadHTML(mb_convert_encoding($source, 'HTML-ENTITIES', 'UTF-8'));
@@ -58,6 +58,7 @@ class Utils
      * This method removes some additional HTML added by PHP's DOM parser if
      * given HTML is not entirely valid e.g. when parsing HTML chunks.
      *
+     * @param \DOMDocument $document DOM document to convert to HTML.
      * @return string HTML representation of \DOMDocument document.
      */
     public static function saveHTML(\DOMDocument $document)
@@ -87,10 +88,10 @@ class Utils
     }
 
     /**
-     * Removes class from given \DOMElement. If class doesn't exists it does nothing.
+     * Removes class from given \DOMElement. If class does not exist it does nothing.
      *
      * @param \DOMElement $domElement DOM element to remove class from.
-     * @param type $className Class name to remove.
+     * @param string $className Class name to remove.
      */
     public static function removeClass(\DOMElement $domElement, $className)
     {
@@ -105,7 +106,8 @@ class Utils
      * Tells if given DOM element has given class.
      *
      * @param \DOMElement $domElement DOM element to search in.
-     * @param type $className Class name to search for.
+     * @param string $className Class name to search for.
+     * @return boolean True if DOM element has given class, false otherwise.
      */
     public static function hasClass(\DOMElement $domElement, $className)
     {
@@ -116,7 +118,7 @@ class Utils
      * Appends given HTML inside given DOM element.
      *
      * @param \DOMElement $domElement DOM element to with contents HTML should be appended.
-     * @param type $html HTML to append.
+     * @param string $html HTML to append.
      * @return \DOMElement DOM element with appended contents.
      */
     public static function appendHTML(\DOMElement $domElement, $html)

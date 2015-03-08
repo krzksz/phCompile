@@ -134,8 +134,8 @@ abstract class Directive
      * Tells if directive has given restriction.
      * You should check for only one restrict at a time!
      *
-     * @param type $restrict
-     * @return type
+     * @param string $restrict Single letter directive restrict to check.
+     * @return boolean True if directive has given restrict, false otherwise.
      * @throws InvalidArgumentException Throws exception if restrict is not a string
      * or it contains more then one letter.
      */
@@ -192,7 +192,7 @@ abstract class Directive
      * Renders and returns given DOM element using given Scope.
      *
      * @param \DOMElement $domElement DOM element to render.
-     * @param Scope $scope Scope oblect containg data for rendering.
+     * @param Scope $scope Scope object containing data for rendering.
      * @return \DOMElement Renderer DOM element.
      */
     public function compile(\DOMElement $domElement, Scope $scope)
@@ -202,6 +202,7 @@ abstract class Directive
 
     /**
      * Sets the boolean telling compiler if it should stop compiling current element.
+     * @param boolean $interrupt True if compiler should stop compiling, false otherwise.
      */
     public function setInterrupt($interrupt)
     {
