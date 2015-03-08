@@ -1,5 +1,5 @@
 # phCompile
-[![Build Status](https://travis-ci.org/krzksz/phCompile.svg?branch=master)](https://travis-ci.org/krzksz/ngPhCompile)
+[![Build Status](https://travis-ci.org/krzksz/phCompile.svg?branch=master)](https://travis-ci.org/krzksz/phCompile)
 
 Library for server-side precompiling AngularJS templates in PHP.
 
