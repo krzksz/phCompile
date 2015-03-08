@@ -5,6 +5,8 @@ Library for server-side precompiling AngularJS templates in PHP.
 
 The goal of using ngPhCompile is to let you compile your HTML templates using your existing JSON REST api.
 
+Server side compiling works in a way that lets you easily revert back all of the changes made by ngPhCompile on the client side by either adding speciall class or attribute to the element.
+
 ngPhCompile is still in alpha state, bugs and api changes may occur.
 
 ### Use cases
@@ -23,30 +25,19 @@ ngPhCompile is still in alpha state, bugs and api changes may occur.
 * ng-bind.
 
 ### Roadmap
-* Docs and wiki update,
 * Performance benchmark,
 * Filters, currently they are expected to break expression that uses them,
 * Expressions cache,
 * Suggestions?
 
-## Setting up 
+## Quick Example
 ```php
 $phCompile = new \PhCompile\PhCompile(); // Create PhCompile object
 $template = new \PhCompile\Template\Template($phCompile); // Create template
 
 $template->loadHtml('template.html'); // Load from file
 $template->setHtml('<span></span>'); // Or just from string
-```
-
-## Compiling
-The main goal is to achive as closest similarity to AngularJS as possible. It is also worth noting, that ngPhCompile always adds either class or attribute where it changed template structure so you can revert everything back easily on the client-side.
-```php
-$phCompile = new \PhCompile\PhCompile();
-$template = new \PhCompile\Template\Template($phCompile);
-$template->setHtml('<span></span>');
-
-$template->getScope()->setData(array('foo'=>'bar')); // Feed template scope with data
-echo $template->compile(); // Compile template HTML
+echo $template->compile();
 ```
 
 #### {{ }} expressions
@@ -118,35 +109,6 @@ $template->setHtml('<span ng-hide="foo"></span>');
 $template->getScope()->setData(array('foo'=>true));
 
 echo $template->compile(); // Outputs <span ng-hide="foo" class="ng-hide">bar</span>
-```
-## Configuration
-
-Main configuration is stored inside `Scope` object inside `PhCompile` class.
-PhCompile sets some configuration by default:
-```php
-array(
-	'compile' => array(
-        /**
-         * Class used to tag server side compileed elements.
-         */
-        'class' => 'ng-phcompile',
-        /**
-         * Attribute used to tag server side compiled expressions.
-         */
-        'attr' => 'ng-phcompile'
-  	)
-)```
-You can of course access and overwrite this configuration however you want:
-```php
-$phCompile->setConfig(
-    array(
-        'compile' => array('class' => 'custom-class')
-    )
-);
-echo $phCompile->getConfig('compile.class'); // Outputs "custom-class"
-echo $phCompile->getConfig('compile["class"]'); // Also outputs "custom-class"
-echo $phCompile->getConfig('compile.attr'); // Outputs "ng-phcompile"
-echo $phCompile->getConfig('compile["attr"]'); // Also outputs "ng-phcompile"
 ```
 
 ## Directives
