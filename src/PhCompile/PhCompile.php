@@ -10,11 +10,10 @@
 
 namespace PhCompile;
 
-use PhCompile\Template\Directive\NgHide;
-use PhCompile\Template\Directive\NgShow;
 use SplPriorityQueue,
     PhCompile\Template\Directive\Directive,
-    PhCompile\Template\Directive\NgVisibility,
+    PhCompile\Template\Directive\NgShow,
+    PhCompile\Template\Directive\NgHide,
     PhCompile\Template\Directive\NgRepeat,
     PhCompile\Template\Directive\NgBind,
     PhCompile\Template\Directive\NgClass;
