@@ -163,7 +163,10 @@ class Template
      */
     protected function compileNode(\DOMElement $element)
     {
-        $directives = $this->phCompile->getDirectives();
+        /**
+         * Clone queue so we won't lost original data.
+         */
+        $directives = clone $this->phCompile->getDirectives();
         $interrupt  = false;
         foreach ($directives as $directive) {
             if ($directive->isRestrict('E') === true) {
