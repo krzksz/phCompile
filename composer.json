@@ -1,5 +1,5 @@
 {
-    "name": "krzksz/ng-phcompile",
+    "name": "krzksz/phcompile",
     "description": "PHP server side precompiler for AngularJS apps.",
     "type": "library",
     "keywords": [
