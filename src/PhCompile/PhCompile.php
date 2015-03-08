@@ -10,6 +10,8 @@
 
 namespace PhCompile;
 
+use PhCompile\Template\Directive\NgHide;
+use PhCompile\Template\Directive\NgShow;
 use SplPriorityQueue,
     PhCompile\Template\Directive\Directive,
     PhCompile\Template\Directive\NgVisibility,
@@ -127,8 +129,8 @@ class PhCompile
     {
         $defaultAttributes = array(
             new NgRepeat($this),
-            new NgVisibility($this),
-            new NgVisibility($this),
+            new NgShow($this),
+            new NgHide($this),
             new NgBind($this),
             new NgClass($this)
         );
