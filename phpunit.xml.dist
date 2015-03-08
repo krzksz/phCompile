@@ -11,13 +11,13 @@
          bootstrap="tests/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="ngPhCompile Test Suite">
+        <testsuite name="phCompile Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/PhRender/</directory>
+            <directory>./src/PhCompile/</directory>
         </whitelist>
     </filter>
 </phpunit>

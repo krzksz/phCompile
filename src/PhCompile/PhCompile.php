@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the ngPhCompile package.
+ * This file is part of the phCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
  *
