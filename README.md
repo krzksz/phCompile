@@ -1,13 +1,13 @@
-# ngPhCompile
-[![Build Status](https://travis-ci.org/krzksz/ngPhCompile.svg?branch=master)](https://travis-ci.org/krzksz/ngPhCompile)
+# phCompile
+[![Build Status](https://travis-ci.org/krzksz/phCompile.svg?branch=master)](https://travis-ci.org/krzksz/ngPhCompile)
 
 Library for server-side precompiling AngularJS templates in PHP.
 
-The goal of using ngPhCompile is to let you compile your HTML templates using your existing JSON REST api.
+The goal of using phCompile is to let you compile your HTML templates using your existing JSON REST api.
 
-Server side compiling works in a way that lets you easily revert back all of the changes made by ngPhCompile on the client side by either adding speciall class or attribute to the element.
+Server side compiling works in a way that lets you easily revert back all of the changes made by phCompile on the client side by either adding speciall class or attribute to the element.
 
-ngPhCompile is still in alpha state, bugs and api changes may occur.
+phCompile is still in alpha state, bugs and api changes may occur.
 
 ### Use cases
 * Serving complete website on first load for better SEO and social crawlers.
@@ -58,7 +58,7 @@ echo $template->compile(); // Outputs <span ng-phcompile="2+2*2">6</span>
 ```
 As you propably noticed, expression value has been covered with `span` element with `ng-phcompile` attribute. This mechanism lets you revert template back on the client-site when AngularJS gets ready.
 #### ng-repeat
-ng-repeat attribute also works similar to AngularJS and supports both `foo in bar` and `(foo, bar) in baz` methods. The only difference is that ngPhCompile leaves first copy of the element uncompiled with `ng-hide` class, so you can use it when AngularJS kicks in on the client side.
+ng-repeat attribute also works similar to AngularJS and supports both `foo in bar` and `(foo, bar) in baz` methods. The only difference is that phCompile leaves first copy of the element uncompiled with `ng-hide` class, so you can use it when AngularJS kicks in on the client side.
 
 ```php
 $phCompile = new \PhCompile\PhCompile();
@@ -112,10 +112,10 @@ echo $template->compile(); // Outputs <span ng-hide="foo" class="ng-hide">bar</s
 ```
 
 ## Directives
-Directive are objects responsible for compiling provided `DOMElement` using given `Scope` data. ngPhCompile comes with some default `Directive` objects that correspond with standard AngularJS directives. Those objects must extend `Directive` object to be accepted by `PhCompile`.
+Directive are objects responsible for compiling provided `DOMElement` using given `Scope` data. phCompile comes with some default `Directive` objects that correspond with standard AngularJS directives. Those objects must extend `Directive` object to be accepted by `PhCompile`.
 
 ##Contribute
-You are welcome to contribute your own improvements and ideas. If you have any issues and feature ideas please post them at [project's issues page](https://github.com/krzksz/ngPhCompile/issues).
+You are welcome to contribute your own improvements and ideas. If you have any issues and feature ideas please post them at [project's issues page](https://github.com/krzksz/phCompile/issues).
 
 ##Contact
 If you would like you can contact me or follow via Twitter [@krzksz](https://twitter.com/krzksz).
