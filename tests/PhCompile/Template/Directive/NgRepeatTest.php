@@ -17,8 +17,17 @@ use PhCompile\PhCompile,
 
 class RepeatTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var PhCompile
+     */
     protected $phCompile;
+    /**
+     * @var NgRepeat
+     */
     protected $repeat;
+    /**
+     * @var Scope
+     */
     protected $scope;
 
     public function setUp() {

@@ -51,7 +51,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\Directive::getName
      * @depends testSetName
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testSetNameNotString()
     {
@@ -112,7 +112,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\Directive::setRestrict
      * @depends testSetRestrict
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testSetRestrictNotString()
     {
@@ -160,7 +160,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\Directive::isRestrict
      * @depends testSetRestrict
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testIsRestrictNotString()
     {
@@ -170,7 +170,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\Directive::isRestrict
      * @depends testSetRestrict
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testIsRestrictNotSingle()
     {
@@ -191,7 +191,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhCompile\Template\Directive\Directive::setPriority
      * @depends testSetRestrict
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testSetPriorityNotNumber()
     {

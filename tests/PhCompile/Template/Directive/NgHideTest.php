@@ -18,7 +18,13 @@ use PhCompile\PhCompile,
 class NgHideTest extends \PHPUnit_Framework_TestCase
 {
     protected $phCompile;
+    /**
+     * @var NgHide
+     */
     protected $ngHide;
+    /**
+     * @var Scope
+     */
     protected $scope;
 
     public function setUp() {

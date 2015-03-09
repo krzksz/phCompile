@@ -17,8 +17,17 @@ use PhCompile\PhCompile,
 
 class BindTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var PhCompile
+     */
     protected $phCompile;
+    /**
+     * @var NgBind
+     */
     protected $bind;
+    /**
+     * @var Scope
+     */
     protected $scope;
 
     public function setUp() {

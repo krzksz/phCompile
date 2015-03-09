@@ -17,8 +17,17 @@ use PhCompile\PhCompile,
 
 class NgClassTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var PhCompile
+     */
     protected $phCompile;
+    /**
+     * @var NgClass
+     */
     protected $class;
+    /**
+     * @var Scope
+     */
     protected $scope;
 
     public function setUp() {

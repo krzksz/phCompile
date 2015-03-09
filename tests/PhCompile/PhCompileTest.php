@@ -15,6 +15,9 @@ use PhCompile\PhCompile,
 
 class PhCompileTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var PhCompile
+     */
     protected $phCompile;
 
     protected function setUp()
