@@ -106,7 +106,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhCompile\Template\Template::compile
-     * @covers PhCompile\Template\Template::compileAttributes
+     * @covers PhCompile\Template\Template::compileAttribute
      */
     public function testCompile()
     {

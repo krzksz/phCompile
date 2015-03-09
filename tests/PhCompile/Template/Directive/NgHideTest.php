@@ -29,7 +29,7 @@ class NgHideTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers PhCompile\Template\Directive\NgHide:compile
+     * @covers PhCompile\Template\Directive\NgHide::compile
      * @dataProvider compileProvider
      */
     public function testCompile($scopeData, $expression, $expectedClass) {

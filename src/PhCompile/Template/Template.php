@@ -142,7 +142,6 @@ class Template
          */
         foreach ($domIterator as $domNode) {
             if ($domNode->nodeType === XML_ELEMENT_NODE) {
-                var_dump($domNode->tagName);
                 $this->compileNode($domNode);
             }
         }
