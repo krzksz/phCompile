@@ -76,6 +76,17 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhCompile\PhCompile::addDirective
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddDirectiveWithoutName()
+    {
+        $directiveStub = $this->getMockForAbstractClass('PhCompile\Template\Directive\Directive',
+            array(new PhCompile));
+        $this->phCompile->addDirective($directiveStub);
+    }
+
+    /**
      * @covers PhCompile\PhCompile::getDirectives
      * @depends testAddDirective
      */

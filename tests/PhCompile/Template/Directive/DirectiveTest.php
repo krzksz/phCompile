@@ -68,7 +68,7 @@ class DirectiveTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNameDefault()
     {
-        $this->assertAttributeSame('', 'name', $this->directiveStub);
+        $this->assertAttributeSame(null, 'name', $this->directiveStub);
     }
 
     /**

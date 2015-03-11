@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This file is part of the phCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
@@ -127,6 +127,12 @@ class PhCompile
      */
     public function addDirective(Directive $directive)
     {
+        if($directive->getName() === null) {
+            throw new \InvalidArgumentException(sprintf(
+                'Directive "%s" does not have a name!', get_class($directive)
+            ));
+        }
+
         $this->directives->insert($directive, $directive->getPriority());
     }
 

@@ -87,7 +87,7 @@ class Template
      * Loads template HTML from file.
      *
      * @param string $filepath Path to template file.
-     * @throws InvalidArgumentException Throw's exception if file does not exist.
+     * @throws InvalidArgumentException Throws exception if file does not exist.
      */
     public function loadHTML($filepath)
     {

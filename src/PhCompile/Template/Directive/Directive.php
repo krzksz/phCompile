@@ -53,7 +53,7 @@ abstract class Directive
      *
      * @var string
      */
-    protected $name = '';
+    protected $name = null;
 
     /**
      * Creates new directive.
