@@ -11,8 +11,8 @@ var phCompile = (function(window, document, undefined) {
         /**
          * Set default argument values.
          */
-        className = className || 'ng-repeat';
-        attribute = attribute || 'ng-repeat';
+        className = className || 'ng-phcompile';
+        attribute = attribute || 'ng-phcompile';
 
         /**
          * Remove all elements with given tag class.
