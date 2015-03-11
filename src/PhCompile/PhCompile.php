@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * This file is part of the phCompile package.
  *
  * (c) Mateusz Krzeszowiak <mateusz.krzeszowiak@gmail.com>
@@ -61,7 +61,7 @@ class PhCompile
          * Add default directives if config allows.
          */
         $this->directives = new SplPriorityQueue();
-        if($this->config->getData('directive.defaults')) {
+        if ($this->config->getData('directive.defaults') == true) {
             $this->addDefaultDirectives();
         }
     }
@@ -127,7 +127,7 @@ class PhCompile
      */
     public function addDirective(Directive $directive)
     {
-        if($directive->getName() === null) {
+        if ($directive->getName() === null) {
             throw new \InvalidArgumentException(sprintf(
                 'Directive "%s" does not have a name!', get_class($directive)
             ));
