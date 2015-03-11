@@ -43,14 +43,27 @@ class PhCompile
 
     /**
      * Creates new PhRender object.
+     * You can pass configuration in shape of an array just like to Scope object.
+     *
+     * @param array $config Configuration.
      */
-    public function __construct()
+    public function __construct(array $config = array())
     {
+        /**
+         * Set default config and overwrite it with given Scope data.
+         */
         $this->config = new Scope();
         $this->setDefaultConfig();
+        $this->config->setData($config);
 
+
+        /**
+         * Add default directives if config allows.
+         */
         $this->directives = new SplPriorityQueue();
-        $this->addDefaultDirectives();
+        if($this->config->getData('directive.defaults')) {
+            $this->addDefaultDirectives();
+        }
     }
 
     /**
@@ -69,6 +82,12 @@ class PhCompile
                      * Attribute used to tag server side compiled expressions.
                      */
                     'attr' => 'ng-phcompile'
+                ),
+                'directive' => array(
+                    /**
+                     * Tells if PhCompile should add default directives on construct.
+                     */
+                    'defaults'  =>  true
                 )
             )
         );

@@ -12,6 +12,7 @@ namespace PhCompile\Tests;
 
 use PhCompile\PhCompile,
     PhCompile\Template\Directive\NgRepeat;
+use PhCompile\Scope;
 
 class PhCompileTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,6 +38,17 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhCompile\PhCompile::__construct
+     * @depends testSetAndGetConfig
+     */
+    public function testSetConfigConstruct() {
+        $config = array('foo' => array('bar' => 'baz'));
+        $phCompile = new PhCompile($config);
+
+        $this->assertEquals('baz', $phCompile->getConfig('foo.bar'));
+    }
+
+    /**
      * @covers PhCompile\PhCompile::setDefaultConfig
      */
     public function testSetDefaultConfig()
@@ -45,8 +57,11 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
             'compile' => array(
                 'class' => 'ng-phcompile',
                 'attr' => 'ng-phcompile'
+            ),
+            'directive' => array(
+                'defaults'  =>  true
             )
-            ), $this->phCompile->getConfig());
+        ), $this->phCompile->getConfig());
     }
 
     /**
@@ -75,12 +90,27 @@ class PhCompileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhCompile\PhCompile::addDefaultDirectives
+     * @covers PhCompile\PhCompile::__construct
      * @depends testGetDirectives
      */
     public function testAddDefaultDirectives()
     {
-        $directives = $this->phCompile->getDirectives();
+        $this->assertNotEmpty($this->phCompile->getDirectives());
+    }
 
-        $this->assertNotEmpty($directives);
+    /**
+     * @covers PhCompile\PhCompile::addDefaultDirectives
+     * @covers PhCompile\PhCompile::__construct
+     * @depends testGetDirectives
+     */
+    public function testNoDefaultDirectives() {
+        $config = array(
+            'directive' =>  array(
+                'defaults'  => false
+            )
+        );
+        $phCompile = new PhCompile($config);
+
+        $this->assertEmpty($phCompile->getDirectives());
     }
 }

@@ -17,6 +17,7 @@ use PhCompile\PhCompile,
 
 class DirectiveTest extends \PHPUnit_Framework_TestCase
 {
+
     protected $directiveStub;
 
     public function setUp()
