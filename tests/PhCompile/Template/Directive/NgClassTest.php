@@ -24,7 +24,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
     /**
      * @var NgClass
      */
-    protected $class;
+    protected $ngClass;
     /**
      * @var Scope
      */
@@ -32,7 +32,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phCompile = new PhCompile();
-        $this->class = new NgClass($this->phCompile);
+        $this->ngClass = new NgClass($this->phCompile);
         $this->scope = new Scope();
     }
 
@@ -50,7 +50,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
 
-        $compiledHtml = Utils::saveHTML($this->class->compile($element, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHTML($this->ngClass->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-class="' . $classString . '" class="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $compiledHtml);
@@ -99,7 +99,7 @@ class NgClassTest extends \PHPUnit_Framework_TestCase
         $document = Utils::loadHTML('<span ng-class="' . $classString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
 
-        $this->class->compile($element, $this->scope);
+        $this->ngClass->compile($element, $this->scope);
     }
 
     public function compileExceptionProvider() {

@@ -12,10 +12,10 @@ namespace PhCompile\Tests\Template\Directive;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
-    PhCompile\Template\Directive\NgBind,
+    PhCompile\Template\Directive\NgBindTemplate,
     PhCompile\DOM\Utils;
 
-class NgBindTest extends \PHPUnit_Framework_TestCase
+class NgBindTemplateTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var PhCompile
@@ -24,7 +24,7 @@ class NgBindTest extends \PHPUnit_Framework_TestCase
     /**
      * @var NgBind
      */
-    protected $bind;
+    protected $bindTemplate;
     /**
      * @var Scope
      */
@@ -32,47 +32,38 @@ class NgBindTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phCompile = new PhCompile();
-        $this->bind = new NgBind($this->phCompile);
+        $this->bindTemplate = new NgBindTemplate($this->phCompile);
         $this->scope = new Scope();
     }
 
 
     /**
-     * @covers PhCompile\Template\Directive\NgBind::compile
+     * @covers PhCompile\Template\Directive\NgBindTemplate::compile
      * @dataProvider compileProvider
      */
     public function testCompile($scopeData, $bindString, $expected) {
         $this->scope->setData($scopeData);
 
-        $document = Utils::loadHTML('<span ng-bind="' . $bindString . '"></span>');
+        $document = Utils::loadHTML('<span ng-bind-template="' . $bindString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
-        
-        $compiledHtml = Utils::saveHTML($this->bind->compile($element, $this->scope)->ownerDocument);
-        $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
-        
+
+        $compiledHtml = Utils::saveHTML($this->bindTemplate->compile($element, $this->scope)->ownerDocument);
+        $expectedHtml = '<span ng-bind-template="' . $bindString . '">' . $expected . '</span>';
+
         $this->assertSame($expectedHtml, $compiledHtml);
     }
 
     public function compileProvider() {
         return array(
             array(
-                array('foo' => 'bar'), 'foo', 'bar'
+                array('foo' => 'bar'), '{{foo}}', 'bar'
             ),
             array(
-                array('foo' => array('bar', 'baz')), 'foo[1]', 'baz'
+                array('foo' => array('bar', 'baz')), '{{foo[0]}} {{foo[1]}}', 'bar baz'
             ),
             array(
-                array('foo' => array('bar', 'baz')), 'foo[0]', 'bar'
+                array('foo' => 'bar', 'baz' => 'zaz'), '{{foo}} {{baz}}', 'bar zaz'
             ),
-            array(
-                array('foo' => array('bar', 'baz')), 'foo[99]', null
-            ),
-            array(
-                array('foo' => array('bar', 'baz')), 'foo.baz', null
-            ),
-            array(
-                array('foo' => array('bar' => 'baz')), 'foo.bar', 'baz'
-            )
         );
     }
 
