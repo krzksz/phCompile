@@ -24,7 +24,7 @@ class NgBindTest extends \PHPUnit_Framework_TestCase
     /**
      * @var NgBind
      */
-    protected $bind;
+    protected $ngBind;
     /**
      * @var Scope
      */
@@ -32,7 +32,7 @@ class NgBindTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phCompile = new PhCompile();
-        $this->bind = new NgBind($this->phCompile);
+        $this->ngBind = new NgBind($this->phCompile);
         $this->scope = new Scope();
     }
 
@@ -47,7 +47,7 @@ class NgBindTest extends \PHPUnit_Framework_TestCase
         $document = Utils::loadHTML('<span ng-bind="' . $bindString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
         
-        $compiledHtml = Utils::saveHTML($this->bind->compile($element, $this->scope)->ownerDocument);
+        $compiledHtml = Utils::saveHTML($this->ngBind->compile($element, $this->scope)->ownerDocument);
         $expectedHtml = '<span ng-bind="' . $bindString . '">' . $expected . '</span>';
         
         $this->assertSame($expectedHtml, $compiledHtml);

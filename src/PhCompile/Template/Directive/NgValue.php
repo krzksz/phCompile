@@ -12,7 +12,6 @@ namespace PhCompile\Template\Directive;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
-    PhCompile\DOM\Utils,
     PhCompile\Template\Expression\Expression;
 
 /**
@@ -28,7 +27,7 @@ class NgValue extends Directive{
     public function __construct(PhCompile $phCompile)
     {
         parent::__construct($phCompile);
-        $this->setName('ng-bind');
+        $this->setName('ng-value');
         $this->setRestrict('A');
     }
 
@@ -41,14 +40,12 @@ class NgValue extends Directive{
      * @return \DOMElement Compiled DOM element.
      */
     public function compile(\DOMElement $domElement, Scope $scope) {
-        $expressionString = $domElement->getAttribute('ng-bind');
+        $expressionString = $domElement->getAttribute('ng-value');
 
         $expression = new Expression($this->phCompile);
         $expressionValue = $expression->compile($expressionString, $scope);
 
-        if(empty($expressionValue) === false) {
-            Utils::appendHTML($domElement, $expressionValue);
-        }
+        $domElement->setAttribute('value', $expressionValue);
 
         return $domElement;
     }

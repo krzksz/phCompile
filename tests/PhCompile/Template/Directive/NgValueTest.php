@@ -12,19 +12,19 @@ namespace PhCompile\Tests\Template\Directive;
 
 use PhCompile\PhCompile,
     PhCompile\Scope,
-    PhCompile\Template\Directive\NgBindTemplate,
+    PhCompile\Template\Directive\NgValue,
     PhCompile\DOM\Utils;
 
-class NgBindTemplateTest extends \PHPUnit_Framework_TestCase
+class NgValueTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var PhCompile
      */
     protected $phCompile;
     /**
-     * @var NgBindTemplate
+     * @var NgValue
      */
-    protected $ngBindTemplate;
+    protected $ngValue;
     /**
      * @var Scope
      */
@@ -32,23 +32,23 @@ class NgBindTemplateTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->phCompile = new PhCompile();
-        $this->ngBindTemplate = new NgBindTemplate($this->phCompile);
+        $this->ngValue = new NgValue($this->phCompile);
         $this->scope = new Scope();
     }
 
 
     /**
-     * @covers PhCompile\Template\Directive\NgBindTemplate::compile
+     * @covers PhCompile\Template\Directive\NgValue::compile
      * @dataProvider compileProvider
      */
     public function testCompile($scopeData, $bindString, $expected) {
         $this->scope->setData($scopeData);
 
-        $document = Utils::loadHTML('<span ng-bind-template="' . $bindString . '"></span>');
+        $document = Utils::loadHTML('<span ng-value="' . $bindString . '"></span>');
         $element = $document->getElementsByTagName('span')->item(0);
 
-        $compiledHtml = Utils::saveHTML($this->ngBindTemplate->compile($element, $this->scope)->ownerDocument);
-        $expectedHtml = '<span ng-bind-template="' . $bindString . '">' . $expected . '</span>';
+        $compiledHtml = Utils::saveHTML($this->ngValue->compile($element, $this->scope)->ownerDocument);
+        $expectedHtml = '<span ng-value="' . $bindString . '" value="' . $expected . '"></span>';
 
         $this->assertSame($expectedHtml, $compiledHtml);
     }
@@ -56,14 +56,23 @@ class NgBindTemplateTest extends \PHPUnit_Framework_TestCase
     public function compileProvider() {
         return array(
             array(
-                array('foo' => 'bar'), '{{foo}}', 'bar'
+                array('foo' => 'bar'), 'foo', 'bar'
             ),
             array(
-                array('foo' => array('bar', 'baz')), '{{foo[0]}} {{foo[1]}}', 'bar baz'
+                array('foo' => array('bar', 'baz')), 'foo[1]', 'baz'
             ),
             array(
-                array('foo' => 'bar', 'baz' => 'zaz'), '{{foo}} {{baz}}', 'bar zaz'
+                array('foo' => array('bar', 'baz')), 'foo[0]', 'bar'
             ),
+            array(
+                array('foo' => array('bar', 'baz')), 'foo[99]', null
+            ),
+            array(
+                array('foo' => array('bar', 'baz')), 'foo.baz', null
+            ),
+            array(
+                array('foo' => array('bar' => 'baz')), 'foo.bar', 'baz'
+            )
         );
     }
 
