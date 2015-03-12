@@ -17,15 +17,17 @@ phCompile is still in alpha state, bugs and api changes may occur.
 * Making your website preserve minimal functionality without JavaScript enabled.
 
 ### Supported AngularJS features
-* {{ }} expressions,
-* ng-repeat(without "track by"),
-* ng-hide,
-* ng-show,
-* ng-class,
-* ng-bind.
+* {{ }} expressions;
+* ng-repeat(without "track by");
+* ng-hide, ng-show;
+* ng-class, ng-class-even, ng-class-odd;
+* ng-bind, ng-bind-template;
+* ng-href;
+* ng-value;
+* ng-src, ng-srcset.
 
 ### Roadmap
-* Other AngularJS directives,
+* Remaining textual AngularJS directives,
 * Filters(currently they are expected to break expression that uses them),
 * Expressions cache,
 * Suggestions?
